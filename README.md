@@ -1,44 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
 
-## Available Scripts
+  <img alt="Language" src="https://img.shields.io/github/languages/top/TCC-SMIA/web?style=for-the-badge">
 
-In the project directory, you can run:
+  <a href="https://github.com/TCC-SMIA/web" target="_blank">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/TCC-SMIA/web?style=for-the-badge">
+  </a>
 
-### `yarn start`
+   <a href="https://github.com/TCC-SMIA/web/stargazers" target="_blank">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/TCC-SMIA/web?style=for-the-badge">
+  </a>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+</p>
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## 💻&nbsp;&nbsp; Project
 
-### `yarn test`
+The web application to make complaints about any irregularity in the environment.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀&nbsp;&nbsp; Technologies
 
-### `yarn build`
+This project is being developed using these technologies:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [TypeScript](https://www.typescriptlang.org/)
+- [Axios](https://github.com/axios/axios)
+- [Eslint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## :gear:&nbsp;&nbsp; Installing this project
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Make sure you have NodeJS installed on your machine.
+- Download or clone this project.
+- If you are using Yarn as a package manager.
+  - Run `yarn` to install all the necessary dependencies.
+  - Run `yarn start` to start the Application.
+- After all the instructions you can see the server running on port http://localhost:3000.
 
-### `yarn eject`
+# 🥇&nbsp;&nbsp; Contributors
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+| [<img src="https://avatars3.githubusercontent.com/u/44821959?s=460&u=3d09f94c26b0fd9b9ed57670c62db54fa3ae0a83&v=4" width="100px;"/><br /><sub><b>Higor Martins</b></sub>](https://www.linkedin.com/in/higormartinsdasilva/)<br />  | [<img src="https://avatars3.githubusercontent.com/u/44583521?s=460&u=2bb92913239de8faeb3a3902ec3593782d9b4ac6&v=4" width="100px;"/><br /><sub><b>Gabriel Portugal</b></sub>](https://www.linkedin.com/in/gabrielrportugal/)<br /> | [<img src="https://avatars3.githubusercontent.com/u/53874888?s=460&u=ba2ad90f590349a99756eb6ae3f728039bdb5b8b&v=4" width="100px;"/><br /><sub><b>Raphael de Melo</b></sub>](https://www.linkedin.com/in/raphaeldemelo/)<br />  | [<img src="https://media-exp1.licdn.com/dms/image/C4D03AQE132_A6zuG8A/profile-displayphoto-shrink_800_800/0?e=1597276800&v=beta&t=xGMxKRdd81P8zU64U6R1WcvSz16I8fm5XfUKLLyPwMA" width="100px;"/><br /><sub><b>Renan Horste</b></sub>](https://www.linkedin.com/in/renan-matos-horste-de-oliveira-2121b4173/)<br /> |
+| :---: | :---: | :---: | :---: |
