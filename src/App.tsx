@@ -1,9 +1,18 @@
+import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 
-// import { Container } from './styles';
+import GlobalStyle from './styles/global';
+import Routes from './routes';
 
 const src: React.FC = () => {
-  return <div>oi</div>;
+  return (
+    <>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+      <GlobalStyle />
+    </>
+  );
 };
 
 export default src;
