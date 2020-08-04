@@ -1,11 +1,9 @@
 import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-     oi
-    </div>
-  );
-}
+// import { Container } from './styles';
 
-export default App;
+const src: React.FC = () => {
+  return <div>oi</div>;
+};
+
+export default src;
