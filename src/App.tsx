@@ -7,14 +7,12 @@ import AppProvider from './hooks/index';
 
 const src: React.FC = () => {
   return (
-    <>
+    <AppProvider>
       <BrowserRouter>
-        <AppProvider>
-          <Routes />
-        </AppProvider>
+        <Routes />
       </BrowserRouter>
       <GlobalStyle />
-    </>
+    </AppProvider>
   );
 };
 

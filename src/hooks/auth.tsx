@@ -100,10 +100,10 @@ const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
-function useAuth(): AuthContextData {
+const useAuth = (): AuthContextData => {
   const context = useContext(AuthContext);
 
   return context;
-}
+};
 
 export { AuthProvider, useAuth };
