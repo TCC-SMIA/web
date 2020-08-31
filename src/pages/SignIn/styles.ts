@@ -33,6 +33,7 @@ export const FormContainer = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 700px;
+  background: #e8eaf0;
 
   > div {
     display: flex;
@@ -50,8 +51,7 @@ export const FormContainer = styled.div`
     > p {
       margin-top: 8px;
       font-weight: bold;
-      font-size: 1.4rem;
-      color: #444;
+      font-size: 2.2rem;
     }
   }
 
@@ -62,13 +62,13 @@ export const FormContainer = styled.div`
 
     div {
       display: flex;
-      border: 1px solid #9aa0a6;
-      border-radius: 15px;
-      padding: 10px;
+      border-radius: 5px;
+      padding: 20px;
       transition: 0.2s;
+      background: #fff;
 
       & + div {
-        margin-top: 10px;
+        margin-top: 2px;
       }
 
       svg {
@@ -95,10 +95,12 @@ export const FormContainer = styled.div`
       height: 44px;
       border-radius: 10px;
       border: none;
-      background: #9aa0a6;
+      background: #9d9b9b;
       color: #fff;
+      font-weight: bold;
       font-size: 1.2rem;
       transition: 0.2s;
+      letter-spacing: 0.1rem;
     }
   }
 `;

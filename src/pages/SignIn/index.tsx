@@ -55,7 +55,7 @@ const SignIn: React.FC = () => {
               onChange={(event) => handleChangePasswordInput(event)}
             />
           </div>
-          <button type="submit">Get Started</button>
+          <button type="submit">Entrar</button>
         </form>
 
         <NotHaveAccountContainer>

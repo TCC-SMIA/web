@@ -95,7 +95,7 @@ export const FormContainer = styled.div`
       height: 44px;
       border-radius: 10px;
       border: none;
-      background: #9aa0a6;
+      background: #9d9b9b;
       color: #fff;
       font-size: 1.2rem;
       transition: 0.2s;
