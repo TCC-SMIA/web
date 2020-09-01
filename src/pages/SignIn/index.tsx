@@ -1,27 +1,26 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+
 import {
   Container,
   ImageContainer,
   FormContainer,
   NotHaveAccountContainer,
 } from './styles';
-import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
 
 const SignIn: React.FC = () => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+  const { signIn } = useAuth();
 
   const handleSignIn = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
 
-      await api.post('/sessions', {
-        login: loginInput,
-        password: passwordInput,
-      });
+      await signIn({ login: loginInput, password: passwordInput });
     },
-    [loginInput, passwordInput],
+    [loginInput, passwordInput, signIn],
   );
 
   const handleChangeLoginInput = useCallback((event) => {
