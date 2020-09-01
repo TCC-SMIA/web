@@ -10,7 +10,7 @@ import {
   NotHaveAccountContainer,
   LogoImage,
 } from './styles';
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/useAuth';
 
 const SignIn: React.FC = () => {
   const [loginInput, setLoginInput] = useState('');
