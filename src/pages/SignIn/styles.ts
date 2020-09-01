@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import bgSignIn from '../../assets/bg-signin.jpg';
+
 export const Container = styled.div`
   overflow-x: scroll;
   display: flex;
@@ -16,7 +18,7 @@ export const ImageContainer = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background: #9aa0a6;
+  background: url(${bgSignIn}) no-repeat center;
 
   @media (max-width: 450px) {
     display: none;
@@ -33,7 +35,7 @@ export const FormContainer = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 700px;
-  background: #e8eaf0;
+  background: #426d49;
 
   > div {
     display: flex;
@@ -52,6 +54,7 @@ export const FormContainer = styled.div`
       margin-top: 8px;
       font-weight: bold;
       font-size: 2.2rem;
+      color: #fff;
     }
   }
 
@@ -114,4 +117,11 @@ export const NotHaveAccountContainer = styled.div`
   a {
     font-size: 0.8rem;
   }
+`;
+
+export const LogoImage = styled.img`
+  width: 300px;
+  height: 300px;
+
+  margin-top: -160px;
 `;

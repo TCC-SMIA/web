@@ -1,11 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+import imgLogo from '../../assets/logo.png';
+
 import {
   Container,
   ImageContainer,
   FormContainer,
   NotHaveAccountContainer,
+  LogoImage,
 } from './styles';
 import { useAuth } from '../../hooks/auth';
 
@@ -35,6 +38,7 @@ const SignIn: React.FC = () => {
     <Container>
       <ImageContainer />
       <FormContainer>
+        <LogoImage src={imgLogo} alt="SMIA" />
         <div>
           <p>Login</p>
         </div>
