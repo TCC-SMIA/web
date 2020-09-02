@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import bgSignUp from '../../assets/bg-signup.jpg';
+
 export const Container = styled.div`
   overflow-x: scroll;
   display: flex;
@@ -16,7 +18,7 @@ export const ImageContainer = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background: #9aa0a6;
+  background: url(${bgSignUp}) no-repeat center;
 
   @media (max-width: 450px) {
     display: none;
@@ -33,7 +35,7 @@ export const FormContainer = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 700px;
-  background: #e8eaf0;
+  background: var(--color-smia);
 
   > div {
     display: flex;
@@ -52,6 +54,7 @@ export const FormContainer = styled.div`
       margin-top: 8px;
       font-weight: bold;
       font-size: 2.6rem;
+      color: var(--color-white);
     }
   }
 
@@ -65,43 +68,54 @@ export const FormContainer = styled.div`
       border-radius: 5px;
       padding: 20px;
       transition: 0.2s;
-      background: #fff;
+      background: var(--color-white);
 
       & + div {
-        margin-top: 2px;
+        margin-top: 8px;
       }
 
       svg {
         margin-right: 10px;
         transition: 0.2s;
-        color: #9aa0a6;
+        color: var(--color-icons);
       }
 
       input {
         border: 0;
         font-size: 1.2rem;
         width: 350px;
-        color: #777;
+        color: var(--color-input);
 
         ::placeholder {
-          color: #9aa0a6;
+          color: var(--color-placeholder);
         }
       }
     }
 
     button {
       margin-top: 10px;
-      width: 250px;
-      height: 44px;
+      width: 80%;
+      height: 46px;
       border-radius: 10px;
       border: none;
-      background: #9d9b9b;
-      color: #fff;
+      background: var(--color-bg-button);
+      color: var(--color-white);
       font-size: 1.2rem;
       transition: 0.2s;
       font-weight: bold;
       letter-spacing: 0.1rem;
     }
+  }
+`;
+
+export const BackToLogonContainer = styled.div`
+  margin: 16px 0;
+  padding: 16px;
+
+  a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--color-bg-button);
   }
 `;
 
@@ -114,4 +128,11 @@ export const NotHaveAccountContainer = styled.div`
   a {
     font-size: 0.8rem;
   }
+`;
+
+export const LogoImage = styled.img`
+  width: 300px;
+  height: 300px;
+
+  margin-top: -80px;
 `;

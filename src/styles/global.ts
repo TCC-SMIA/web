@@ -16,7 +16,7 @@ body{
 }
 
 body, input, button {
-   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+   font-family: "Poppins", "Helvetica", "Arial", sans-serif;
 }
 
 
@@ -31,4 +31,17 @@ ul{
 button{
    cursor: pointer;
 }
+
+:root {
+    --color-smia: #426d49;
+    --color-input: #777;
+    --color-placeholder: #9aa0a6;
+    --color-bg-button: #0A2342;
+    --color-icons: #9aa0a6;
+    --color-background: #9aa0a6;
+    --color-black: rgba(0,0,0,.9);
+    --color-gray: rgba(0,0,0,.6);
+    --color-separator: rgba(0,0,0,0.15);
+    --color-white: #fff;
+  }
 `;

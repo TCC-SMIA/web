@@ -1,8 +1,17 @@
 import React, { useState, useCallback } from 'react';
 
 import { useNavigate } from 'react-router';
-import { Container, ImageContainer, FormContainer } from './styles';
+import { Link } from 'react-router-dom';
+import {
+  Container,
+  ImageContainer,
+  FormContainer,
+  LogoImage,
+  BackToLogonContainer,
+} from './styles';
 import api from '../../services/api';
+
+import imgLogo from '../../assets/logo.png';
 
 interface ISignUpRequest {
   name: string;
@@ -59,6 +68,7 @@ const SignUp: React.FC = () => {
     <Container>
       <ImageContainer />
       <FormContainer>
+        <LogoImage src={imgLogo} alt="SMIA" />
         <div>
           <p>Cadastro</p>
         </div>
@@ -101,6 +111,9 @@ const SignUp: React.FC = () => {
           </div>
           <button type="submit">Cadastrar</button>
         </form>
+        <BackToLogonContainer>
+          <Link to="/signin">Voltar para Logon</Link>
+        </BackToLogonContainer>
       </FormContainer>
     </Container>
   );

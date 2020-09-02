@@ -35,7 +35,7 @@ export const FormContainer = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 700px;
-  background: #426d49;
+  background: var(--color-smia);
 
   > div {
     display: flex;
@@ -54,7 +54,7 @@ export const FormContainer = styled.div`
       margin-top: 8px;
       font-weight: bold;
       font-size: 2.2rem;
-      color: #fff;
+      color: var(--color-white);
     }
   }
 
@@ -68,54 +68,79 @@ export const FormContainer = styled.div`
       border-radius: 5px;
       padding: 20px;
       transition: 0.2s;
-      background: #fff;
+      background: var(--color-white);
 
       & + div {
-        margin-top: 2px;
+        margin-top: 8px;
       }
 
       svg {
         margin-right: 10px;
         transition: 0.2s;
-        color: #9aa0a6;
+        color: var(--color-icons);
       }
 
       input {
         border: 0;
         font-size: 1.2rem;
         width: 350px;
-        color: #777;
+        color: var(--color-input);
 
         ::placeholder {
-          color: #9aa0a6;
+          color: var(--color-placeholder);
         }
       }
     }
 
     button {
       margin-top: 10px;
-      width: 250px;
-      height: 44px;
+      width: 80%;
+      height: 46px;
       border-radius: 10px;
       border: none;
-      background: #9d9b9b;
-      color: #fff;
+      background: var(--color-bg-button);
+      color: var(--color-white);
       font-weight: bold;
       font-size: 1.2rem;
       transition: 0.2s;
       letter-spacing: 0.1rem;
     }
+
+    a {
+      color: var(--color-white);
+      display: block;
+      text-decoration: none;
+      margin-top: 24px;
+      transition: color 0.2s;
+
+      display: flex;
+      align-items: center;
+    }
+  }
+`;
+
+export const ForgotPasswordContainer = styled.div`
+  margin: 8px 0;
+  padding: 8px;
+
+  a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--color-bg-button);
   }
 `;
 
 export const NotHaveAccountContainer = styled.div`
   > h1 {
     font-weight: normal;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    color: var(--color-white);
   }
 
   a {
-    font-size: 0.8rem;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--color-bg-button);
   }
 `;
 

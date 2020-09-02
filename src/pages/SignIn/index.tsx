@@ -8,6 +8,7 @@ import {
   ImageContainer,
   FormContainer,
   NotHaveAccountContainer,
+  ForgotPasswordContainer,
   LogoImage,
 } from './styles';
 import { useAuth } from '../../hooks/useAuth';
@@ -60,6 +61,10 @@ const SignIn: React.FC = () => {
           </div>
           <button type="submit">Entrar</button>
         </form>
+
+        <ForgotPasswordContainer>
+          <Link to="/forgot-password">Esqueci minha senha</Link>
+        </ForgotPasswordContainer>
 
         <NotHaveAccountContainer>
           <h1>Ainda não tem uma conta?</h1>
