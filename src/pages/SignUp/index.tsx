@@ -31,7 +31,6 @@ const SignUp: React.FC = () => {
   const handleSignUp = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
-      console.log('signup');
       const response = await api.post('/users', {
         name: nameInput,
         nickname: nicknameInput,
@@ -106,6 +105,7 @@ const SignUp: React.FC = () => {
             <input
               placeholder="Senha: "
               name="password"
+              type="password"
               onChange={(event) => handleChangePasswordInput(event)}
             />
           </div>
