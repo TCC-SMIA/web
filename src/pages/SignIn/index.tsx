@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import imgLogo from '../../assets/logo.png';
 
@@ -18,13 +19,17 @@ const SignIn: React.FC = () => {
   const [passwordInput, setPasswordInput] = useState('');
   const { signIn } = useAuth();
 
+  const navigate = useNavigate();
+
   const handleSignIn = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
 
       await signIn({ login: loginInput, password: passwordInput });
+
+      navigate('/dashboard');
     },
-    [loginInput, passwordInput, signIn],
+    [loginInput, navigate, passwordInput, signIn],
   );
 
   const handleChangeLoginInput = useCallback((event) => {
