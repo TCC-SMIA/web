@@ -56,6 +56,7 @@ const SignIn: React.FC = () => {
             <input
               placeholder="Password: "
               name="password"
+              type="password"
               onChange={(event) => handleChangePasswordInput(event)}
             />
           </div>
