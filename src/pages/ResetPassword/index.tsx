@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
-
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import imgLogo from '../../assets/logo.png';
+import Button from '../../components/Button';
+
 import {
   Container,
   ImageContainer,
@@ -74,7 +76,7 @@ const ResetPassword: React.FC = () => {
               onChange={(event) => handleChangeConfirmPasswordInput(event)}
             />
           </div>
-          <button type="submit">Redefinir</button>
+          <Button type="submit">Redefinir</Button>
         </form>
         <BackToLogonContainer>
           <Link to="/signin">

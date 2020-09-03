@@ -2,6 +2,11 @@ import React, { useState, useCallback } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+
+import api from '../../services/api';
+import imgLogo from '../../assets/logo.png';
+import Button from '../../components/Button';
+
 import {
   Container,
   ImageContainer,
@@ -9,9 +14,6 @@ import {
   LogoImage,
   BackToLogonContainer,
 } from './styles';
-import api from '../../services/api';
-
-import imgLogo from '../../assets/logo.png';
 
 interface ISignUpRequest {
   name: string;
@@ -121,7 +123,7 @@ const SignUp: React.FC = () => {
               onChange={(event) => handleChangePasswordInput(event)}
             />
           </div>
-          <button type="submit">Cadastrar</button>
+          <Button type="submit">Cadastrar</Button>
         </form>
         <BackToLogonContainer>
           <Link to="/signin">

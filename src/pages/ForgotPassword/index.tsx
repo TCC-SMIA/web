@@ -1,10 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { FiArrowLeft } from 'react-icons/fi';
-
 import { Link } from 'react-router-dom';
+
 import imgLogo from '../../assets/logo.png';
 import api from '../../services/api';
+import Button from '../../components/Button';
+
 import {
   Container,
   ImageContainer,
@@ -51,7 +53,7 @@ const ForgotPassword: React.FC = () => {
               onChange={(event) => handleChangeEmailInput(event)}
             />
           </div>
-          <button type="submit">Enviar</button>
+          <Button type="submit">Enviar</Button>
         </form>
         <BackToLogonContainer>
           <Link to="/signin">

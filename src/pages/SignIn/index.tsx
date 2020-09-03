@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { FiLogIn } from 'react-icons/fi';
 
 import imgLogo from '../../assets/logo.png';
-
+import Button from '../../components/Button';
 import {
   Container,
   ImageContainer,
@@ -66,7 +66,7 @@ const SignIn: React.FC = () => {
               onChange={(event) => handleChangePasswordInput(event)}
             />
           </div>
-          <button type="submit">Entrar</button>
+          <Button type="submit">Entrar</Button>
         </form>
 
         <ForgotPasswordContainer>
