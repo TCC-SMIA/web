@@ -117,6 +117,13 @@ export const BackToLogonContainer = styled.div`
     font-size: 1rem;
     text-decoration: none;
     color: var(--color-bg-button);
+
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 16px;
+    }
   }
 `;
 

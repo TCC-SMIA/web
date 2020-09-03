@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-
+import { FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
@@ -112,7 +112,10 @@ const SignUp: React.FC = () => {
           <button type="submit">Cadastrar</button>
         </form>
         <BackToLogonContainer>
-          <Link to="/signin">Voltar para Logon</Link>
+          <Link to="/signin">
+            <FiArrowLeft />
+            Voltar para Logon
+          </Link>
         </BackToLogonContainer>
       </FormContainer>
     </Container>

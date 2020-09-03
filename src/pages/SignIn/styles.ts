@@ -113,9 +113,6 @@ export const FormContainer = styled.div`
       text-decoration: none;
       margin-top: 24px;
       transition: color 0.2s;
-
-      display: flex;
-      align-items: center;
     }
   }
 `;
@@ -142,6 +139,13 @@ export const NotHaveAccountContainer = styled.div`
     font-size: 1rem;
     text-decoration: none;
     color: var(--color-bg-button);
+
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 16px;
+    }
   }
 `;
 

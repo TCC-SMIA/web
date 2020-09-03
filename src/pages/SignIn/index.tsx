@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
+import { FiLogIn } from 'react-icons/fi';
 
 import imgLogo from '../../assets/logo.png';
 
@@ -74,7 +75,11 @@ const SignIn: React.FC = () => {
 
         <NotHaveAccountContainer>
           <h1>Ainda não tem uma conta?</h1>
-          <Link to="/signup">Criar conta</Link>
+
+          <Link to="/signup">
+            <FiLogIn />
+            Criar conta
+          </Link>
         </NotHaveAccountContainer>
       </FormContainer>
     </Container>

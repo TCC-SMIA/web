@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { FiArrowLeft } from 'react-icons/fi';
 
 import { Link } from 'react-router-dom';
 import imgLogo from '../../assets/logo.png';
@@ -53,7 +54,10 @@ const ForgotPassword: React.FC = () => {
           <button type="submit">Enviar</button>
         </form>
         <BackToLogonContainer>
-          <Link to="/signin">Voltar para Logon</Link>
+          <Link to="/signin">
+            <FiArrowLeft />
+            Voltar para Logon
+          </Link>
         </BackToLogonContainer>
       </FormContainer>
       <ImageContainer />
