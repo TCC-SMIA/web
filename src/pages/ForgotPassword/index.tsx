@@ -17,17 +17,20 @@ import {
 
 const ForgotPassword: React.FC = () => {
   const [emailInput, setEmailInput] = useState();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleForgotPassword = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+      setLoading(true);
 
       const response = await api.post('/password/forgot', {
         email: emailInput,
       });
 
+      setLoading(false);
       if (response) navigate('/signin');
     },
     [emailInput, navigate],
@@ -53,7 +56,9 @@ const ForgotPassword: React.FC = () => {
               onChange={(event) => handleChangeEmailInput(event)}
             />
           </div>
-          <Button type="submit">Enviar</Button>
+          <Button loading={loading} type="submit">
+            Enviar
+          </Button>
         </form>
         <BackToLogonContainer>
           <Link to="/signin">

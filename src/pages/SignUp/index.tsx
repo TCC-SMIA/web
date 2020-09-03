@@ -45,7 +45,7 @@ const SignUp: React.FC = () => {
         password: passwordInput,
       } as ISignUpRequest);
 
-      if (response) navigate('/signin');
+      navigate('/signin');
     },
     [
       emailInput,
