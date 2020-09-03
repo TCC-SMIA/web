@@ -31,6 +31,11 @@ const SignUp: React.FC = () => {
   const handleSignUp = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+
+      if (emailInput !== emailConfirmationInput) {
+        throw new Error();
+      }
+
       const response = await api.post('/users', {
         name: nameInput,
         nickname: nicknameInput,
@@ -40,7 +45,14 @@ const SignUp: React.FC = () => {
 
       if (response) navigate('/signin');
     },
-    [emailInput, passwordInput, nameInput, nicknameInput, navigate],
+    [
+      emailInput,
+      emailConfirmationInput,
+      nameInput,
+      nicknameInput,
+      passwordInput,
+      navigate,
+    ],
   );
 
   const handleChangeEmailInput = useCallback((event) => {

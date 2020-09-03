@@ -40,7 +40,7 @@ const ForgotPassword: React.FC = () => {
       <FormContainer>
         <LogoImage src={imgLogo} alt="SMIA" />
         <div>
-          <p>Redefina sua senha</p>
+          <p>Email para redefinir</p>
         </div>
 
         <form onSubmit={(event) => handleForgotPassword(event)}>
