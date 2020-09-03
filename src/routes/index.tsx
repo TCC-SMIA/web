@@ -2,6 +2,7 @@ import React, { lazy } from 'react';
 import { Routes } from 'react-router-dom';
 
 import Route from './Route';
+import ForgotPassword from '../pages/ForgotPassword';
 
 const SignIn = lazy(() => import('../pages/SignIn'));
 const SignUp = lazy(() => import('../pages/SignUp'));
@@ -14,6 +15,7 @@ const MainRoutes: React.FC = () => {
       <Route path="/" element={LandingPage} />
       <Route path="/signin" element={SignIn} />
       <Route path="/signup" element={SignUp} />
+      <Route path="/forgot-password" element={ForgotPassword} />
       <Route path="/dashboard" isPrivate element={Dashboard} />
     </Routes>
   );

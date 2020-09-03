@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import bgSignUp from '../../assets/bg-signup.jpg';
+import bgSignIn from '../../assets/bg-forgotpassword.jpg';
 
 export const Container = styled.div`
   overflow-x: scroll;
@@ -18,7 +18,7 @@ export const ImageContainer = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background: url(${bgSignUp}) no-repeat center;
+  background: url(${bgSignIn}) no-repeat center;
   background-size: cover;
 
   @media (max-width: 450px) {
@@ -29,9 +29,9 @@ export const ImageContainer = styled.div`
 export const FormContainer = styled.div`
   padding: 20px;
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   height: 100%;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -45,20 +45,13 @@ export const FormContainer = styled.div`
     justify-content: center;
     margin-bottom: 30px;
 
-    img {
-      width: 90px;
-      height: 90px;
-      border-radius: 45px;
-    }
-
     > p {
       margin-top: 8px;
       font-weight: bold;
-      font-size: 2.6rem;
+      font-size: 2.2rem;
       color: var(--color-white);
     }
   }
-
   form {
     display: flex;
     flex-direction: column;
@@ -70,16 +63,6 @@ export const FormContainer = styled.div`
       padding: 20px;
       transition: 0.2s;
       background: var(--color-white);
-
-      & + div {
-        margin-top: 8px;
-      }
-
-      svg {
-        margin-right: 10px;
-        transition: 0.2s;
-        color: var(--color-icons);
-      }
 
       input {
         border: 0;
@@ -101,9 +84,9 @@ export const FormContainer = styled.div`
       border: none;
       background: var(--color-bg-button);
       color: var(--color-white);
+      font-weight: bold;
       font-size: 1.2rem;
       transition: 0.2s;
-      font-weight: bold;
       letter-spacing: 0.1rem;
     }
   }
@@ -120,20 +103,9 @@ export const BackToLogonContainer = styled.div`
   }
 `;
 
-export const NotHaveAccountContainer = styled.div`
-  > h1 {
-    font-weight: normal;
-    font-size: 0.9rem;
-  }
-
-  a {
-    font-size: 0.8rem;
-  }
-`;
-
 export const LogoImage = styled.img`
   width: 300px;
   height: 300px;
 
-  margin-top: -80px;
+  margin-top: -160px;
 `;

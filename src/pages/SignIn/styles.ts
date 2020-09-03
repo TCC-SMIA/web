@@ -19,6 +19,7 @@ export const ImageContainer = styled.div`
   align-items: center;
   justify-content: center;
   background: url(${bgSignIn}) no-repeat center;
+  background-size: cover;
 
   @media (max-width: 450px) {
     display: none;
