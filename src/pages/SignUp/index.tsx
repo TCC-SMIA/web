@@ -14,6 +14,7 @@ import {
   LogoImage,
   BackToLogonContainer,
 } from './styles';
+import Input from '../../components/Input';
 
 interface ISignUpRequest {
   name: string;
@@ -45,7 +46,7 @@ const SignUp: React.FC = () => {
         password: passwordInput,
       } as ISignUpRequest);
 
-      if (response) navigate('/signin');
+      navigate('/signin');
     },
     [
       emailInput,
@@ -87,42 +88,32 @@ const SignUp: React.FC = () => {
         </div>
 
         <form onSubmit={(event) => handleSignUp(event)}>
-          <div>
-            <input
-              placeholder="Nome: "
-              name="name"
-              onChange={(event) => handleChangeNameInput(event)}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Apelido: "
-              name="nickname"
-              onChange={(event) => handleChangeNicknameInput(event)}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="E-mail: "
-              name="email"
-              onChange={(event) => handleChangeEmailInput(event)}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Confirme e-mail: "
-              name="emailConfirmation"
-              onChange={(event) => handleChangeEmailConfirmationInput(event)}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Senha: "
-              name="password"
-              type="password"
-              onChange={(event) => handleChangePasswordInput(event)}
-            />
-          </div>
+          <Input
+            placeholder="Nome: "
+            name="name"
+            onChange={(event) => handleChangeNameInput(event)}
+          />
+          <Input
+            placeholder="Apelido: "
+            name="nickname"
+            onChange={(event) => handleChangeNicknameInput(event)}
+          />
+          <Input
+            placeholder="E-mail: "
+            name="email"
+            onChange={(event) => handleChangeEmailInput(event)}
+          />
+          <Input
+            placeholder="Confirme e-mail: "
+            name="emailConfirmation"
+            onChange={(event) => handleChangeEmailConfirmationInput(event)}
+          />
+          <Input
+            placeholder="Senha: "
+            name="password"
+            type="password"
+            onChange={(event) => handleChangePasswordInput(event)}
+          />
           <Button type="submit">Cadastrar</Button>
         </form>
         <BackToLogonContainer>

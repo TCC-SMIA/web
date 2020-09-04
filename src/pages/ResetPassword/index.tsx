@@ -37,6 +37,7 @@ const ResetPassword: React.FC = () => {
 
       const response = await api.post('/password/reset', {
         password,
+        password_confirmation: confirmPassword,
         token,
       });
 
@@ -66,6 +67,7 @@ const ResetPassword: React.FC = () => {
             <input
               placeholder="Senha: "
               name="password"
+              type="password"
               onChange={(event) => handleChangePasswordInput(event)}
             />
           </div>
@@ -73,6 +75,7 @@ const ResetPassword: React.FC = () => {
             <input
               placeholder="Confirmar Senha: "
               name="confirmPassword"
+              type="password"
               onChange={(event) => handleChangeConfirmPasswordInput(event)}
             />
           </div>
