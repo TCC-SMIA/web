@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { Container } from './styles';
+import { Container, Feed } from './styles';
 import api from '../../services/api';
 import Card from '../../components/Card';
 import IComplaint from '../../entities/Complaint';
+import Header from '../../components/Header';
 
 const Dashboard: React.FC = () => {
   const [complaints, setComplaints] = useState([] as IComplaint[]);
@@ -16,9 +17,14 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      {complaints?.map((complaint) => (
-        <Card key={complaint.id} complaint={complaint} />
-      ))}
+      <Header />
+      <Feed>
+        {complaints?.map((complaint) => (
+          <Card key={complaint.id} complaint={complaint} />
+        ))}
+      </Feed>
     </Container>
   );
 };
+
+export default Dashboard;

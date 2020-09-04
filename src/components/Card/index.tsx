@@ -31,7 +31,13 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Description>
         <p>alguma coisa</p>
       </Description>
-      <img src={complaint.image_url} alt="default" />
+      <img
+        src={
+          complaint.image_url ||
+          'https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'
+        }
+        alt="default"
+      />
 
       <Options>
         <button type="button">Chamar relator</button>
