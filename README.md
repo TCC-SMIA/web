@@ -1,18 +1,17 @@
 <p align="center">
-
   <img alt="Language" src="https://img.shields.io/github/languages/top/TCC-SMIA/web?style=for-the-badge">
 
   <a href="https://github.com/TCC-SMIA/web" target="_blank">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/TCC-SMIA/web?style=for-the-badge">
   </a>
 
-   <a href="https://github.com/TCC-SMIA/web/stargazers" target="_blank">
+  <a href="https://github.com/TCC-SMIA/web/stargazers" target="_blank">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/TCC-SMIA/web?style=for-the-badge">
   </a>
-
 </p>
 
 ## 💻&nbsp;&nbsp; Project
+  [![Netlify Status](https://api.netlify.com/api/v1/badges/ce0b2c25-b354-440a-8313-d8767049fdd9/deploy-status)](https://app.netlify.com/sites/smia-web/deploys)
 
 The web application to make complaints about any irregularity in the environment.
 
