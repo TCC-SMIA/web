@@ -20,7 +20,6 @@ const Route: React.FC<RProps> = ({ isPrivate, element: Element, ...rest }) => {
   if (signed && !isPrivate) {
     return <Navigate to="/dashboard" replace />;
   }
-
   return (
     <ReactRoute
       {...rest}

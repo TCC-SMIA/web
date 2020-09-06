@@ -33,7 +33,6 @@ ul{
 button{
    cursor: pointer;
 }
-
 :root {
     --color-smia: #426d49;
     --color-input: #777;
