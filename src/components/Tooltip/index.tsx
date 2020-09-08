@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Container, MenuToolTip, } from './styles';
+import { Container, MenuToolTip } from './styles';
 
 interface TooltipProps {
   visible: boolean;
 }
 
 const Tooltip: React.FC<TooltipProps> = ({ visible }) => {
-
   return (
     <Container isVisible={!!visible}>
       <MenuToolTip>
