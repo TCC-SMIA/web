@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   height: 80px;
-  background: #426d49;
+  background: var(--color-smia);
   display: flex;
   position: absolute;
 `;
@@ -31,13 +31,13 @@ export const Botao = styled.button`
 `;
 
 export const Title = styled.text`
-  color: #fffafa;
+  color: var(--color-title-header);
   font-size: 16px;
 
   font-weight: bold;
 
   :hover {
-    color: #dcdcdc;
+    color: var(--color-hover-tooltip);
   }
 `;
 
@@ -49,7 +49,7 @@ export const ProfileArea = styled.div`
 
   &:hover {
     > strong {
-      color: green;
+      color: var(--color-title-green);
     }
   }
 
@@ -66,7 +66,7 @@ export const ProfileArea = styled.div`
       display: block;
       font-size: 10px;
       margin-top: 2px;
-      color: #fff;
+      color: var(--color-white);
     }
   }
 
