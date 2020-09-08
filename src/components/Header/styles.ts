@@ -5,7 +5,6 @@ export const Container = styled.div`
   height: 80px;
   background: var(--color-smia);
   display: flex;
-  position: absolute;
 `;
 
 export const LogoImage = styled.img`
