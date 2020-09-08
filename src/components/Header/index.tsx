@@ -7,7 +7,7 @@ import imgLogo from '../../assets/logo.png';
 import Tooltip from '../Tooltip';
 
 const Header: React.FC = () => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const handleVisible = useCallback(() => {
     setVisible(!visible);
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
 
       <Botoes>
         <Botao>
-          <Link to="/">
+          <Link to="/dashboard">
             <Title>Início</Title>
           </Link>
         </Botao>
@@ -37,9 +37,7 @@ const Header: React.FC = () => {
         </Botao>
 
         <Botao>
-          <Link to="/">
-            <IoMdNotificationsOutline size={30} color="#fff" />
-          </Link>
+          <IoMdNotificationsOutline size={30} color="#fff" />
         </Botao>
 
         <Botao onClick={handleVisible}>
