@@ -17,7 +17,7 @@ const ResetPassword = lazy(() => import('../pages/ResetPassword'));
 const MainRoutes: React.FC = () => {
   return (
     <Routes>
-      <Manager path="/" layout={DefaultLayout}>
+      <Manager layout={DefaultLayout}>
         <Route path="/" element={LandingPage} />
         <Route path="/signin" element={SignIn} />
         <Route path="/signup" element={SignUp} />
@@ -25,7 +25,7 @@ const MainRoutes: React.FC = () => {
         <Route path="/reset-password" element={ResetPassword} />
       </Manager>
 
-      <Manager path="/" isPrivate layout={AuthLayout}>
+      <Manager isPrivate layout={AuthLayout}>
         <Route path="/dashboard" element={Dashboard} />
         <Route path="/profile" element={Profile} />
       </Manager>
