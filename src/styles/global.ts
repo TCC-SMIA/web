@@ -46,5 +46,7 @@ button{
     --color-hover-tooltip: #dcdcdc;
     --color-title-header: #fffafa;
     --color-title-green: #008000;
+    --color-separator-border: #d3d3d3;
+    --color-textarea: #fafafc;
   }
 `;
