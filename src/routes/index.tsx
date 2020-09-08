@@ -2,14 +2,14 @@ import React, { lazy } from 'react';
 import { Routes } from 'react-router-dom';
 
 import Route from './Route';
-import ForgotPassword from '../pages/ForgotPassword';
-import ResetPassword from '../pages/ResetPassword';
-import Profile from '../pages/Profile';
 
 const SignIn = lazy(() => import('../pages/SignIn'));
 const SignUp = lazy(() => import('../pages/SignUp'));
 const LandingPage = lazy(() => import('../pages/LandingPage'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Profile = lazy(() => import('../pages/Profile'));
+const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('../pages/ResetPassword'));
 
 const MainRoutes: React.FC = () => {
   return (
@@ -19,8 +19,9 @@ const MainRoutes: React.FC = () => {
       <Route path="/signup" element={SignUp} />
       <Route path="/forgot-password" element={ForgotPassword} />
       <Route path="/reset-password" element={ResetPassword} />
-      <Route path="/profile" element={Profile}/>
+
       <Route path="/dashboard" isPrivate element={Dashboard} />
+      <Route path="/profile" isPrivate element={Profile} />
     </Routes>
   );
 };
