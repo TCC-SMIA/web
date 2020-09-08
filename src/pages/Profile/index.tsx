@@ -1,9 +1,13 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import { Container } from './styles';
 
 const Profile: React.FC = () => {
-  return <div />;
+  return (
+    <Container>
+      <h1>tela de perfil</h1>
+    </Container>
+  );
 };
 
 export default Profile;

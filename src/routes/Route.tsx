@@ -1,26 +1,12 @@
 import React, { Suspense } from 'react';
-import { RouteProps, Navigate } from 'react-router';
+import { RouteProps } from 'react-router';
 import { Route as ReactRoute } from 'react-router-dom';
 
-import { useAuth } from '../hooks/useAuth';
-
 interface RProps extends Omit<RouteProps, 'element'> {
-  isPrivate?: boolean;
   element: React.ComponentType;
 }
 
-const Route: React.FC<RProps> = ({ isPrivate, element: Element, ...rest }) => {
-  const { user } = useAuth();
-  const signed = user;
-
-  if (!signed && isPrivate) {
-    return <Navigate to="/" replace />;
-  }
-
-  if (signed && !isPrivate) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
+const Route: React.FC<RProps> = ({ element: Element, ...rest }) => {
   return (
     <ReactRoute
       {...rest}

@@ -13,6 +13,7 @@ body{
    ::-webkit-scrollbar{
      display: none;
   }
+
 }
 
 body, input, button {
@@ -31,7 +32,6 @@ ul{
 button{
    cursor: pointer;
 }
-
 :root {
     --color-smia: #426d49;
     --color-input: #777;
@@ -43,5 +43,8 @@ button{
     --color-gray: rgba(0,0,0,.6);
     --color-separator: rgba(0,0,0,0.15);
     --color-white: #fff;
+    --color-hover-tooltip: #dcdcdc;
+    --color-title-header: #fffafa;
+    --color-title-green: #008000;
   }
 `;

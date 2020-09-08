@@ -14,6 +14,7 @@ import {
   LogoImage,
 } from './styles';
 import { useAuth } from '../../hooks/useAuth';
+import Input from '../../components/Input';
 
 const SignIn: React.FC = () => {
   const [loginInput, setLoginInput] = useState('');
@@ -51,21 +52,17 @@ const SignIn: React.FC = () => {
         </div>
 
         <form onSubmit={(event) => handleSignIn(event)}>
-          <div>
-            <input
-              placeholder="Login: "
-              name="login"
-              onChange={(event) => handleChangeLoginInput(event)}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Password: "
-              name="password"
-              type="password"
-              onChange={(event) => handleChangePasswordInput(event)}
-            />
-          </div>
+          <Input
+            placeholder="Login: "
+            name="login"
+            onChange={(event) => handleChangeLoginInput(event)}
+          />
+          <Input
+            placeholder="Password: "
+            name="password"
+            type="password"
+            onChange={(event) => handleChangePasswordInput(event)}
+          />
           <Button type="submit">Entrar</Button>
         </form>
 

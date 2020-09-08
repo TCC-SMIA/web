@@ -64,35 +64,6 @@ export const FormContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
-    div {
-      display: flex;
-      border-radius: 5px;
-      padding: 20px;
-      transition: 0.2s;
-      background: var(--color-white);
-
-      & + div {
-        margin-top: 8px;
-      }
-
-      svg {
-        margin-right: 10px;
-        transition: 0.2s;
-        color: var(--color-icons);
-      }
-
-      input {
-        border: 0;
-        font-size: 1.2rem;
-        width: 350px;
-        color: var(--color-input);
-
-        ::placeholder {
-          color: var(--color-placeholder);
-        }
-      }
-    }
-
     button {
       margin-top: 10px;
       width: 80%;
