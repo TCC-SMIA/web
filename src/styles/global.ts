@@ -45,5 +45,7 @@ button{
     --color-separator: rgba(0,0,0,0.15);
     --color-white: #fff;
     --color-hover-tooltip: #dcdcdc;
+    --color-title-header: #fffafa;
+    --color-title-green: #008000;
   }
 `;
