@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
         throw new Error();
       }
 
-      const response = await api.post('/users', {
+      await api.post('/users', {
         name: nameInput,
         nickname: nicknameInput,
         email: emailInput,
