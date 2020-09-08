@@ -2,6 +2,9 @@ import React, { lazy } from 'react';
 import { Routes } from 'react-router-dom';
 
 import Route from './Route';
+import Manager from './Manager';
+import AuthLayout from '../pages/_layouts/AuthLayout';
+import DefaultLayout from '../pages/_layouts/DefaultLayout';
 
 const SignIn = lazy(() => import('../pages/SignIn'));
 const SignUp = lazy(() => import('../pages/SignUp'));
@@ -14,14 +17,18 @@ const ResetPassword = lazy(() => import('../pages/ResetPassword'));
 const MainRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={LandingPage} />
-      <Route path="/signin" element={SignIn} />
-      <Route path="/signup" element={SignUp} />
-      <Route path="/forgot-password" element={ForgotPassword} />
-      <Route path="/reset-password" element={ResetPassword} />
+      <Manager path="/" layout={DefaultLayout}>
+        <Route path="/" element={LandingPage} />
+        <Route path="/signin" element={SignIn} />
+        <Route path="/signup" element={SignUp} />
+        <Route path="/forgot-password" element={ForgotPassword} />
+        <Route path="/reset-password" element={ResetPassword} />
+      </Manager>
 
-      <Route path="/dashboard" isPrivate element={Dashboard} />
-      <Route path="/profile" isPrivate element={Profile} />
+      <Manager path="/" isPrivate layout={AuthLayout}>
+        <Route path="/dashboard" element={Dashboard} />
+        <Route path="/profile" element={Profile} />
+      </Manager>
     </Routes>
   );
 };

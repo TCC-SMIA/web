@@ -13,8 +13,7 @@ body{
    ::-webkit-scrollbar{
      display: none;
   }
-  min-height: 100vh;
-  background: #f5f5f5;
+
 }
 
 body, input, button {
