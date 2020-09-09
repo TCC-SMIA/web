@@ -35,31 +35,36 @@ const SignUp: React.FC = () => {
   const handleSignUp = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+      try {
+        if (
+          nameInput === '' ||
+          nicknameInput === '' ||
+          emailInput === '' ||
+          emailConfirmationInput === '' ||
+          passwordInput === ''
+        ) {
+          toast.error('Preencha todos os campos ');
+          return;
+        }
 
-      if (
-        nameInput === '' ||
-        nicknameInput === '' ||
-        emailInput === '' ||
-        emailConfirmationInput === '' ||
-        passwordInput === ''
-      ) {
-        toast.error('Preencha todos os campos ');
-        return;
+        if (emailInput !== emailConfirmationInput) {
+          toast.error('Emails não conferem.');
+          return;
+        }
+
+        await api.post('/users', {
+          name: nameInput,
+          nickname: nicknameInput,
+          email: emailInput,
+          password: passwordInput,
+        } as ISignUpRequest);
+
+        toast.success('Cadastro realizado com sucesso.');
+        navigate('/signin');
+      } catch (error) {
+        console.log(error);
+        toast.error('Ocorreu um erro ao cadastrar usuário.');
       }
-
-      if (emailInput !== emailConfirmationInput) {
-        toast.error('Emails não conferem.');
-        return;
-      }
-
-      const response = await api.post('/users', {
-        name: nameInput,
-        nickname: nicknameInput,
-        email: emailInput,
-        password: passwordInput,
-      } as ISignUpRequest);
-
-      navigate('/signin');
     },
     [
       emailInput,

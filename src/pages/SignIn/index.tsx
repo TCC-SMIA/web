@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { FiLogIn } from 'react-icons/fi';
 
+import { toast } from 'react-toastify';
 import imgLogo from '../../assets/logo.png';
 import Button from '../../components/Button';
 import {
@@ -26,10 +27,15 @@ const SignIn: React.FC = () => {
   const handleSignIn = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+      try {
+        await signIn({ login: loginInput, password: passwordInput });
 
-      await signIn({ login: loginInput, password: passwordInput });
+        toast.success('Login realizado com sucesso');
 
-      navigate('/dashboard');
+        navigate('/dashboard');
+      } catch (error) {
+        toast.error('Verifique as credenciais para fazer login.');
+      }
     },
     [loginInput, navigate, passwordInput, signIn],
   );
