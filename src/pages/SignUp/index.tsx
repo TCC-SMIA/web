@@ -3,6 +3,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 
 import api from '../../services/api';
 import imgLogo from '../../assets/logo.png';
@@ -36,21 +37,40 @@ const SignUp: React.FC = () => {
     async (event): Promise<void> => {
       event.preventDefault();
       try {
-        if (
-          nameInput === '' ||
-          nicknameInput === '' ||
-          emailInput === '' ||
-          emailConfirmationInput === '' ||
-          passwordInput === ''
-        ) {
-          toast.error('Preencha todos os campos ');
-          return;
-        }
+        const userSchema = Yup.object().shape({
+          name: Yup.string()
+            .required('Nome é um campo obrigatório.')
+            .matches(
+              /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/,
+              'Insira um nome válido e sem caracteres especiais.',
+            ),
+          nickname: Yup.string()
+            .matches(
+              /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/,
+              'Insira um apelido válido e sem caracteres especiais.',
+            )
+            .required('Apelido é um campo obrigatório.'),
+          email: Yup.string()
+            .email('Insira um e-mail válido.')
+            .required('E-mail é um campo obrigatório.'),
+          email_confirmation: Yup.string()
+            .email('Insira um email válido.')
+            .oneOf([Yup.ref('email')], 'Confirmação de email incorreta.'),
+          password: Yup.string()
+            .min(6, 'Senha deve possuir no mínimo 6 caracteres.')
+            .required('Senha é obrigatória.'),
+        });
 
-        if (emailInput !== emailConfirmationInput) {
-          toast.error('Emails não conferem.');
-          return;
-        }
+        await userSchema.validate(
+          {
+            name: nameInput,
+            nickname: nicknameInput,
+            email: emailInput,
+            email_confirmation: emailConfirmationInput,
+            password: passwordInput,
+          },
+          { abortEarly: false },
+        );
 
         await api.post('/users', {
           name: nameInput,
@@ -62,6 +82,10 @@ const SignUp: React.FC = () => {
         toast.success('Cadastro realizado com sucesso.');
         navigate('/signin');
       } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          toast.error(error.inner[0].message);
+          return;
+        }
         if (error.response.data.message === 'Email already exists') {
           toast.error('Email já cadastrado no SMIA.');
           return;
