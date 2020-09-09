@@ -41,7 +41,7 @@ const SignUp: React.FC = () => {
           name: Yup.string()
             .required('Nome é um campo obrigatório.')
             .matches(
-              /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/,
+              /\b[A-Za-z](?!\s)/,
               'Insira um nome válido e sem caracteres especiais.',
             ),
           nickname: Yup.string()
