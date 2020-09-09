@@ -17,6 +17,7 @@ interface Agency {
   email: string;
   latitude: number;
   longitude: number;
+  avatar_url: string;
 }
 
 interface AuthState {
