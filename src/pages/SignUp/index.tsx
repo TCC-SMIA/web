@@ -62,7 +62,14 @@ const SignUp: React.FC = () => {
         toast.success('Cadastro realizado com sucesso.');
         navigate('/signin');
       } catch (error) {
-        console.log(error);
+        if (error.response.data.message === 'Email already exists') {
+          toast.error('Email já cadastrado no SMIA.');
+          return;
+        }
+        if (error.response.data.message === 'Nickname already used') {
+          toast.error('Apelido já está em uso no SMIA.');
+          return;
+        }
         toast.error('Ocorreu um erro ao cadastrar usuário.');
       }
     },
