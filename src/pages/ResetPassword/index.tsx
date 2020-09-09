@@ -1,7 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
+import { toast } from 'react-toastify';
 import imgLogo from '../../assets/logo.png';
 import Button from '../../components/Button';
 
@@ -24,24 +26,45 @@ const ResetPassword: React.FC = () => {
   const handleResetPassword = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+      try {
+        const passwordSchema = Yup.object().shape({
+          password: Yup.string()
+            .min(6, 'Senha deve possuir no mínimo 6 caracteres.')
+            .required('Senha obrigatória'),
+          confirmPassword: Yup.string().oneOf(
+            [Yup.ref('password')],
+            'Confirmação de senha incorreta.',
+          ),
+        });
 
-      if (password !== confirmPassword) {
-        throw new Error();
+        await passwordSchema.validate(
+          {
+            password,
+            confirmPassword,
+          },
+          { abortEarly: false },
+        );
+
+        const token = location.search.replace('?token=', '');
+
+        if (!token) {
+          throw new Error();
+        }
+
+        await api.post('/password/reset', {
+          password,
+          password_confirmation: confirmPassword,
+          token,
+        });
+
+        navigate('/signin');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          toast.error(error.inner[0].message);
+          return;
+        }
+        toast.error('Ocorreu um erro ao resetar senha do usuário.');
       }
-
-      const token = location.search.replace('?token=', '');
-
-      if (!token) {
-        throw new Error();
-      }
-
-      const response = await api.post('/password/reset', {
-        password,
-        password_confirmation: confirmPassword,
-        token,
-      });
-
-      if (response) navigate('/signin');
     },
     [confirmPassword, location.search, navigate, password],
   );

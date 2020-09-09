@@ -34,7 +34,7 @@ const SignIn: React.FC = () => {
 
         navigate('/dashboard');
       } catch (error) {
-        toast.error('Verifique as credenciais para fazer login.');
+        toast.error('Email ou senha incorretos.');
       }
     },
     [loginInput, navigate, passwordInput, signIn],
