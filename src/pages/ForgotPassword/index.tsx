@@ -2,7 +2,9 @@ import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
 
+import { toast } from 'react-toastify';
 import imgLogo from '../../assets/logo.png';
 import api from '../../services/api';
 import Button from '../../components/Button';
@@ -24,14 +26,46 @@ const ForgotPassword: React.FC = () => {
   const handleForgotPassword = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
-      setLoading(true);
+      try {
+        setLoading(true);
 
-      const response = await api.post('/password/forgot', {
-        email: emailInput,
-      });
+        const emailSchema = Yup.object().shape({
+          email: Yup.string()
+            .email('Insira um e-mail válido.')
+            .required('E-mail é um campo obrigatório.'),
+        });
 
-      setLoading(false);
-      if (response) navigate('/signin');
+        await emailSchema.validate(
+          {
+            email: emailInput,
+          },
+          { abortEarly: false },
+        );
+
+        await api.post('/password/forgot', {
+          email: emailInput,
+        });
+
+        toast.success(
+          `Um email para redefinição de senha foi enviado para ${emailInput}`,
+        );
+
+        setLoading(false);
+        navigate('/signin');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          toast.error(error.inner[0].message);
+          setLoading(false);
+          return;
+        }
+        if (error.response.data.message === 'User does not exists.') {
+          toast.error('Email não cadastrado no SMIA.');
+          setLoading(false);
+          return;
+        }
+        setLoading(false);
+        toast.error('Não foi possível enviar email para redefinição de senha.');
+      }
     },
     [emailInput, navigate],
   );
