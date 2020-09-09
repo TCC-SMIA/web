@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 import imgLogo from '../../assets/logo.png';
@@ -35,8 +36,20 @@ const SignUp: React.FC = () => {
     async (event): Promise<void> => {
       event.preventDefault();
 
+      if (
+        nameInput === '' ||
+        nicknameInput === '' ||
+        emailInput === '' ||
+        emailConfirmationInput === '' ||
+        passwordInput === ''
+      ) {
+        toast.error('Preencha todos os campos ');
+        return;
+      }
+
       if (emailInput !== emailConfirmationInput) {
-        throw new Error();
+        toast.error('Emails não conferem.');
+        return;
       }
 
       const response = await api.post('/users', {
