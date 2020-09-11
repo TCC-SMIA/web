@@ -13,6 +13,7 @@ const Dashboard = lazy(() => import('../pages/Dashboard'));
 const Profile = lazy(() => import('../pages/Profile'));
 const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('../pages/ResetPassword'));
+const Report = lazy(() => import('../pages/Report'));
 
 const MainRoutes: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const MainRoutes: React.FC = () => {
       <Manager isPrivate layout={AuthLayout}>
         <Route path="/dashboard" element={Dashboard} />
         <Route path="/profile" element={Profile} />
+        <Route path="/report" element={Report} />
       </Manager>
     </Routes>
   );

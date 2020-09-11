@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: var(--color-white);
-  width: 500px;
-  height: 600px;
+  width: 40%;
+  height: 40%;
   border-radius: 8px;
+  padding: 30px;
 
   textarea {
     margin-left: 15px;
