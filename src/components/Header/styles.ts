@@ -29,7 +29,7 @@ export const Botao = styled.button`
   border: none;
 `;
 
-export const Title = styled.text`
+export const Title = styled.p`
   color: var(--color-title-header);
   font-size: 16px;
 
