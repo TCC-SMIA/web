@@ -8,6 +8,7 @@ interface User {
   nickname: string;
   email: string;
   avatar_url: string;
+  user_type: number;
 }
 
 interface Agency {
@@ -17,6 +18,9 @@ interface Agency {
   email: string;
   latitude: number;
   longitude: number;
+  user_type: number;
+  avatar_url?: string;
+  nickname?: string;
 }
 
 interface AuthState {
@@ -93,7 +97,12 @@ const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, updateUser }}
+      value={{
+        user: { ...data.user, user_type: data.user_type },
+        signIn,
+        signOut,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
