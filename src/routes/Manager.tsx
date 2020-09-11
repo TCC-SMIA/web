@@ -11,7 +11,7 @@ interface RProps extends Omit<RouteProps, 'element'> {
 
 const Manager: React.FC<RProps> = ({ isPrivate, layout: Layout, ...rest }) => {
   const { user } = useAuth();
-  const signed = user;
+  const signed = !!user;
 
   if (!signed && isPrivate) {
     return <Navigate to="/" replace />;
