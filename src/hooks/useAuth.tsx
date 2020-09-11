@@ -27,14 +27,12 @@ const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
     const tokenStoraged = localStorage.getItem('@smia:token');
     const userStoraged = localStorage.getItem('@smia:user');
-    const userTypeStoraged = localStorage.getItem('@smia:user_type');
 
-    if (tokenStoraged && userStoraged && userTypeStoraged) {
+    if (tokenStoraged && userStoraged) {
       api.defaults.headers.authorization = `Bearer ${tokenStoraged}`;
       return {
         token: tokenStoraged,
         user: JSON.parse(userStoraged),
-        user_type: Number(userTypeStoraged),
       };
     }
 
