@@ -39,7 +39,7 @@ button{
     --color-placeholder: #9aa0a6;
     --color-bg-button: #0A2342;
     --color-icons: #9aa0a6;
-    --color-background: #9aa0a6;
+    --color-background: #f1f1f1;
     --color-black: rgba(0,0,0,.9);
     --color-gray: rgba(0,0,0,.6);
     --color-separator: rgba(0,0,0,0.15);
