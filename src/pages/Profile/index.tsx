@@ -14,9 +14,9 @@ import { Container, FormContent, AvatarContainer } from './styles';
 const Profile: React.FC = () => {
   const { user, updateUser } = useAuth();
 
-  const [nameInput, setNameInput] = useState(user.name);
-  const [nicknameInput, setNicknameInput] = useState(user.nickname);
-  const [emailInput, setEmailInput] = useState(user.email);
+  const [nameInput, setNameInput] = useState(user.name || '');
+  const [nicknameInput, setNicknameInput] = useState(user.nickname || '');
+  const [emailInput, setEmailInput] = useState(user.email || '');
   const [oldPasswordInput, setOldPasswordInput] = useState('');
   const [newPasswordInput, setNewPasswordInput] = useState('');
   const [passwordConfirmationInput, setPasswordConfirmationInput] = useState(
@@ -262,38 +262,38 @@ const Profile: React.FC = () => {
       <FormContent>
         <form onSubmit={(event) => handleUpdateUser(event)}>
           <Input
-            placeholder="Nome: "
+            placeholder={user.name}
             name="name"
-            value={user.name}
             onChange={(event) => handleChangeNameInput(event)}
           />
           {user.user_type === 1 && (
             <Input
-              placeholder="Apelido: "
+              placeholder={user.nickname}
               name="nickname"
-              value={user.nickname}
               onChange={(event) => handleChangeNicknameInput(event)}
             />
           )}
           <Input
-            placeholder="Email: "
+            placeholder={user.email}
             name="email"
-            value={user.email}
             onChange={(event) => handleChangeEmailInput(event)}
           />
           <Input
             placeholder="Senha Atual: "
             name="oldPassword"
+            type="password"
             onChange={(event) => handleChangeOldPasswordInput(event)}
           />
           <Input
             placeholder="Nova Senha: "
             name="newPassword"
+            type="password"
             onChange={(event) => handleChangeNewPasswordInput(event)}
           />
           <Input
             placeholder="Confirmar Senha: "
             name="passwordConfirmation"
+            type="password"
             onChange={(event) => handleChangePasswordConfirmationInput(event)}
           />
           <Button type="submit">Salvar</Button>
