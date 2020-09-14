@@ -201,7 +201,12 @@ const Profile: React.FC = () => {
         data.append('avatar', event.target.files[0]);
 
         api.patch('/users/avatar', data).then((response) => {
-          updateUser(response.data);
+          const newUser = {
+            ...response.data.user,
+            user_type: response.data.user_type,
+          };
+
+          updateUser(newUser);
 
           toast.success('Avatar atualizado com sucesso.');
         });
