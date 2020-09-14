@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, ChangeEvent } from 'react';
 import * as Yup from 'yup';
-
 import { toast } from 'react-toastify';
+import { IoIosCamera } from 'react-icons/io';
+
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
@@ -192,6 +193,23 @@ const Profile: React.FC = () => {
     ],
   );
 
+  const handleAvatarChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files) {
+        const data = new FormData();
+
+        data.append('avatar', event.target.files[0]);
+
+        api.patch('/users/avatar', data).then((response) => {
+          updateUser(response.data);
+
+          toast.success('Avatar atualizado com sucesso.');
+        });
+      }
+    },
+    [updateUser],
+  );
+
   const handleChangeEmailInput = useCallback((event) => {
     setEmailInput(event.target.value);
   }, []);
@@ -226,6 +244,15 @@ const Profile: React.FC = () => {
           }
           alt={user.name}
         />
+        <label htmlFor="avatar">
+          <IoIosCamera />
+          <input
+            type="file"
+            name=""
+            id="avatar"
+            onChange={handleAvatarChange}
+          />
+        </label>
       </AvatarContainer>
       <FormContent>
         <form onSubmit={(event) => handleUpdateUser(event)}>
