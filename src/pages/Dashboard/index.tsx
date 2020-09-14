@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
     api.get('/complaints').then((response) => {
       setComplaints(response.data);
     });
-  }, [complaints]);
+  }, []);
 
   return (
     <Container>

@@ -10,6 +10,10 @@ export const Container = styled.div`
     border-radius: 10px;
     margin: 10px 0;
   }
+
+  & + div {
+    margin-top: 2rem;
+  }
 `;
 
 export const Header = styled.div``;
