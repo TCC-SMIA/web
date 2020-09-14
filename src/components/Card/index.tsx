@@ -9,7 +9,6 @@ import {
   Description,
   Options,
 } from './styles';
-
 import IComplaint from '../../entities/Complaint';
 
 interface ICardProps {
