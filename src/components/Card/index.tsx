@@ -1,5 +1,7 @@
 import React from 'react';
+import { IoMdPin } from 'react-icons/io';
 
+import { Link } from 'react-router-dom';
 import {
   Container,
   Header,
@@ -7,6 +9,7 @@ import {
   Description,
   Options,
 } from './styles';
+
 import IComplaint from '../../entities/Complaint';
 
 interface ICardProps {
@@ -27,9 +30,12 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           />
           <p>{complaint.user.name}</p>
         </AvatarContainer>
+        <Link to="/complaint">
+          <IoMdPin />
+        </Link>
       </Header>
       <Description>
-        <p>alguma coisa</p>
+        <p>{complaint.description}</p>
       </Description>
       <img
         src={
