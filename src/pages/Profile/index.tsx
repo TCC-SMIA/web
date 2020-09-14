@@ -27,144 +27,86 @@ const Profile: React.FC = () => {
     async (event) => {
       event.preventDefault();
       try {
-        if (user.user_type === 1) {
-          const userSchema = Yup.object().shape({
-            name: Yup.string()
-              .required('Nome é um campo obrigatório.')
-              .matches(
-                /\b[A-Za-z](?!\s)/,
-                'Insira um nome válido e sem caracteres especiais.',
-              ),
-            nickname: Yup.string()
-              .matches(
-                /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/,
-                'Insira um apelido válido e sem caracteres especiais.',
-              )
-              .required('Apelido é um campo obrigatório.'),
-            email: Yup.string()
-              .email('Insira um e-mail válido.')
-              .required('E-mail é um campo obrigatório.'),
-            old_password: Yup.string(),
-            password: Yup.string().when('old_password', {
+        const userSchema = Yup.object().shape({
+          name: Yup.string()
+            .required('Nome é um campo obrigatório.')
+            .matches(
+              /\b[A-Za-z](?!\s)/,
+              'Insira um nome válido e sem caracteres especiais.',
+            ),
+          nickname:
+            user.user_type === 1
+              ? Yup.string().matches(
+                  /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/,
+                  'Insira um apelido válido e sem caracteres especiais.',
+                )
+              : Yup.string(),
+          email: Yup.string()
+            .email('Insira um e-mail válido.')
+            .required('E-mail é um campo obrigatório.'),
+          old_password: Yup.string(),
+          password: Yup.string().when('old_password', {
+            is: (val) => !!val.length,
+            then: Yup.string().required('Campo senha obrigatório'),
+            otherwise: Yup.string(),
+          }),
+          password_confirmation: Yup.string()
+            .when('old_password', {
               is: (val) => !!val.length,
-              then: Yup.string().required('Campo senha obrigatório'),
+              then: Yup.string().required('Campo confirmar senha obrigatório'),
               otherwise: Yup.string(),
-            }),
-            password_confirmation: Yup.string()
-              .when('old_password', {
-                is: (val) => !!val.length,
-                then: Yup.string().required(
-                  'Campo confirmar senha obrigatório',
-                ),
-                otherwise: Yup.string(),
-              })
-              .oneOf([Yup.ref('password')], 'Confirmação de senha incorreta'),
-          });
+            })
+            .oneOf([Yup.ref('password')], 'Confirmação de senha incorreta'),
+        });
 
-          await userSchema.validate(
-            {
-              name: nameInput,
-              nickname: nicknameInput,
-              email: emailInput,
-              old_password: oldPasswordInput,
-              password: newPasswordInput,
-              password_confirmation: passwordConfirmationInput,
-            },
-            { abortEarly: false },
-          );
+        await userSchema.validate(
+          {
+            name: nameInput,
+            nickname: nicknameInput,
+            email: emailInput,
+            old_password: oldPasswordInput,
+            password: newPasswordInput,
+            password_confirmation: passwordConfirmationInput,
+          },
+          { abortEarly: false },
+        );
 
-          if (oldPasswordInput === '') {
-            const response = await api.put('/users/profile', {
-              name: nameInput,
-              nickname: nicknameInput,
-              email: emailInput,
-            });
-
-            updateUser(response.data);
-
-            toast.success('Perfil atualizado.');
-
-            return;
-          }
-
+        if (oldPasswordInput === '') {
           const response = await api.put('/users/profile', {
             name: nameInput,
             nickname: nicknameInput,
             email: emailInput,
-            oldpassword: oldPasswordInput,
-            password: newPasswordInput,
-            password_confirmation: passwordConfirmationInput,
           });
 
-          updateUser(response.data);
+          const newUser = {
+            ...response.data.user,
+            user_type: response.data.user_type,
+          };
+
+          updateUser(newUser);
 
           toast.success('Perfil atualizado.');
+
+          return;
         }
 
-        if (user.user_type === 2) {
-          const agencySchema = Yup.object().shape({
-            name: Yup.string()
-              .required('Nome é um campo obrigatório.')
-              .matches(
-                /\b[A-Za-z](?!\s)/,
-                'Insira um nome válido e sem caracteres especiais.',
-              ),
-            email: Yup.string()
-              .email('Insira um e-mail válido.')
-              .required('E-mail é um campo obrigatório.'),
-            old_password: Yup.string(),
-            password: Yup.string().when('old_password', {
-              is: (val) => !!val.length,
-              then: Yup.string().required('Campo senha obrigatório'),
-              otherwise: Yup.string(),
-            }),
-            password_confirmation: Yup.string()
-              .when('old_password', {
-                is: (val) => !!val.length,
-                then: Yup.string().required(
-                  'Campo confirmar senha obrigatório',
-                ),
-                otherwise: Yup.string(),
-              })
-              .oneOf([Yup.ref('password')], 'Confirmação de senha incorreta'),
-          });
+        const response = await api.put('/users/profile', {
+          name: nameInput,
+          nickname: nicknameInput,
+          email: emailInput,
+          oldpassword: oldPasswordInput,
+          password: newPasswordInput,
+          password_confirmation: passwordConfirmationInput,
+        });
 
-          await agencySchema.validate(
-            {
-              name: nameInput,
-              email: emailInput,
-              old_password: oldPasswordInput,
-              password: newPasswordInput,
-              password_confirmation: passwordConfirmationInput,
-            },
-            { abortEarly: false },
-          );
+        const newUser = {
+          ...response.data.user,
+          user_type: response.data.user_type,
+        };
 
-          if (oldPasswordInput === '') {
-            const response = await api.put('/agencies/profile', {
-              name: nameInput,
-              email: emailInput,
-            });
+        updateUser(newUser);
 
-            updateUser(response.data);
-
-            toast.success('Perfil atualizado.');
-
-            return;
-          }
-
-          const response = await api.put('/agencies/profile', {
-            name: nameInput,
-            email: emailInput,
-            oldpassword: oldPasswordInput,
-            password: newPasswordInput,
-            password_confirmation: passwordConfirmationInput,
-          });
-
-          updateUser(response.data);
-
-          toast.success('Perfil atualizado.');
-        }
+        toast.success('Perfil atualizado.');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           toast.error(error.inner[0].message);
@@ -189,7 +131,6 @@ const Profile: React.FC = () => {
       oldPasswordInput,
       passwordConfirmationInput,
       updateUser,
-      user.user_type,
     ],
   );
 
