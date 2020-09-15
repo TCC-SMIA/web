@@ -131,6 +131,7 @@ const Profile: React.FC = () => {
       oldPasswordInput,
       passwordConfirmationInput,
       updateUser,
+      user.user_type,
     ],
   );
 
