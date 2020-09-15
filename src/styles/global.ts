@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 export default createGlobalStyle`
 *{
@@ -38,7 +39,7 @@ button{
     --color-placeholder: #9aa0a6;
     --color-bg-button: #0A2342;
     --color-icons: #9aa0a6;
-    --color-background: #9aa0a6;
+    --color-background: #f1f1f1;
     --color-black: rgba(0,0,0,.9);
     --color-gray: rgba(0,0,0,.6);
     --color-separator: rgba(0,0,0,0.15);
@@ -46,5 +47,7 @@ button{
     --color-hover-tooltip: #dcdcdc;
     --color-title-header: #fffafa;
     --color-title-green: #008000;
+    --color-separator-border: #d3d3d3;
+    --color-textarea: #fafafc;
   }
 `;

@@ -25,7 +25,7 @@ const Header: React.FC = () => {
         </Botao>
 
         <Botao>
-          <Link to="/">
+          <Link to="/report">
             <Title>Relatar</Title>
           </Link>
         </Botao>

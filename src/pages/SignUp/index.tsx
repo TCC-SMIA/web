@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 
 import api from '../../services/api';
 import imgLogo from '../../assets/logo.png';
@@ -34,19 +36,66 @@ const SignUp: React.FC = () => {
   const handleSignUp = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+      try {
+        const userSchema = Yup.object().shape({
+          name: Yup.string()
+            .required('Nome é um campo obrigatório.')
+            .matches(
+              /\b[A-Za-z](?!\s)/,
+              'Insira um nome válido e sem caracteres especiais.',
+            ),
+          nickname: Yup.string()
+            .matches(
+              /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/,
+              'Insira um apelido válido e sem caracteres especiais.',
+            )
+            .required('Apelido é um campo obrigatório.'),
+          email: Yup.string()
+            .email('Insira um e-mail válido.')
+            .required('E-mail é um campo obrigatório.'),
+          email_confirmation: Yup.string()
+            .email('Insira um email válido.')
+            .oneOf([Yup.ref('email')], 'Confirmação de email incorreta.'),
+          password: Yup.string()
+            .min(6, 'Senha deve possuir no mínimo 6 caracteres.')
+            .required('Senha é obrigatória.'),
+        });
 
-      if (emailInput !== emailConfirmationInput) {
-        throw new Error();
+        await userSchema.validate(
+          {
+            name: nameInput,
+            nickname: nicknameInput,
+            email: emailInput,
+            email_confirmation: emailConfirmationInput,
+            password: passwordInput,
+          },
+          { abortEarly: false },
+        );
+
+        await api.post('/users', {
+          name: nameInput,
+          nickname: nicknameInput,
+          email: emailInput,
+          password: passwordInput,
+        } as ISignUpRequest);
+
+        toast.success('Cadastro realizado com sucesso.');
+        navigate('/signin');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          toast.error(error.inner[0].message);
+          return;
+        }
+        if (error.response.data.message === 'Email already exists') {
+          toast.error('Email já cadastrado no SMIA.');
+          return;
+        }
+        if (error.response.data.message === 'Nickname already used') {
+          toast.error('Apelido já está em uso no SMIA.');
+          return;
+        }
+        toast.error('Ocorreu um erro ao cadastrar usuário.');
       }
-
-      await api.post('/users', {
-        name: nameInput,
-        nickname: nicknameInput,
-        email: emailInput,
-        password: passwordInput,
-      } as ISignUpRequest);
-
-      navigate('/signin');
     },
     [
       emailInput,

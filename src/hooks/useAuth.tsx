@@ -1,28 +1,12 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 
 import api from '../services/api';
-
-interface User {
-  id: string;
-  name: string;
-  nickname: string;
-  email: string;
-  avatar_url: string;
-}
-
-interface Agency {
-  id: string;
-  name: string;
-  cnpj: string;
-  email: string;
-  latitude: number;
-  longitude: number;
-}
+import IUser from '../entities/User';
+import IAgency from '../entities/Agency';
 
 interface AuthState {
-  user: User | Agency;
+  user: IUser | IAgency;
   token: string;
-  user_type: number;
 }
 
 interface SignInCredentias {
@@ -31,10 +15,10 @@ interface SignInCredentias {
 }
 
 interface AuthContextData {
-  user: User | Agency;
+  user: IUser | IAgency;
   signIn(credentials: SignInCredentias): Promise<void>;
   signOut(): void;
-  updateUser(user: User | Agency): void;
+  updateUser(user: IUser | IAgency): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -43,14 +27,12 @@ const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
     const tokenStoraged = localStorage.getItem('@smia:token');
     const userStoraged = localStorage.getItem('@smia:user');
-    const userTypeStoraged = localStorage.getItem('@smia:user_type');
 
-    if (tokenStoraged && userStoraged && userTypeStoraged) {
+    if (tokenStoraged && userStoraged) {
       api.defaults.headers.authorization = `Bearer ${tokenStoraged}`;
       return {
         token: tokenStoraged,
         user: JSON.parse(userStoraged),
-        user_type: Number(userTypeStoraged),
       };
     }
 
@@ -62,13 +44,14 @@ const AuthProvider: React.FC = ({ children }) => {
 
     const { token, user, user_type } = response.data;
 
+    user.user_type = user_type;
+
     localStorage.setItem('@smia:token', token);
     localStorage.setItem('@smia:user', JSON.stringify(user));
-    localStorage.setItem('@smia:user_type', user_type);
 
     api.defaults.headers.authorization = `Bearer ${token}`;
 
-    setData({ token, user, user_type });
+    setData({ token, user });
   }, []);
 
   const signOut = useCallback(() => {
@@ -80,20 +63,24 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const updateUser = useCallback(
-    (user: User | Agency) => {
+    (user: IUser | IAgency) => {
       setData({
         token: data.token,
-        user,
-        user_type: data.user_type,
+        user: Object.assign(data.user, user),
       });
       localStorage.setItem('@smia:user', JSON.stringify(user));
     },
-    [data.token, data.user_type],
+    [data.token, data.user],
   );
 
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, updateUser }}
+      value={{
+        user: data.user,
+        signIn,
+        signOut,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -5,6 +5,14 @@ export const Container = styled.div`
   height: 80px;
   background: var(--color-smia);
   display: flex;
+
+  padding: 0 30px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 `;
 
 export const LogoImage = styled.img`
@@ -29,7 +37,7 @@ export const Botao = styled.button`
   border: none;
 `;
 
-export const Title = styled.text`
+export const Title = styled.p`
   color: var(--color-title-header);
   font-size: 16px;
 

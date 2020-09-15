@@ -5,4 +5,5 @@ export default interface IUser {
   email: string;
   avatar: string;
   avatar_url: string;
+  user_type: number;
 }
