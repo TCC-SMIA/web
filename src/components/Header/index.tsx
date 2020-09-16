@@ -2,12 +2,20 @@ import React, { useState, useCallback } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import { Container, LogoImage, Botoes, Botao, Title } from './styles';
+
 import imgLogo from '../../assets/logo.png';
 import Tooltip from '../Tooltip';
+import Notification from '../Notification';
+
+import { Container, LogoImage, Botoes, Botao, Title } from './styles';
 
 const Header: React.FC = () => {
   const [visible, setVisible] = useState(false);
+  const [notificationsVisible, setNotificationsVisible] = useState(false);
+
+  const handleNoticationVisible = useCallback(() => {
+    setNotificationsVisible(!notificationsVisible);
+  }, [notificationsVisible]);
 
   const handleVisible = useCallback(() => {
     setVisible(!visible);
@@ -36,8 +44,9 @@ const Header: React.FC = () => {
           </Link>
         </Botao>
 
-        <Botao>
+        <Botao onClick={handleNoticationVisible}>
           <IoMdNotificationsOutline size={30} color="#fff" />
+          <Notification visible={notificationsVisible} />
         </Botao>
 
         <Botao onClick={handleVisible}>

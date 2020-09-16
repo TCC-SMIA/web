@@ -49,5 +49,6 @@ button{
     --color-title-green: #008000;
     --color-separator-border: #d3d3d3;
     --color-textarea: #fafafc;
+    --color-notification: #3D3D3D;
   }
 `;
