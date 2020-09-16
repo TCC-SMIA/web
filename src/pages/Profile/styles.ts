@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const FormContent = styled.div`
   min-width: 500px;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
 
   form {
     display: flex;
@@ -18,17 +18,16 @@ export const FormContent = styled.div`
   }
 
   button {
-    margin-top: 2rem;
+    margin: 1.5rem 0;
     align-self: center;
   }
 
   @media (max-width: 520px) {
-    min-width: 75%;
+    min-width: 70%;
   }
 `;
 
 export const AvatarContainer = styled.div`
-  margin-top: -6rem;
   position: relative;
 
   img {
@@ -39,8 +38,8 @@ export const AvatarContainer = styled.div`
 
   label {
     position: absolute;
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: var(--color-smia);
     right: 0;

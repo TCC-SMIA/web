@@ -26,8 +26,18 @@ export const ImageContainer = styled.div`
   }
 `;
 
+export const LogoImage = styled.img`
+  width: 300px;
+  height: 300px;
+
+  @media (max-width: 450px) {
+    width: 140px;
+    height: 140px;
+  }
+`;
+
 export const FormContainer = styled.div`
-  padding: 20px;
+  padding: 15px;
   display: flex;
   min-height: 100vh;
   height: 100%;
@@ -43,13 +53,7 @@ export const FormContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 30px;
-
-    img {
-      width: 90px;
-      height: 90px;
-      border-radius: 45px;
-    }
+    margin-bottom: 28px;
 
     > p {
       margin-top: 8px;
@@ -63,33 +67,20 @@ export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
 
-    button {
-      margin-top: 10px;
-      width: 80%;
-      height: 46px;
-      border-radius: 10px;
-      border: none;
-      background: var(--color-bg-button);
-      color: var(--color-white);
-      font-weight: bold;
-      font-size: 1.2rem;
-      transition: 0.2s;
-      letter-spacing: 0.1rem;
-    }
-
-    a {
-      color: var(--color-white);
-      display: block;
-      text-decoration: none;
-      margin-top: 24px;
-      transition: color 0.2s;
+  @media (max-width: 450px) {
+    div {
+      width: 300px;
+      input {
+        width: 280px;
+      }
     }
   }
 `;
 
 export const ForgotPasswordContainer = styled.div`
-  margin: 8px 0;
+  margin: 6px 0;
   padding: 8px;
 
   a {
@@ -118,11 +109,4 @@ export const NotHaveAccountContainer = styled.div`
       margin-right: 16px;
     }
   }
-`;
-
-export const LogoImage = styled.img`
-  width: 300px;
-  height: 300px;
-
-  margin-top: -160px;
 `;

@@ -27,7 +27,6 @@ export const ImageContainer = styled.div`
 `;
 
 export const FormContainer = styled.div`
-  padding: 20px;
   display: flex;
   min-height: 100vh;
   height: 100%;
@@ -43,16 +42,10 @@ export const FormContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 30px;
-
-    img {
-      width: 90px;
-      height: 90px;
-      border-radius: 45px;
-    }
+    margin-bottom: 16px;
 
     > p {
-      margin-top: 8px;
+      margin-top: 6px;
       font-weight: bold;
       font-size: 2.6rem;
       color: var(--color-white);
@@ -63,48 +56,14 @@ export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
 
+  @media (max-width: 450px) {
     div {
-      display: flex;
-      border-radius: 5px;
-      padding: 20px;
-      transition: 0.2s;
-      background: var(--color-white);
-
-      & + div {
-        margin-top: 8px;
-      }
-
-      svg {
-        margin-right: 10px;
-        transition: 0.2s;
-        color: var(--color-icons);
-      }
-
+      width: 300px;
       input {
-        border: 0;
-        font-size: 1.2rem;
-        width: 350px;
-        color: var(--color-input);
-
-        ::placeholder {
-          color: var(--color-placeholder);
-        }
+        width: 280px;
       }
-    }
-
-    button {
-      margin-top: 10px;
-      width: 80%;
-      height: 46px;
-      border-radius: 10px;
-      border: none;
-      background: var(--color-bg-button);
-      color: var(--color-white);
-      font-size: 1.2rem;
-      transition: 0.2s;
-      font-weight: bold;
-      letter-spacing: 0.1rem;
     }
   }
 `;
@@ -127,20 +86,12 @@ export const BackToLogonContainer = styled.div`
   }
 `;
 
-export const NotHaveAccountContainer = styled.div`
-  > h1 {
-    font-weight: normal;
-    font-size: 0.9rem;
-  }
-
-  a {
-    font-size: 0.8rem;
-  }
-`;
-
 export const LogoImage = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 180px;
+  height: 180px;
 
-  margin-top: -80px;
+  @media (max-width: 450px) {
+    width: 120px;
+    height: 120px;
+  }
 `;
