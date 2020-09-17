@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  height: 80px;
+  height: var(--header-height);
   background: var(--color-smia);
   display: flex;
 
@@ -13,6 +13,10 @@ export const Container = styled.div`
   left: 0;
   right: 0;
   z-index: 2;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const LogoImage = styled.img`

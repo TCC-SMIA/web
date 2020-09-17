@@ -3,17 +3,13 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-
-  margin-bottom: 2rem;
+  width: 80%;
 `;
 
 export const Feed = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: center;
-
-  display: flex;
-  flex-direction: column;
 `;
 
 export const SearchContainer = styled.div`
@@ -26,7 +22,6 @@ export const SearchSelect = styled.div`
   align-items: center;
   position: relative;
   flex: 1;
-
   select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -39,11 +34,9 @@ export const SearchSelect = styled.div`
     font-size: 1rem;
     margin: 0 8px;
   }
-
   option {
     font-size: 0.9rem;
   }
-
   svg {
     position: absolute;
     right: 16px;

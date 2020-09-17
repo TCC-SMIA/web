@@ -37,6 +37,7 @@ export const FormContainer = styled.div`
   width: 100%;
   max-width: 700px;
   background: var(--color-smia);
+  text-align: center;
 
   > div {
     display: flex;
@@ -89,6 +90,15 @@ export const FormContainer = styled.div`
       transition: 0.2s;
       letter-spacing: 0.1rem;
     }
+
+    @media (max-width: 450px) {
+      div {
+        width: 300px;
+        input {
+          width: 280px;
+        }
+      }
+    }
   }
 `;
 
@@ -114,5 +124,8 @@ export const LogoImage = styled.img`
   width: 300px;
   height: 300px;
 
-  margin-top: -160px;
+  @media (max-width: 450px) {
+    width: 140px;
+    height: 140px;
+  }
 `;
