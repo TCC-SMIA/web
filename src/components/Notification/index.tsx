@@ -8,7 +8,7 @@ interface NotificationProps {
 
 const Notification: React.FC<NotificationProps> = ({ visible }) => {
   return (
-    <Container isVisible={!visible}>
+    <Container isVisible={visible}>
       <div>
         <h1>Notificações</h1>
       </div>
