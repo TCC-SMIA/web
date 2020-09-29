@@ -3,13 +3,15 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 75%;
+  padding-top: 100px;
 `;
 
 export const Feed = styled.div`
-  margin-top: 10px;
+  margin: 12px 0;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 `;
 
 export const SearchContainer = styled.div`
