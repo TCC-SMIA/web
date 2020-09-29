@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 75%;
-  padding-top: 100px;
 `;
 
 export const Feed = styled.div`
