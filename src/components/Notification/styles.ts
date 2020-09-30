@@ -37,8 +37,8 @@ export const Container = styled.div<NotificationProps>`
 
 export const NotificationItem = styled.div`
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
-  justify-content: center;
   height: 36px;
   border-bottom: 1px solid var(--color-icons);
 
@@ -46,3 +46,5 @@ export const NotificationItem = styled.div`
     color: var(--color-notification);
   }
 `;
+
+export const ReadButton = styled.div``;
