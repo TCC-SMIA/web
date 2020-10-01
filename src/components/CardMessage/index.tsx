@@ -1,29 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
 import perfil from '../../assets/avatar-message.png';
-import ChatListItem from '../CardMessage/ChatListItem';
-import ChatIntro from '../../components/CardMessage/ChatIntro';
-import ChatWindow from '../../components/CardMessage/ChatWindow';
+import ChatListItem from './ChatListItem';
+import ChatWindow from './ChatWindow';
 
-import {
-  Container,
-  SideBar,
-  ContentArea,
-  Header,
-  ChatList,
-} from './styles'
-
-
+import { Container, SideBar, ContentArea, Header, ChatList } from './styles';
 
 const CardMessage: React.FC = () => {
-
-  const [chatlist, setChatlist] = useState([{},{},{},{},{},{},{},{},{},{},{},{},{},{},]);
+  const [chatlist, setChatlist] = useState([
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+  ]);
   const [activeChat, setActiveChat] = useState({});
-
 
   return (
     <Container>
       <SideBar>
-
         <Header>
           <img src={perfil} alt="perfil mensagem" />
           <h1>Fulano</h1>
@@ -31,12 +35,9 @@ const CardMessage: React.FC = () => {
 
         <ChatList>
           {chatlist.map((item, key) => (
-            <ChatListItem
-              
-            />
+            <ChatListItem />
           ))}
         </ChatList>
-
       </SideBar>
 
       <ContentArea>
@@ -48,7 +49,6 @@ const CardMessage: React.FC = () => {
           <ChatIntro />
         } */}
       </ContentArea>
-
     </Container>
   );
 };

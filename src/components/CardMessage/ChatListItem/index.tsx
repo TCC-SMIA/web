@@ -8,15 +8,12 @@ import {
   ChatListName,
   ChatListDate,
   ChatListLastMessage,
-} from './styles'
+} from './styles';
 
-
-
-const ChatListItem: React.FC = ({}) => {
-
+const ChatListItem: React.FC = () => {
   return (
     <Container>
-      <img src={perfil} alt='avatar' />
+      <img src={perfil} alt="avatar" />
       <ChatLines>
         <ChatLine>
           <ChatListName>Órgão Responsável</ChatListName>

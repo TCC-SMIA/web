@@ -1,9 +1,9 @@
-import React,{useState} from 'react';
-import perfil from '../../../assets/avatar-message.png';
-import { FiMoreVertical } from 'react-icons/fi';
-import { FiSend } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiMoreVertical, FiSend } from 'react-icons/fi';
 
-import MessageItem from '../../../components/CardMessage/MessageItem';
+import perfil from '../../../assets/avatar-message.png';
+
+import MessageItem from '../MessageItem';
 
 import {
   Container,
@@ -14,49 +14,40 @@ import {
   HeaderButtons,
   HeaderBtn,
   ButtonSend,
-} from './styles'
-
-
+} from './styles';
 
 const ChatWindow: React.FC = () => {
-
   const [List, setList] = useState([
-    {body:'bla bla bla'},
-    {body:'bla bla'},
-    {body:'bla bla bla bla'},
+    { body: 'bla bla bla' },
+    { body: 'bla bla' },
+    { body: 'bla bla bla bla' },
   ]);
 
   return (
     <Container>
       <Header>
         <HeaderInfo>
-          <img src={perfil} alt='avatar' />
+          <img src={perfil} alt="avatar" />
           <h1>Órgão Responsável</h1>
         </HeaderInfo>
         <HeaderButtons>
           <HeaderBtn>
-            <FiMoreVertical color={'#919191'} />
+            <FiMoreVertical color="#919191" />
           </HeaderBtn>
         </HeaderButtons>
       </Header>
 
       <Body>
-        {List.map((item, key)=>(
-            <MessageItem
-              //key={key}
-              //data={item}
-            />
+        {List.map((item, key) => (
+          <MessageItem />
         ))}
       </Body>
 
       <Footer>
-        <input 
-        type='text'
-        placeholder= 'Digite uma mensagem'
-        />
+        <input type="text" placeholder="Digite uma mensagem" />
 
         <ButtonSend>
-          <FiSend color={'white'} size={20}/>
+          <FiSend color="white" size={20} />
         </ButtonSend>
       </Footer>
     </Container>

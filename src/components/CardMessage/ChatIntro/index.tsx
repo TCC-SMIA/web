@@ -1,12 +1,9 @@
 import React from 'react';
 import { MdMessage } from 'react-icons/md';
 
-import {
-  Container,
-} from './styles';
+import { Container } from './styles';
 
 const ChatIntro: React.FC = () => {
-
   return (
     <Container>
       <MdMessage size={200} color="green" />

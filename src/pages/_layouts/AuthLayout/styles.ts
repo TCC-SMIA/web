@@ -7,7 +7,7 @@ export const Container = styled.div`
   min-height: 100vh;
   height: 100%;
   background: var(--color-background);
-  padding-top: 110px;
+  margin-top: 105px;
 
   @media (max-width: 768px) {
     margin-top: 0;
