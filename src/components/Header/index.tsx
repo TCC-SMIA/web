@@ -39,7 +39,7 @@ const Header: React.FC = () => {
         </Botao>
 
         <Botao>
-          <Link to="/">
+          <Link to="/messages">
             <Title>Mensagens</Title>
           </Link>
         </Botao>
