@@ -35,6 +35,7 @@ button{
 }
 :root {
     --color-smia: #426d49;
+    --color-smia-hover: #34573A;
     --color-input: #777;
     --color-placeholder: #9aa0a6;
     --color-bg-button: #0A2342;
