@@ -1,16 +1,19 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, FormEvent } from 'react';
 
 import Switch from 'react-switch';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
+import { useNavigate } from 'react-router';
 
-import { css } from 'styled-components';
+import { toast } from 'react-toastify';
+import Dropzone from '../../components/Dropzone';
 import { Container, Header, Option, OptionMap } from './styles';
 
 const Report: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [anonymous, setAnonymous] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File>();
 
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
     0,
@@ -20,6 +23,8 @@ const Report: React.FC = () => {
     0,
     0,
   ]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -33,19 +38,33 @@ const Report: React.FC = () => {
     setSelectedPosition([event.latlng.lat, event.latlng.lng]);
   }, []);
 
-  const handleSubmit = useCallback(
-    (event) => {
+  async function handleSubmit(event: FormEvent): Promise<void> {
+    try {
       event.preventDefault();
 
-      const data = {
-        title,
-        description,
-      };
+      const [latitude, longitude] = selectedPosition;
+
+      const data = new FormData();
+
+      data.append('title', title);
+      data.append('description', description);
+      data.append('date', String(new Date()));
+      data.append('latitude', String(latitude));
+      data.append('longitude', String(longitude));
+      data.append('anonymous', anonymous ? '1' : '0');
+      data.append('image', 'imageURL');
+
+      // await api.post('complaints', data);
 
       console.log(data);
-    },
-    [description, title],
-  );
+
+      toast.success('Relato criado com sucesso');
+
+      navigate('/dashboard');
+    } catch (err) {
+      toast.error('Houve um erro ao tentar criar este relato.');
+    }
+  }
 
   const handleChangeTitle = useCallback((event) => {
     setTitle(event.target.value);
@@ -67,9 +86,15 @@ const Report: React.FC = () => {
       <hr color="#d3d3d3" />
       <form>
         <Option>
-          <p>Adicione a imagem</p>
-          <button type="submit">Adicionar</button>
+          <p>Título do relato</p>
+          <input
+            onChange={(event) => handleChangeTitle(event)}
+            placeholder=""
+            name="titulo do relato"
+          />
         </Option>
+
+        <Dropzone onFileUploaded={setSelectedFile} />
 
         <Option>
           <p>Deseja publicar como anônimo</p>
@@ -82,20 +107,16 @@ const Report: React.FC = () => {
         </Option>
 
         <Option>
-          <p>Título do relato</p>
-          <input
-            onChange={(event) => handleChangeTitle(event)}
-            placeholder=""
-            name="titulo do relato"
-          />
-        </Option>
-
-        <Option>
           <p>Localização</p>
         </Option>
 
         <OptionMap>
-          <Map center={initialPosition} zoom={20} onClick={handleMapClick}>
+          <Map
+            doubleClickZoom
+            center={initialPosition}
+            zoom={15}
+            onClick={handleMapClick}
+          >
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
