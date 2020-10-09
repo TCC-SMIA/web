@@ -71,3 +71,19 @@ export const Option = styled.div`
     color: var(--color-white);
   }
 `;
+
+export const OptionMap = styled.div`
+  display: flex;
+
+  margin: 20px;
+
+  min-width: 465px;
+  min-height: 320px;
+  max-width: 465px;
+  max-height: 320px;
+
+  > div {
+    display: flex;
+    flex: 1;
+  }
+`;
