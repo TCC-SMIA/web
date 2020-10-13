@@ -10,14 +10,15 @@ export const Container = styled.div`
   textarea {
     margin-left: 15px;
     margin-right: 15px;
-    min-width: 465px;
+    min-width: 485px;
     min-height: 200px;
-    max-width: 465px;
+    max-width: 680px;
     max-height: 200px;
     border: 1px solid var(--color-separator);
     background: var(--color-textarea);
     border-radius: 8px;
     padding: 10px;
+    font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
   }
 
   footer {
@@ -26,12 +27,17 @@ export const Container = styled.div`
     button {
       margin-top: 20px;
       width: 250px;
-      height: 30px;
+      height: 45px;
       border-radius: 8px;
       border: none;
       background: var(--color-smia);
       font-weight: bold;
       color: var(--color-white);
+      transition: background 0.2s;
+
+      &:hover {
+        background: var(--color-smia-hover);
+      }
     }
   }
 `;
@@ -60,6 +66,7 @@ export const Option = styled.div`
     border: 1px solid var(--color-separator-border);
     background: var(--color-textarea);
     padding: 10px;
+    font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
   }
   button {
     width: 250px;
@@ -69,5 +76,25 @@ export const Option = styled.div`
     background: var(--color-smia);
     font-weight: bold;
     color: var(--color-white);
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--color-smia-hover);
+    }
+  }
+`;
+
+export const OptionMap = styled.div`
+  display: flex;
+
+  margin: 0 20px;
+
+  min-width: 465px;
+  max-width: 700px;
+  height: 320px;
+
+  > div {
+    display: flex;
+    flex: 1;
   }
 `;
