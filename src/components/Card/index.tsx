@@ -20,14 +20,27 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
     <Container>
       <Header>
         <AvatarContainer>
-          <img
-            src={
-              complaint.user.avatar_url ||
-              'https://api.adorable.io/avatars/285/abott@adorable.pngCopy to Clipboard'
-            }
-            alt="avatar"
-          />
-          <p>{complaint.user.name}</p>
+          {complaint.anonymous && (
+            <>
+              <img
+                src="https://api.adorable.io/avatars/285/abott@adorable.png"
+                alt="avatar"
+              />
+              <p>Anônimo</p>
+            </>
+          )}
+          {!complaint.anonymous && (
+            <>
+              <img
+                src={
+                  complaint.user.avatar_url ||
+                  'https://api.adorable.io/avatars/285/abott@adorable.png'
+                }
+                alt="avatar"
+              />
+              <p>{complaint.user.name}</p>
+            </>
+          )}
         </AvatarContainer>
         <Link to="/complaint">
           <IoMdPin />
