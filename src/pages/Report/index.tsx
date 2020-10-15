@@ -60,8 +60,6 @@ const Report: React.FC = () => {
 
       await api.post('complaints', data);
 
-      console.log(data);
-
       toast.success('Relato criado com sucesso');
 
       navigate('/dashboard');

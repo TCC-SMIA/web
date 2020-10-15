@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import bgSignUp from '../../assets/bg-signup.jpg';
+import bgAgencySignUp from '../../assets/bg-agency-signup.jpg';
 
 export const Container = styled.div`
   overflow-x: scroll;
@@ -18,7 +18,7 @@ export const ImageContainer = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background: url(${bgSignUp}) no-repeat center;
+  background: url(${bgAgencySignUp}) no-repeat center;
   background-size: cover;
 
   @media (max-width: 450px) {
@@ -65,6 +65,29 @@ export const FormContainer = styled.div`
         width: 280px;
       }
     }
+  }
+`;
+
+export const MapButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1rem;
+  text-decoration: none;
+  border: none;
+  color: var(--color-bg-button);
+  transition: color linear 0.2s;
+  margin-top: 6px;
+
+  background: transparent;
+
+  :hover {
+    color: var(--color-bg-button-hover);
+  }
+
+  svg {
+    margin-right: 6px;
   }
 `;
 

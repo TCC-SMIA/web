@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import { FiArrowLeft, FiBriefcase } from 'react-icons/fi';
+import React, { useState, useCallback, useEffect } from 'react';
+import { FiArrowLeft, FiUser, FiMapPin } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import { LeafletMouseEvent } from 'leaflet';
 
 import api from '../../services/api';
 import imgLogo from '../../assets/logo.png';
@@ -15,28 +16,47 @@ import {
   FormContainer,
   LogoImage,
   BottomButtonsContainer,
+  MapButton,
 } from './styles';
 import Input from '../../components/Input';
+import ModalMap from '../../components/ModalMap';
 
-interface ISignUpRequest {
+interface ISignUpAgencyRequest {
   name: string;
-  nickname: string;
+  cnpj: string;
   email: string;
   password: string;
+  latitude: number;
+  longitude: number;
 }
 
-const SignUp: React.FC = () => {
+const AgencySignUp: React.FC = () => {
+  const [nameInput, setNameInput] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [emailConfirmationInput, setEmailConfirmationInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-  const [nameInput, setNameInput] = useState('');
-  const [nicknameInput, setNicknameInput] = useState('');
+  const [cnpjInput, setCnpjInput] = useState('');
+
+  const [modalMapToggle, setModalMapToggle] = useState(false);
+
+  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
+
   const navigate = useNavigate();
 
   const handleSignUp = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+
       try {
+        const [latitude, longitude] = selectedPosition;
+
         const userSchema = Yup.object().shape({
           name: Yup.string()
             .required('Nome é um campo obrigatório.')
@@ -44,12 +64,12 @@ const SignUp: React.FC = () => {
               /\b[A-Za-z](?!\s)/,
               'Insira um nome válido e sem caracteres especiais.',
             ),
-          nickname: Yup.string()
+          cnpj: Yup.string()
+            .required('CNPJ é um campo obrigatório.')
             .matches(
-              /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/,
-              'Insira um apelido válido e sem caracteres especiais.',
-            )
-            .required('Apelido é um campo obrigatório.'),
+              /([0-9]{2}\.?[0-9]{3}\.?[0-9]{3}\/?[0-9]{4}-?[0-9]{2})$/,
+              'Insira um CNPJ válido.',
+            ),
           email: Yup.string()
             .email('Insira um e-mail válido.')
             .required('E-mail é um campo obrigatório.'),
@@ -64,7 +84,7 @@ const SignUp: React.FC = () => {
         await userSchema.validate(
           {
             name: nameInput,
-            nickname: nicknameInput,
+            cnpj: cnpjInput,
             email: emailInput,
             email_confirmation: emailConfirmationInput,
             password: passwordInput,
@@ -72,12 +92,14 @@ const SignUp: React.FC = () => {
           { abortEarly: false },
         );
 
-        await api.post('/users', {
+        await api.post('/agencies', {
           name: nameInput,
-          nickname: nicknameInput,
+          cnpj: cnpjInput,
           email: emailInput,
           password: passwordInput,
-        } as ISignUpRequest);
+          latitude,
+          longitude,
+        } as ISignUpAgencyRequest);
 
         toast.success('Cadastro realizado com sucesso.');
         navigate('/signin');
@@ -98,33 +120,46 @@ const SignUp: React.FC = () => {
       }
     },
     [
+      selectedPosition,
+      nameInput,
+      cnpjInput,
       emailInput,
       emailConfirmationInput,
-      nameInput,
-      nicknameInput,
       passwordInput,
       navigate,
     ],
   );
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+
+      setInitialPosition([latitude, longitude]);
+    });
+  }, []);
+
+  const handleMapClick = useCallback((event: LeafletMouseEvent): void => {
+    setSelectedPosition([event.latlng.lat, event.latlng.lng]);
+  }, []);
+
   const handleChangeEmailInput = useCallback((event) => {
     setEmailInput(event.target.value);
   }, []);
 
-  const handleChangePasswordInput = useCallback((event) => {
-    setPasswordInput(event.target.value);
+  const handleChangeEmailConfirmationInput = useCallback((event) => {
+    setEmailConfirmationInput(event.target.value);
   }, []);
 
   const handleChangeNameInput = useCallback((event) => {
     setNameInput(event.target.value);
   }, []);
 
-  const handleChangeNicknameInput = useCallback((event) => {
-    setNicknameInput(event.target.value);
+  const handleChangeCnpjInput = useCallback((event) => {
+    setCnpjInput(event.target.value);
   }, []);
 
-  const handleChangeEmailConfirmationInput = useCallback((event) => {
-    setEmailConfirmationInput(event.target.value);
+  const handleChangePasswordInput = useCallback((event) => {
+    setPasswordInput(event.target.value);
   }, []);
 
   return (
@@ -143,9 +178,9 @@ const SignUp: React.FC = () => {
             onChange={(event) => handleChangeNameInput(event)}
           />
           <Input
-            placeholder="Apelido: "
-            name="nickname"
-            onChange={(event) => handleChangeNicknameInput(event)}
+            placeholder="CNPJ: "
+            name="cnpj"
+            onChange={(event) => handleChangeCnpjInput(event)}
           />
           <Input
             placeholder="E-mail: "
@@ -163,12 +198,16 @@ const SignUp: React.FC = () => {
             type="password"
             onChange={(event) => handleChangePasswordInput(event)}
           />
+          <MapButton type="button" onClick={() => setModalMapToggle(true)}>
+            <FiMapPin />
+            Marcar no mapa
+          </MapButton>
           <Button type="submit">Cadastrar</Button>
         </form>
         <BottomButtonsContainer>
-          <Link to="/signup-agency">
-            <FiBriefcase />
-            Cadastrar como agência
+          <Link to="/signup">
+            <FiUser />
+            Cadastrar como pessoa
           </Link>
           <Link to="/signin">
             <FiArrowLeft />
@@ -176,8 +215,17 @@ const SignUp: React.FC = () => {
           </Link>
         </BottomButtonsContainer>
       </FormContainer>
+
+      {modalMapToggle && (
+        <ModalMap
+          initialPosition={initialPosition}
+          selectedPosition={selectedPosition}
+          handleMapClick={handleMapClick}
+          onClose={() => setModalMapToggle(false)}
+        />
+      )}
     </Container>
   );
 };
 
-export default SignUp;
+export default AgencySignUp;
