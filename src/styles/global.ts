@@ -39,6 +39,7 @@ button{
     --color-input: #777;
     --color-placeholder: #9aa0a6;
     --color-bg-button: #0A2342;
+    --color-bg-button-hover:#223854;
     --color-icons: #9aa0a6;
     --color-background: #f1f1f1;
     --color-black: rgba(0,0,0,.9);
