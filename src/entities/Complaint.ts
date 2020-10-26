@@ -13,4 +13,5 @@ export default interface IComplaint {
   city: string;
   state: string;
   user: IUser;
+  user_id?: string;
 }

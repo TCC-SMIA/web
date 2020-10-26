@@ -42,7 +42,11 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
             </>
           )}
         </AvatarContainer>
-        <Link to="/complaint">
+        <Link
+          to={{
+            pathname: `/complaint/${complaint.id}`,
+          }}
+        >
           <IoMdPin />
         </Link>
       </Header>
