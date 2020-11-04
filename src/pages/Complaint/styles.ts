@@ -86,7 +86,17 @@ export const Description = styled.div`
   margin-top: 0.8rem;
 
   p {
+    font-size: 0.8rem;
     font-weight: 300;
+  }
+`;
+
+export const Title = styled.div`
+  margin-top: 0.8rem;
+
+  p {
+    font-size: 1rem;
+    font-weight: 500;
   }
 `;
 

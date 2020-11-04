@@ -16,6 +16,7 @@ import {
   ErrorContainer,
   AvatarContainer,
   Description,
+  Title,
   CommentsContainer,
 } from './styles';
 import { RANDOM_AVATAR } from '../../utils/constants';
@@ -30,9 +31,12 @@ const Complaint: React.FC = () => {
   const [complaint, setComplaint] = useState<IComplaint>({} as IComplaint);
 
   useEffect(() => {
-    api.get<IComplaint>(`/complaints/${id}`).then((response) => {
-      setComplaint(response.data);
-    });
+    const getComplaintData = async (): Promise<void> => {
+      await api.get<IComplaint>(`/complaints/${id}`).then((response) => {
+        setComplaint(response.data);
+      });
+    };
+    getComplaintData();
   }, [id]);
 
   useEffect(() => {
@@ -70,13 +74,13 @@ const Complaint: React.FC = () => {
           </MapContainer>
           <ComplaintContainer>
             <AvatarContainer>
-              {complaint?.anonymous && (
+              {complaint.anonymous && (
                 <>
                   <img src={RANDOM_AVATAR} alt="avatar" />
                   <p>Anônimo</p>
                 </>
               )}
-              {!complaint?.anonymous && (
+              {!complaint.anonymous && (
                 <>
                   <img
                     src={complaint?.user?.avatar_url || RANDOM_AVATAR}
@@ -86,15 +90,17 @@ const Complaint: React.FC = () => {
                 </>
               )}
             </AvatarContainer>
+            <Title>
+              <p>{complaint.title}</p>
+            </Title>
             <Description>
               <p>{complaint?.description}</p>
             </Description>
             <img src={complaint?.image_url || emptyImageSvg} alt="default" />
-            <hr color="#d3d3d3" />
             <CommentsContainer>
               <h1>Comentários</h1>
-              {complaint?.comments &&
-                complaint?.comments.map((comment) => (
+              {complaint.comments &&
+                complaint.comments.map((comment) => (
                   <p key={comment.id}>{comment.content}</p>
                 ))}
             </CommentsContainer>
