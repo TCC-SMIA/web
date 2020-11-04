@@ -21,37 +21,26 @@ import {
 
 const Complaint: React.FC = () => {
   const { id } = useParams();
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
 
-  const [complaint, setComplaint] = useState<IComplaint>({
-    id: 'ba73e575-adef-46b3-a975-d3dbfed0b862',
-    user_id: 'e80096df-e0aa-43fe-a379-41f2cf6f3a1c',
-    title: 'Tartatura Morte',
-    description: 'Tartaruga encontrada na praia grande em arraial do cabo',
-    resolved: false,
-    date: new Date('2020-09-29T18:00:00.000'),
-    latitude: -22.96974,
-    longitude: -42.03521,
-    city: 'Arraial do Cabo',
-    state: 'Rio de Janeiro',
-    anonymous: false,
-    user: {
-      id: 'e80096df-e0aa-43fe-a379-41f2cf6f3a1c',
-      name: 'Gabriel Portugal',
-      user_type: 0,
-      nickname: 'gabrielportugal',
-      email: 'gabrielrportugal@outlook.com',
-      avatar: '47f1ac02c8c2c543e3df-profile.jpeg',
-      avatar_url:
-        'http://localhost:3333/files/47f1ac02c8c2c543e3df-profile.jpeg',
-    },
-    image_url: 'http://localhost:3333/files/4cd01c61cdf1c98ac755-1267287.jpg',
-  });
+  const [complaint, setComplaint] = useState<IComplaint>({} as IComplaint);
 
   useEffect(() => {
-    api.get<IComplaint>(`/complaint/${id}`).then((response) => {
+    api.get<IComplaint>(`/complaints/${id}`).then((response) => {
       setComplaint(response.data);
     });
   }, [id]);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+
+      setInitialPosition([latitude, longitude]);
+    });
+  }, [complaint]);
 
   return (
     <Container>
@@ -60,19 +49,27 @@ const Complaint: React.FC = () => {
           <MapContainer>
             <Map
               doubleClickZoom
-              center={[complaint.latitude, complaint.longitude]}
+              center={[
+                complaint?.latitude || initialPosition[0],
+                complaint?.longitude || initialPosition[1],
+              ]}
               zoom={15}
             >
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <Marker position={[complaint.latitude, complaint.longitude]} />
+              <Marker
+                position={[
+                  complaint?.latitude || initialPosition[0],
+                  complaint?.longitude || initialPosition[1],
+                ]}
+              />
             </Map>
           </MapContainer>
           <ComplaintContainer>
             <AvatarContainer>
-              {complaint.anonymous && (
+              {complaint?.anonymous && (
                 <>
                   <img
                     src="https://api.adorable.io/avatars/285/abott@adorable.png"
@@ -81,27 +78,28 @@ const Complaint: React.FC = () => {
                   <p>Anônimo</p>
                 </>
               )}
-              {!complaint.anonymous && (
+              {!complaint?.anonymous && (
                 <>
                   <img
                     src={
-                      complaint.user.avatar_url ||
+                      complaint?.user?.avatar_url ||
                       'https://api.adorable.io/avatars/285/abott@adorable.png'
                     }
                     alt="avatar"
                   />
-                  <p>{complaint.user.name}</p>
+                  <p>{complaint?.user?.name}</p>
                 </>
               )}
             </AvatarContainer>
             <Description>
-              <p>{complaint.description}</p>
+              <p>{complaint?.description}</p>
             </Description>
-            <img src={complaint.image_url || emptyImageSvg} alt="default" />
+            <img src={complaint?.image_url || emptyImageSvg} alt="default" />
             <hr color="#d3d3d3" />
             <CommentsContainer>
               <h1>Comentários</h1>
-              <p>Este é um comentário</p>
+              {complaint?.comments &&
+                complaint?.comments.map((comment) => <p>{comment.content}</p>)}
             </CommentsContainer>
           </ComplaintContainer>
         </>
