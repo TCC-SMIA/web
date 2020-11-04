@@ -18,6 +18,7 @@ import {
   Description,
   CommentsContainer,
 } from './styles';
+import { RANDOM_AVATAR } from '../../utils/constants';
 
 const Complaint: React.FC = () => {
   const { id } = useParams();
@@ -71,20 +72,14 @@ const Complaint: React.FC = () => {
             <AvatarContainer>
               {complaint?.anonymous && (
                 <>
-                  <img
-                    src="https://api.adorable.io/avatars/285/abott@adorable.png"
-                    alt="avatar"
-                  />
+                  <img src={RANDOM_AVATAR} alt="avatar" />
                   <p>Anônimo</p>
                 </>
               )}
               {!complaint?.anonymous && (
                 <>
                   <img
-                    src={
-                      complaint?.user?.avatar_url ||
-                      'https://api.adorable.io/avatars/285/abott@adorable.png'
-                    }
+                    src={complaint?.user?.avatar_url || RANDOM_AVATAR}
                     alt="avatar"
                   />
                   <p>{complaint?.user?.name}</p>
@@ -99,7 +94,9 @@ const Complaint: React.FC = () => {
             <CommentsContainer>
               <h1>Comentários</h1>
               {complaint?.comments &&
-                complaint?.comments.map((comment) => <p>{comment.content}</p>)}
+                complaint?.comments.map((comment) => (
+                  <p key={comment.id}>{comment.content}</p>
+                ))}
             </CommentsContainer>
           </ComplaintContainer>
         </>

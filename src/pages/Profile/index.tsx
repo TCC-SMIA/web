@@ -10,6 +10,7 @@ import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
 
 import { Container, FormContent, AvatarContainer } from './styles';
+import { RANDOM_AVATAR } from '../../utils/constants';
 
 const Profile: React.FC = () => {
   const { user, updateUser } = useAuth();
@@ -184,13 +185,7 @@ const Profile: React.FC = () => {
   return (
     <Container>
       <AvatarContainer>
-        <img
-          src={
-            user.avatar_url ||
-            'https://api.adorable.io/avatars/285/abott@adorable.png'
-          }
-          alt={user.name}
-        />
+        <img src={user.avatar_url || RANDOM_AVATAR} alt={user.name} />
         <label htmlFor="avatar">
           <IoIosCamera />
           <input

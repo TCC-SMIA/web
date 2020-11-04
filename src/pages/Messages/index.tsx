@@ -3,6 +3,7 @@ import { FiSend } from 'react-icons/fi';
 
 import IChat from '../../entities/Chat';
 import api from '../../services/api';
+import { RANDOM_AVATAR } from '../../utils/constants';
 
 import {
   Container,
@@ -40,10 +41,7 @@ const Messages: React.FC = () => {
             chats.map((chat: IChat) => (
               <ChatItem key={chat.id} onClick={() => handleSelect(chat)}>
                 <img
-                  src={
-                    chat?.destinatary?.avatar_url ||
-                    'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'
-                  }
+                  src={chat?.destinatary?.avatar_url || RANDOM_AVATAR}
                   alt="avatar"
                 />
                 <p>{chat?.destinatary?.nickname || chat?.destinatary?.name}</p>

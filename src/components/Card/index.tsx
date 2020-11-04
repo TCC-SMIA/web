@@ -10,6 +10,7 @@ import {
   Options,
 } from './styles';
 import IComplaint from '../../entities/Complaint';
+import { RANDOM_AVATAR } from '../../utils/constants';
 
 interface ICardProps {
   complaint: IComplaint;
@@ -22,20 +23,14 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
         <AvatarContainer>
           {complaint.anonymous && (
             <>
-              <img
-                src="https://api.adorable.io/avatars/285/abott@adorable.png"
-                alt="avatar"
-              />
+              <img src={RANDOM_AVATAR} alt="avatar" />
               <p>Anônimo</p>
             </>
           )}
           {!complaint.anonymous && (
             <>
               <img
-                src={
-                  complaint.user.avatar_url ||
-                  'https://api.adorable.io/avatars/285/abott@adorable.png'
-                }
+                src={complaint.user.avatar_url || RANDOM_AVATAR}
                 alt="avatar"
               />
               <p>{complaint.user.name}</p>
