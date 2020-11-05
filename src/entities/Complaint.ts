@@ -1,3 +1,4 @@
+import { IComment } from './Comment';
 import IUser from './User';
 
 export default interface IComplaint {
@@ -13,4 +14,6 @@ export default interface IComplaint {
   city: string;
   state: string;
   user: IUser;
+  user_id?: string;
+  comments: IComment[];
 }

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import Dropzone from '../../components/Dropzone';
 import { Container, Header, Option, OptionMap } from './styles';
+import api from '../../services/api';
 
 const Report: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -52,11 +53,12 @@ const Report: React.FC = () => {
       data.append('latitude', String(latitude));
       data.append('longitude', String(longitude));
       data.append('anonymous', anonymous ? '1' : '0');
-      data.append('image', 'imageURL');
 
-      // await api.post('complaints', data);
+      if (selectedFile) {
+        data.append('image', selectedFile);
+      }
 
-      console.log(data);
+      await api.post('complaints', data);
 
       toast.success('Relato criado com sucesso');
 
