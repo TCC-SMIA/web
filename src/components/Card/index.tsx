@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IoMdPin } from 'react-icons/io';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Container,
   Header,
@@ -11,12 +11,29 @@ import {
 } from './styles';
 import IComplaint from '../../entities/Complaint';
 import { RANDOM_AVATAR } from '../../utils/constants';
+import api from '../../services/api';
 
+interface ICreateChatRequestParams {
+  contact_id: string;
+}
 interface ICardProps {
   complaint: IComplaint;
 }
 
 const Card: React.FC<ICardProps> = ({ complaint }) => {
+  const navigate = useNavigate();
+
+  const handleCreateChatWithReporter = useCallback(
+    (user_id) => {
+      api.post('/chats', {
+        contact_id: user_id,
+      } as ICreateChatRequestParams);
+
+      navigate('/messages');
+    },
+    [navigate],
+  );
+
   return (
     <Container>
       <Header>
@@ -57,7 +74,12 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       />
 
       <Options>
-        <button type="button">Chamar relator</button>
+        <button
+          type="button"
+          onClick={() => handleCreateChatWithReporter(complaint.user.id)}
+        >
+          Chamar relator
+        </button>
         <button type="button">Comentar</button>
       </Options>
     </Container>
