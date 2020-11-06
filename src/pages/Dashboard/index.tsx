@@ -54,27 +54,39 @@ const Dashboard: React.FC = () => {
       });
   }, [selectedUf]);
 
-  const filterComplaints = useCallback((city: string) => {
-    api
-      .get('/complaints', { params: { city, skip: 0, take: 15 } })
-      .then((response) => {
-        setComplaints(response.data);
-      });
+  const filterComplaints = useCallback((state?: string, city?: string) => {
+    if (state && city) {
+      api
+        .get('/complaints', { params: { city, state, skip: 0, take: 15 } })
+        .then((response) => {
+          console.log(response.data);
+          setComplaints(response.data);
+        });
+    }
+    if (state) {
+      api
+        .get('/complaints', { params: { state, skip: 0, take: 15 } })
+        .then((response) => {
+          console.log(response.data);
+          setComplaints(response.data);
+        });
+    }
   }, []);
 
   const handleSelectUf = useCallback(
     (event: ChangeEvent<HTMLSelectElement>): void => {
       setSelectedUf(event.target.value);
+      filterComplaints(event.target.value);
     },
-    [],
+    [filterComplaints],
   );
 
   const handleSelectCity = useCallback(
     (event: ChangeEvent<HTMLSelectElement>): void => {
       setSelectedCity(event.target.value);
-      filterComplaints(event.target.value);
+      filterComplaints(selectedUf, event.target.value);
     },
-    [filterComplaints],
+    [filterComplaints, selectedUf],
   );
 
   return (
