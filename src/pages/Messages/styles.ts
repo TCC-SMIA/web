@@ -20,13 +20,16 @@ export const ChatsContainer = styled.div`
 export const ChatList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
+  grid-row-gap: 5px;
 `;
 
-export const ChatItem = styled.div`
+export const ChatItem = styled.div<{ selected: boolean }>`
   display: flex;
-  background: #f5f5f5;
+  background: ${(props) =>
+    props.selected ? lighten(0.2, '#426d49') : '#f5f5f5'};
   padding: 10px;
   border-radius: 15px;
+  transition: 0.2s;
 
   img {
     height: 60px;
