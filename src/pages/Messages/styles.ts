@@ -81,6 +81,11 @@ export const MessagesBox = styled.div`
   align-items: center;
   padding: 15px;
 
+  form {
+    display: flex;
+    align-items: center;
+  }
+
   input {
     width: 100%;
     height: 40px;
@@ -94,7 +99,7 @@ export const MessagesBox = styled.div`
   }
 `;
 
-export const ButtonSend = styled.div`
+export const ButtonSend = styled.button`
   width: 40px;
   height: 40px;
   background: #426d49;
@@ -103,4 +108,5 @@ export const ButtonSend = styled.div`
   align-items: center;
   cursor: pointer;
   border-radius: 0px 15px 15px 0px;
+  border: none;
 `;
