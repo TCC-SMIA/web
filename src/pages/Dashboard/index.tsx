@@ -59,7 +59,6 @@ const Dashboard: React.FC = () => {
       api
         .get('/complaints', { params: { city, state, skip: 0, take: 15 } })
         .then((response) => {
-          console.log(response.data);
           setComplaints(response.data);
         });
     }
@@ -67,7 +66,6 @@ const Dashboard: React.FC = () => {
       api
         .get('/complaints', { params: { state, skip: 0, take: 15 } })
         .then((response) => {
-          console.log(response.data);
           setComplaints(response.data);
         });
     }
