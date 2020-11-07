@@ -12,6 +12,10 @@ export const Container = styled.div`
     width: 100%;
   }
 
+  @media (min-width: 500px) {
+    width: 500px;
+  }
+
   textarea {
     margin-left: 15px;
     margin-right: 15px;
