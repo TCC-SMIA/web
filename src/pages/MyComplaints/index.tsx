@@ -5,15 +5,19 @@ import Card from '../../components/Card';
 import IComplaint from '../../entities/Complaint';
 
 import { Container, Feed } from './styles';
+import { useAuth } from '../../hooks/useAuth';
 
 const MyComplaints: React.FC = () => {
   const [complaints, setComplaints] = useState([] as IComplaint[]);
+  const { user } = useAuth();
 
   useEffect(() => {
-    api.get('/complaints', { params: { take: 15 } }).then((response) => {
-      setComplaints(response.data);
-    });
-  }, []);
+    api
+      .get(`/complaints/${user.id}`, { params: { take: 15 } })
+      .then((response) => {
+        setComplaints(response.data);
+      });
+  }, [user.id]);
 
   return (
     <Container>
