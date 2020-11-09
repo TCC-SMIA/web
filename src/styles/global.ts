@@ -52,5 +52,6 @@ button{
     --color-separator-border: #d3d3d3;
     --color-textarea: #fafafc;
     --color-notification: #3D3D3D;
+    --header-height: 100px
   }
 `;

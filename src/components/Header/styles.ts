@@ -32,7 +32,7 @@ export const Botoes = styled.div`
   position: relative;
 `;
 
-export const Botao = styled.button`
+export const Button = styled.button`
   justify-content: space-evenly;
   align-items: center;
   display: flex;
