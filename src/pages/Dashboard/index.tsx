@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { Container, Feed, SearchSelect, SearchContainer } from './styles';
 import api from '../../services/api';
 import Card from '../../components/Card';
 import IComplaint from '../../entities/Complaint';
+
+import { Container, Feed, SearchSelect, SearchContainer } from './styles';
 
 interface IBGECityResponse {
   nome: string;
@@ -18,11 +19,11 @@ const Dashboard: React.FC = () => {
   const [complaints, setComplaints] = useState([] as IComplaint[]);
   const [ufs, setUfs] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
-  const [selectedUf, setSelectedUf] = useState('0');
-  const [selectedCity, setSelectedCity] = useState('0');
+  const [selectedUf, setSelectedUf] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
 
   useEffect(() => {
-    api.get('/complaints').then((response) => {
+    api.get('/complaints', { params: { take: 15 } }).then((response) => {
       setComplaints(response.data);
     });
   }, []);
@@ -40,7 +41,7 @@ const Dashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedUf === '0') return;
+    if (selectedUf === '') return;
 
     api
       .get<IBGECityResponse[]>(
@@ -53,16 +54,38 @@ const Dashboard: React.FC = () => {
       });
   }, [selectedUf]);
 
+  const filterComplaints = useCallback((state?: string, city?: string) => {
+    if (state && city) {
+      api
+        .get('/complaints', { params: { city, state, skip: 0, take: 15 } })
+        .then((response) => {
+          setComplaints(response.data);
+        });
+    }
+    if (state) {
+      api
+        .get('/complaints', { params: { state, skip: 0, take: 15 } })
+        .then((response) => {
+          setComplaints(response.data);
+        });
+    }
+  }, []);
+
   const handleSelectUf = useCallback(
     (event: ChangeEvent<HTMLSelectElement>): void => {
       setSelectedUf(event.target.value);
+      filterComplaints(event.target.value);
     },
-    [],
+    [filterComplaints],
   );
 
-  function handleSelectCity(event: ChangeEvent<HTMLSelectElement>): void {
-    setSelectedCity(event.target.value);
-  }
+  const handleSelectCity = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>): void => {
+      setSelectedCity(event.target.value);
+      filterComplaints(selectedUf, event.target.value);
+    },
+    [filterComplaints, selectedUf],
+  );
 
   return (
     <Container>

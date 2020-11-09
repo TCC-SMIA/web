@@ -16,6 +16,10 @@ export const Feed = styled.div`
 export const SearchContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const SearchSelect = styled.div`
@@ -23,6 +27,7 @@ export const SearchSelect = styled.div`
   align-items: center;
   position: relative;
   flex: 1;
+
   select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -33,11 +38,13 @@ export const SearchSelect = styled.div`
     border: 0;
     padding: 16px 24px;
     font-size: 1rem;
-    margin: 0 8px;
+    margin: 4px 8px;
   }
+
   option {
     font-size: 0.9rem;
   }
+
   svg {
     position: absolute;
     right: 16px;
