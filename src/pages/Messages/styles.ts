@@ -91,6 +91,7 @@ export const MessagesBox = styled.div`
   form {
     display: flex;
     align-items: center;
+    width: 100%;
   }
 
   input {
