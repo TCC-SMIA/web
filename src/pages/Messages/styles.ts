@@ -31,6 +31,10 @@ export const ChatItem = styled.div<{ selected: boolean }>`
   border-radius: 15px;
   transition: 0.2s;
 
+  :hover {
+    cursor: ${(props) => (props.selected ? 'normal' : 'pointer')};
+  }
+
   img {
     height: 60px;
     width: 60px;
@@ -87,6 +91,7 @@ export const MessagesBox = styled.div`
   form {
     display: flex;
     align-items: center;
+    width: 100%;
   }
 
   input {

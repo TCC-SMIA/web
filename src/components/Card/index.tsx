@@ -103,12 +103,14 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       />
 
       <Options>
-        <button
-          type="button"
-          onClick={() => handleCreateChatWithReporter(complaint.user.id)}
-        >
-          Chamar relator
-        </button>
+        {complaint.user_id !== user.id && (
+          <button
+            type="button"
+            onClick={() => handleCreateChatWithReporter(complaint.user.id)}
+          >
+            Chamar relator
+          </button>
+        )}
 
         <button
           type="button"

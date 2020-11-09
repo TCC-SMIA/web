@@ -42,12 +42,21 @@ const Messages: React.FC = () => {
     setSelected(chat);
   }, []);
 
-  const handleCreateMessage = useCallback(() => {
-    api.post('/messages', {
-      chat_id: selected?.id,
-      content: inputMessage,
-    } as ICreateMessageRequestParams);
-  }, [selected, inputMessage]);
+  const handleCreateMessage = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      api
+        .post('/messages', {
+          chat_id: selected?.id,
+          content: inputMessage,
+        } as ICreateMessageRequestParams)
+        .then(() => {
+          setInputMessage('');
+        });
+    },
+    [selected, inputMessage],
+  );
 
   return (
     <Container>
@@ -65,7 +74,7 @@ const Messages: React.FC = () => {
                     src={chat?.user?.avatar_url || RANDOM_AVATAR}
                     alt="avatar"
                   />
-                  <p>{chat?.user?.nickname || chat?.user?.name}</p>
+                  <p>{chat?.user?.name || chat?.user?.nickname}</p>
                 </ChatItem>
               ) : (
                 <ChatItem
@@ -78,7 +87,7 @@ const Messages: React.FC = () => {
                     alt="avatar"
                   />
                   <p>
-                    {chat?.destinatary?.nickname || chat?.destinatary?.name}
+                    <p>{chat?.user?.name || chat?.user?.nickname}</p>
                   </p>
                 </ChatItem>
               );
@@ -104,17 +113,19 @@ const Messages: React.FC = () => {
             })}
         </MessagesList>
         <MessagesBox>
-          <form onSubmit={() => handleCreateMessage()}>
-            <input
-              type="text"
-              placeholder="Digite uma mensagem"
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-            />
-            <ButtonSend type="submit">
-              <FiSend color="white" size={20} />
-            </ButtonSend>
-          </form>
+          {selected.id && (
+            <form onSubmit={(event) => handleCreateMessage(event)}>
+              <input
+                type="text"
+                placeholder="Digite uma mensagem"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+              />
+              <ButtonSend type="submit">
+                <FiSend color="white" size={20} />
+              </ButtonSend>
+            </form>
+          )}
         </MessagesBox>
       </MessagesContainer>
     </Container>
