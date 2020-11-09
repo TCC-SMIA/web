@@ -29,10 +29,13 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
       </div>
       {notifications &&
         notifications.map((notification: INotification) => (
-          <NotificationItem key={notification.id}>
+          <NotificationItem
+            key={notification.id}
+            onClick={() => handleReadNotification(notification)}
+          >
             <p>{notification.content}</p>
 
-            <ReadButton onClick={() => handleReadNotification(notification)}>
+            <ReadButton>
               {notification.read ? <WiMoonNew /> : <WiMoonAltNew />}
             </ReadButton>
           </NotificationItem>

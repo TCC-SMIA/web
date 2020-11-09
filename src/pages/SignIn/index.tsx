@@ -59,12 +59,12 @@ const SignIn: React.FC = () => {
 
         <form onSubmit={(event) => handleSignIn(event)}>
           <Input
-            placeholder="Login: "
+            placeholder="Email ou apelido"
             name="login"
             onChange={(event) => handleChangeLoginInput(event)}
           />
           <Input
-            placeholder="Password: "
+            placeholder="Senha "
             name="password"
             type="password"
             onChange={(event) => handleChangePasswordInput(event)}

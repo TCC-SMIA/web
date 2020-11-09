@@ -7,7 +7,7 @@ import imgLogo from '../../assets/logo.png';
 import Tooltip from '../Tooltip';
 import Notification from '../Notification';
 
-import { Container, LogoImage, Botoes, Botao, Title } from './styles';
+import { Container, LogoImage, Botoes, Button, Title } from './styles';
 
 const Header: React.FC = () => {
   const [visible, setVisible] = useState(false);
@@ -23,36 +23,46 @@ const Header: React.FC = () => {
 
   return (
     <Container>
-      <LogoImage src={imgLogo} alt="SMIA" />
+      <Button>
+        <Link to="/dashboard">
+          <LogoImage src={imgLogo} alt="SMIA" />
+        </Link>
+      </Button>
 
       <Botoes>
-        <Botao>
+        <Button>
           <Link to="/dashboard">
             <Title>Início</Title>
           </Link>
-        </Botao>
+        </Button>
 
-        <Botao>
+        <Button>
+          <Link to="/complaints">
+            <Title>Minhas Denúncas</Title>
+          </Link>
+        </Button>
+
+        <Button>
           <Link to="/report">
             <Title>Relatar</Title>
           </Link>
-        </Botao>
+        </Button>
 
-        <Botao>
+        <Button>
           <Link to="/messages">
             <Title>Mensagens</Title>
           </Link>
-        </Botao>
+        </Button>
 
-        <Botao onClick={handleNoticationVisible}>
+        <Button onClick={handleNoticationVisible}>
           <IoMdNotificationsOutline size={30} color="#fff" />
           <Notification visible={notificationsVisible} />
-        </Botao>
+        </Button>
 
-        <Botao onClick={handleVisible}>
+        <Button onClick={handleVisible}>
           <FaUserCircle size={40} color="#fff" />
           <Tooltip visible={visible} />
-        </Botao>
+        </Button>
       </Botoes>
     </Container>
   );
