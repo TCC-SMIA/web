@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  margin: 0;
-  padding: 0;
-  background: var(--color-background);
-`;
-
 export const Loading = styled.div`
   position: absolute;
   display: flex;
