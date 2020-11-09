@@ -81,3 +81,28 @@ export const Options = styled.div`
     }
   }
 `;
+
+export const AddComentContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-left: 10px;
+
+    input {
+      width: 100%;
+      height: 40px;
+      border: 0;
+      outline: 0;
+      background: #fff;
+      border-radius: 15px 0px 0px 15px;
+      font-size: 15px;
+      color: #4a4a4a;
+      padding-left: 15px;
+      border: 1px solid #e3e3e3;
+    }
+  }
+`;
