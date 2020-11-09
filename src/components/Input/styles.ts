@@ -14,7 +14,7 @@ export const Container = styled.div`
   input {
     border: 0;
     font-size: 1.2rem;
-    width: 350px;
+    width: 300px;
     color: var(--color-input);
 
     ::placeholder {

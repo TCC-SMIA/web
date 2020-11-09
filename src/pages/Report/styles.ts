@@ -109,6 +109,7 @@ export const OptionMap = styled.div`
   > div {
     display: flex;
     flex: 1;
+    z-index: 0;
   }
 
   @media (max-width: 450px) {
