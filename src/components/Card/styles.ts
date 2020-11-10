@@ -106,3 +106,7 @@ export const AddComentContainer = styled.div`
     }
   }
 `;
+
+export const Title = styled.div`
+  margin-top: 0.8rem;
+`;
