@@ -20,6 +20,7 @@ import Input from '../../components/Input';
 const SignIn: React.FC = () => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+  const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
 
   const navigate = useNavigate();
@@ -27,14 +28,17 @@ const SignIn: React.FC = () => {
   const handleSignIn = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+      setLoading(true);
       try {
         await signIn({ login: loginInput, password: passwordInput });
 
         toast.success('Login realizado com sucesso');
 
+        setLoading(false);
         navigate('/dashboard');
       } catch (error) {
         toast.error('Email ou senha incorretos.');
+        setLoading(false);
       }
     },
     [loginInput, navigate, passwordInput, signIn],
@@ -69,7 +73,9 @@ const SignIn: React.FC = () => {
             type="password"
             onChange={(event) => handleChangePasswordInput(event)}
           />
-          <Button type="submit">Entrar</Button>
+          <Button loading={loading} type="submit">
+            Entrar
+          </Button>
         </form>
 
         <ForgotPasswordContainer>

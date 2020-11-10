@@ -20,8 +20,8 @@ export const Container = styled.div`
 `;
 
 export const LogoImage = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 96px;
+  height: 96px;
   margin-left: 20px;
 `;
 
@@ -30,26 +30,49 @@ export const Botoes = styled.div`
   flex: 1;
   justify-content: flex-end;
   position: relative;
+
+  svg {
+    color: #fff;
+    height: 28px;
+    width: 28px;
+  }
+
+  a {
+    :hover {
+      svg {
+        color: var(--color-hover-tooltip);
+      }
+
+      p {
+        color: var(--color-hover-tooltip);
+      }
+    }
+  }
 `;
 
 export const Button = styled.button`
+  display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   display: flex;
   margin: 30px;
   background: none;
   border: none;
+
+  > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 12px;
+  }
 `;
 
 export const Title = styled.p`
   color: var(--color-title-header);
-  font-size: 16px;
+  font-size: 12px;
 
   font-weight: bold;
-
-  :hover {
-    color: var(--color-hover-tooltip);
-  }
 `;
 
 export const ProfileArea = styled.div`
@@ -79,9 +102,5 @@ export const ProfileArea = styled.div`
       margin-top: 2px;
       color: var(--color-white);
     }
-  }
-
-  img {
-    margin-left: 12px;
   }
 `;

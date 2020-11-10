@@ -5,6 +5,7 @@ import Loader from '../../components/Loader';
 import IChat from '../../entities/Chat';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
+import EmptyMessageSVG from '../../assets/empty-list-messages.svg';
 import { RANDOM_AVATAR } from '../../utils/constants';
 
 import {
@@ -18,6 +19,7 @@ import {
   AnswerMessage,
   MessagesBox,
   ButtonSend,
+  EmptyContainer,
 } from './styles';
 
 interface ICreateMessageRequestParams {
@@ -50,6 +52,7 @@ const Messages: React.FC = () => {
       setLoading(true);
 
       if (inputMessage === '') {
+        setLoading(false);
         return;
       }
 
@@ -77,67 +80,89 @@ const Messages: React.FC = () => {
 
   return (
     <Container>
-      <ChatsContainer>
-        <ChatList>
-          {chats.length > 0 &&
-            chats.map((chat: IChat) => {
-              return (
-                <ChatItem
-                  key={chat.id}
-                  onClick={() => handleSelect(chat)}
-                  selected={chat.id === selected.id}
-                >
-                  <img
-                    src={chat?.destinatary?.avatar_url || RANDOM_AVATAR}
-                    alt="avatar"
+      {chats.length === 0 && (
+        <EmptyContainer>
+          <h2>Não encontramos chats criados.</h2>
+          <img src={EmptyMessageSVG} alt="Lista de mensagens vazia" />
+        </EmptyContainer>
+      )}
+      {chats.length > 0 && (
+        <>
+          <ChatsContainer>
+            <ChatList>
+              {chats.length > 0 &&
+                chats.map((chat: IChat) => {
+                  return chat.user.id === user.id ? (
+                    <ChatItem
+                      key={chat.id}
+                      onClick={() => handleSelect(chat)}
+                      selected={chat.id === selected.id}
+                    >
+                      <img
+                        src={chat?.destinatary?.avatar_url || RANDOM_AVATAR}
+                        alt="avatar"
+                      />
+                      <p>
+                        {chat?.destinatary?.name || chat?.destinatary?.nickname}
+                      </p>
+                    </ChatItem>
+                  ) : (
+                    <ChatItem
+                      key={chat.id}
+                      onClick={() => handleSelect(chat)}
+                      selected={chat.id === selected.id}
+                    >
+                      <img
+                        src={chat?.user?.avatar_url || RANDOM_AVATAR}
+                        alt="avatar"
+                      />
+                      <p>{chat?.user?.name || chat?.user?.nickname}</p>
+                    </ChatItem>
+                  );
+                })}
+            </ChatList>
+          </ChatsContainer>
+          <MessagesContainer>
+            <MessagesList>
+              {selected?.messages &&
+                selected.messages.map((message) => {
+                  if (message.user_id === user.id) {
+                    return (
+                      <OwnerMessage key={message.id}>
+                        {message.content}
+                      </OwnerMessage>
+                    );
+                  }
+                  return (
+                    <AnswerMessage key={message.id}>
+                      {message.content}
+                    </AnswerMessage>
+                  );
+                })}
+              {loading && (
+                <OwnerMessage key="message-loading">
+                  <Loader />
+                </OwnerMessage>
+              )}
+            </MessagesList>
+            <MessagesBox>
+              {selected.id && (
+                <form onSubmit={(event) => handleCreateMessage(event)}>
+                  <input
+                    type="text"
+                    placeholder="Digite uma mensagem"
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
                   />
-                  <p>
-                    {chat?.destinatary?.name || chat?.destinatary?.nickname}
-                  </p>
-                </ChatItem>
-              );
-            })}
-        </ChatList>
-      </ChatsContainer>
-      <MessagesContainer>
-        <MessagesList>
-          {selected?.messages &&
-            selected.messages.map((message) => {
-              if (message.user_id === user.id) {
-                return (
-                  <OwnerMessage key={message.id}>
-                    {message.content}
-                  </OwnerMessage>
-                );
-              }
-              return (
-                <AnswerMessage key={message.id}>
-                  {message.content}
-                </AnswerMessage>
-              );
-            })}
-          {loading && (
-            <OwnerMessage key="message-loading">
-              <Loader />
-            </OwnerMessage>
-          )}
-        </MessagesList>
-        <MessagesBox>
-          {selected.id && (
-            <form onSubmit={(event) => handleCreateMessage(event)}>
-              <input
-                type="text"
-                placeholder="Digite uma mensagem"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-              />
-              <ButtonSend type="submit">
-                <FiSend color="white" size={20} />
-              </ButtonSend>
-            </form>
-          )}
-        </MessagesBox>
-      </MessagesContainer>
+                  <ButtonSend type="submit">
+                    <FiSend color="white" size={20} />
+                  </ButtonSend>
+                </form>
+              )}
+            </MessagesBox>
+          </MessagesContainer>
+        </>
+      )}
     </Container>
   );
 };
