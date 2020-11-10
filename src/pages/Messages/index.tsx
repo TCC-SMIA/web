@@ -123,7 +123,7 @@ const Messages: React.FC = () => {
           )}
         </MessagesList>
         <MessagesBox>
-          {selected.id && (
+          {selected?.id && (
             <form onSubmit={(event) => handleCreateMessage(event)}>
               <input
                 type="text"
