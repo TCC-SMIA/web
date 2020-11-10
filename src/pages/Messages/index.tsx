@@ -92,7 +92,7 @@ const Messages: React.FC = () => {
             <ChatList>
               {chats.length > 0 &&
                 chats.map((chat: IChat) => {
-                  return (
+                  return chat.user.id === user.id ? (
                     <ChatItem
                       key={chat.id}
                       onClick={() => handleSelect(chat)}
@@ -105,6 +105,18 @@ const Messages: React.FC = () => {
                       <p>
                         {chat?.destinatary?.name || chat?.destinatary?.nickname}
                       </p>
+                    </ChatItem>
+                  ) : (
+                    <ChatItem
+                      key={chat.id}
+                      onClick={() => handleSelect(chat)}
+                      selected={chat.id === selected.id}
+                    >
+                      <img
+                        src={chat?.user?.avatar_url || RANDOM_AVATAR}
+                        alt="avatar"
+                      />
+                      <p>{chat?.user?.name || chat?.user?.nickname}</p>
                     </ChatItem>
                   );
                 })}
