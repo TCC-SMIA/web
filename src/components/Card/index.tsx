@@ -7,6 +7,7 @@ import {
   Container,
   Header,
   AvatarContainer,
+  Title,
   Description,
   Options,
   AddComentContainer,
@@ -93,6 +94,9 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           <IoMdPin />
         </Link>
       </Header>
+      <Title>
+        <h5>{complaint.title}</h5>
+      </Title>
       <Description>
         <p>{complaint.description}</p>
       </Description>
