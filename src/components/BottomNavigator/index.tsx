@@ -15,11 +15,11 @@ const BottomNavigator: React.FC = () => {
     <Container>
       <Link to="/dashboard">
         <FiHome />
-        <p>Inicio</p>
+        <p>Início</p>
       </Link>
       <Link to="/complaints">
         <FiNavigation2 />
-        <p>Minhas Denuncias</p>
+        <p>Denúncias</p>
       </Link>
       <Link to="/report">
         <FiMap />
