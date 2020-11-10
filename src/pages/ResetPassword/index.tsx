@@ -19,6 +19,7 @@ import api from '../../services/api';
 const ResetPassword: React.FC = () => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,6 +27,7 @@ const ResetPassword: React.FC = () => {
   const handleResetPassword = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+      setLoading(true);
       try {
         const passwordSchema = Yup.object().shape({
           password: Yup.string()
@@ -56,9 +58,10 @@ const ResetPassword: React.FC = () => {
           password_confirmation: confirmPassword,
           token,
         });
-
+        setLoading(false);
         navigate('/signin');
       } catch (error) {
+        setLoading(false);
         if (error instanceof Yup.ValidationError) {
           toast.error(error.inner[0].message);
           return;
@@ -102,7 +105,9 @@ const ResetPassword: React.FC = () => {
               onChange={(event) => handleChangeConfirmPasswordInput(event)}
             />
           </div>
-          <Button type="submit">Redefinir</Button>
+          <Button loading={loading} type="submit">
+            Redefinir
+          </Button>
         </form>
         <BackToLogonContainer>
           <Link to="/signin">
