@@ -36,6 +36,7 @@ const AgencySignUp: React.FC = () => {
   const [emailConfirmationInput, setEmailConfirmationInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [cnpjInput, setCnpjInput] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [modalMapToggle, setModalMapToggle] = useState(false);
 
@@ -53,7 +54,7 @@ const AgencySignUp: React.FC = () => {
   const handleSignUp = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
-
+      setLoading(true);
       try {
         const [latitude, longitude] = selectedPosition;
 
@@ -102,8 +103,10 @@ const AgencySignUp: React.FC = () => {
         } as ISignUpAgencyRequest);
 
         toast.success('Cadastro realizado com sucesso.');
+        setLoading(false);
         navigate('/signin');
       } catch (error) {
+        setLoading(false);
         if (error instanceof Yup.ValidationError) {
           toast.error(error.inner[0].message);
           return;
@@ -202,7 +205,9 @@ const AgencySignUp: React.FC = () => {
             <FiMapPin />
             Marcar no mapa
           </MapButton>
-          <Button type="submit">Cadastrar</Button>
+          <Button loading={loading} type="submit">
+            Cadastrar
+          </Button>
         </form>
         <BottomButtonsContainer>
           <Link to="/signup">

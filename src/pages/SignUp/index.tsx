@@ -31,11 +31,13 @@ const SignUp: React.FC = () => {
   const [passwordInput, setPasswordInput] = useState('');
   const [nameInput, setNameInput] = useState('');
   const [nicknameInput, setNicknameInput] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignUp = useCallback(
     async (event): Promise<void> => {
       event.preventDefault();
+      setLoading(true);
       try {
         const userSchema = Yup.object().shape({
           name: Yup.string()
@@ -79,9 +81,11 @@ const SignUp: React.FC = () => {
           password: passwordInput,
         } as ISignUpRequest);
 
+        setLoading(false);
         toast.success('Cadastro realizado com sucesso.');
         navigate('/signin');
       } catch (error) {
+        setLoading(false);
         if (error instanceof Yup.ValidationError) {
           toast.error(error.inner[0].message);
           return;
@@ -163,7 +167,9 @@ const SignUp: React.FC = () => {
             type="password"
             onChange={(event) => handleChangePasswordInput(event)}
           />
-          <Button type="submit">Cadastrar</Button>
+          <Button loading={loading} type="submit">
+            Cadastrar
+          </Button>
         </form>
         <BottomButtonsContainer>
           <Link to="/signup-agency">

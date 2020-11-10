@@ -23,10 +23,12 @@ const Profile: React.FC = () => {
   const [passwordConfirmationInput, setPasswordConfirmationInput] = useState(
     '',
   );
+  const [loading, setLoading] = useState(false);
 
   const handleUpdateUser = useCallback(
     async (event) => {
       event.preventDefault();
+      setLoading(true);
       try {
         const userSchema = Yup.object().shape({
           name: Yup.string()
@@ -108,7 +110,9 @@ const Profile: React.FC = () => {
         updateUser(newUser);
 
         toast.success('Perfil atualizado.');
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         if (error instanceof Yup.ValidationError) {
           toast.error(error.inner[0].message);
           return;
@@ -233,7 +237,9 @@ const Profile: React.FC = () => {
             type="password"
             onChange={(event) => handleChangePasswordConfirmationInput(event)}
           />
-          <Button type="submit">Salvar</Button>
+          <Button loading={loading} type="submit">
+            Salvar
+          </Button>
         </form>
       </FormContent>
     </Container>

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.button`
+  position: relative;
   margin-top: 10px;
   width: 80%;
   height: 46px;
