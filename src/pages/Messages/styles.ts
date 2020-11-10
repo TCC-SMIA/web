@@ -67,10 +67,12 @@ export const MessagesList = styled.div`
 `;
 
 export const OwnerMessage = styled.div`
+  position: relative;
   background: ${lighten(0.3, '#426d49')};
   padding: 10px;
   border-radius: 10px 10px 0px 10px;
   width: 50%;
+  min-height: 50px;
   align-self: flex-end;
 `;
 

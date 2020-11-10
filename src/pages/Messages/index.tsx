@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiSend } from 'react-icons/fi';
+import Loader from '../../components/Loader';
 
 import IChat from '../../entities/Chat';
 import { useAuth } from '../../hooks/useAuth';
@@ -28,6 +29,7 @@ const Messages: React.FC = () => {
   const [chats, setChats] = useState([] as IChat[]);
   const [selected, setSelected] = useState({} as IChat);
   const [inputMessage, setInputMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const { user } = useAuth();
 
@@ -45,17 +47,32 @@ const Messages: React.FC = () => {
   const handleCreateMessage = useCallback(
     (event) => {
       event.preventDefault();
+      setLoading(true);
+
+      if (inputMessage === '') {
+        return;
+      }
 
       api
         .post('/messages', {
           chat_id: selected?.id,
           content: inputMessage,
         } as ICreateMessageRequestParams)
-        .then(() => {
+        .then((response) => {
+          const newChats = chats;
+
+          const chatIndex = chats.findIndex((chat) => {
+            return chat.id === response.data.chat.id;
+          });
+
+          newChats[chatIndex].messages.push(response.data);
+
+          setChats(newChats);
           setInputMessage('');
+          setLoading(false);
         });
     },
-    [selected, inputMessage],
+    [selected, inputMessage, chats],
   );
 
   return (
@@ -99,6 +116,11 @@ const Messages: React.FC = () => {
                 </AnswerMessage>
               );
             })}
+          {loading && (
+            <OwnerMessage key="message-loading">
+              <Loader />
+            </OwnerMessage>
+          )}
         </MessagesList>
         <MessagesBox>
           {selected.id && (

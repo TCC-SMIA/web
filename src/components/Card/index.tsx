@@ -7,6 +7,7 @@ import {
   Container,
   Header,
   AvatarContainer,
+  Title,
   Description,
   Options,
   AddComentContainer,
@@ -36,11 +37,13 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
 
   const handleCreateChatWithReporter = useCallback(
     (user_id) => {
-      api.post('/chats', {
-        contact_id: user_id,
-      } as ICreateChatRequestParams);
-
-      navigate('/messages');
+      api
+        .post('/chats', {
+          contact_id: user_id,
+        } as ICreateChatRequestParams)
+        .then(() => {
+          navigate('/messages');
+        });
     },
     [navigate],
   );
@@ -91,6 +94,9 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           <IoMdPin />
         </Link>
       </Header>
+      <Title>
+        <h5>{complaint.title}</h5>
+      </Title>
       <Description>
         <p>{complaint.description}</p>
       </Description>
@@ -103,10 +109,10 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       />
 
       <Options>
-        {complaint.user_id !== user.id && (
+        {complaint.user_id !== user.id && !complaint.anonymous && (
           <button
             type="button"
-            onClick={() => handleCreateChatWithReporter(complaint.user.id)}
+            onClick={() => handleCreateChatWithReporter(complaint.user_id)}
           >
             Chamar relator
           </button>
