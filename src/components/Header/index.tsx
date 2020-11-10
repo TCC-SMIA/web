@@ -38,7 +38,7 @@ const Header: React.FC = () => {
 
         <Button>
           <Link to="/complaints">
-            <Title>Minhas Denúncas</Title>
+            <Title>Minhas Denúncias</Title>
           </Link>
         </Button>
 
