@@ -103,7 +103,7 @@ const Dashboard: React.FC = () => {
       {loading && <Loader />}
       {complaints.length === 0 && !loading && (
         <EmptyContainer>
-          <h2>Não encontramos denúncias criadas.</h2>
+          <h2>Não encontramos relatos criados.</h2>
           <img src={EmptyDashboardSVG} alt="Lista de mensagens vazia" />
         </EmptyContainer>
       )}
