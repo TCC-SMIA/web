@@ -188,7 +188,7 @@ const Messages: React.FC = () => {
                 selected.messages.map((message) => {
                   if (message.user_id === user.id) {
                     return (
-                      <OwnerMessage key={message.id}>
+                      <OwnerMessage loading={loading} key={message.id}>
                         {message.content}
                       </OwnerMessage>
                     );
@@ -200,7 +200,7 @@ const Messages: React.FC = () => {
                   );
                 })}
               {loading && (
-                <OwnerMessage key="message-loading">
+                <OwnerMessage loading={loading} key="message-loading">
                   <Loader />
                 </OwnerMessage>
               )}

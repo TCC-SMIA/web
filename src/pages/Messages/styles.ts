@@ -7,15 +7,27 @@ export const Container = styled.div`
   border-radius: 5px;
   min-width: 80%;
   height: 88vh;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
 `;
 
 export const ChatsContainer = styled.div`
   width: 30%;
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 `;
 
 export const ChatList = styled.div`
   height: 100%;
   overflow-y: scroll;
+
+  @media (max-width: 700px) {
+    display: flex;
+  }
 `;
 
 export const ChatItem = styled.div<{ selected: boolean }>`
@@ -41,6 +53,12 @@ export const ChatItem = styled.div<{ selected: boolean }>`
   p {
     margin-left: 15px;
   }
+
+  @media (max-width: 700px) {
+    img {
+      display: none;
+    }
+  }
 `;
 
 export const MessagesContainer = styled.div`
@@ -49,6 +67,11 @@ export const MessagesContainer = styled.div`
   flex-direction: column;
   height: 100%;
   width: 70%;
+
+  @media (max-width: 700px) {
+    width: 100%;
+    height: 95%;
+  }
 `;
 
 export const MessagesList = styled.div`
@@ -65,21 +88,30 @@ export const MessagesList = styled.div`
   }
 `;
 
-export const OwnerMessage = styled.div`
+export const OwnerMessage = styled.div<{ loading: boolean }>`
+  position: relative;
   background: ${lighten(0.3, '#426d49')};
-  padding: 10px;
+  padding: 12px;
+  min-height: ${(props) => (props.loading ? '50px' : '')};
   border-radius: 10px 10px 0px 10px;
   width: 50%;
-  min-height: 50px;
   align-self: flex-end;
+
+  @media (max-width: 700px) {
+    width: 80%;
+  }
 `;
 
 export const AnswerMessage = styled.div`
   background: #d5d5d5;
-  padding: 10px;
+  padding: 12px;
   border-radius: 0px 10px 10px 10px;
   width: 50%;
   align-self: flex-start;
+
+  @media (max-width: 700px) {
+    width: 80%;
+  }
 `;
 
 export const MessagesBox = styled.div`
