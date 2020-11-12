@@ -12,8 +12,18 @@ export default createGlobalStyle`
 body{
    -webkit-font-smoothing: antialiased;
    ::-webkit-scrollbar{
-     display: none;
+     margin: 0;
+     width:10px;
+     height: 10px;
   }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-smia-hover);
+    }
+
+    ::-webkit-scrollbar-track {
+    background: var(--color-smia);
+    }
 
 }
 
