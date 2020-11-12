@@ -8,7 +8,7 @@ export const Container = styled.div<NotificationProps>`
   position: absolute;
   width: 300px;
   height: 300px;
-  top: calc(80px + 0px);
+  top: calc(100px + 0px);
   background: var(--color-white);
   border-radius: 0px 0px 8px 8px;
   border: 1px solid var(--color-smia);
