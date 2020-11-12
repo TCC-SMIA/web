@@ -5,7 +5,16 @@ import api from '../../services/api';
 import Card from '../../components/Card';
 import IComplaint from '../../entities/Complaint';
 
-import { Container, Feed, SearchSelect, SearchContainer } from './styles';
+import EmptyDashboardSVG from '../../assets/empty-dashboard.svg';
+
+import {
+  Container,
+  Feed,
+  SearchSelect,
+  SearchContainer,
+  EmptyContainer,
+} from './styles';
+import Loader from '../../components/Loader';
 
 interface IBGECityResponse {
   nome: string;
@@ -21,10 +30,12 @@ const Dashboard: React.FC = () => {
   const [cities, setCities] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     api.get('/complaints', { params: { take: 15 } }).then((response) => {
       setComplaints(response.data);
+      setLoading(false);
     });
   }, []);
 
@@ -89,45 +100,56 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <SearchContainer>
-        <SearchSelect>
-          <select
-            name="uf"
-            id="uf"
-            onChange={handleSelectUf}
-            value={selectedUf}
-          >
-            <option value="0">Selecione uma UF</option>
-            {ufs.map((uf) => (
-              <option key={uf} value={uf}>
-                {uf}
-              </option>
+      {loading && <Loader />}
+      {complaints.length === 0 && !loading && (
+        <EmptyContainer>
+          <h2>Não encontramos denúncias criadas.</h2>
+          <img src={EmptyDashboardSVG} alt="Lista de mensagens vazia" />
+        </EmptyContainer>
+      )}
+      {complaints.length > 0 && !loading && (
+        <>
+          <SearchContainer>
+            <SearchSelect>
+              <select
+                name="uf"
+                id="uf"
+                onChange={handleSelectUf}
+                value={selectedUf}
+              >
+                <option value="0">Selecione uma UF</option>
+                {ufs.map((uf) => (
+                  <option key={uf} value={uf}>
+                    {uf}
+                  </option>
+                ))}
+              </select>
+              <IoIosArrowDown />
+            </SearchSelect>
+            <SearchSelect>
+              <select
+                name="city"
+                id="city"
+                onChange={handleSelectCity}
+                value={selectedCity}
+              >
+                <option value="0">Selecione uma cidade</option>
+                {cities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+              <IoIosArrowDown />
+            </SearchSelect>
+          </SearchContainer>
+          <Feed>
+            {complaints?.map((complaint) => (
+              <Card key={complaint.id} complaint={complaint} />
             ))}
-          </select>
-          <IoIosArrowDown />
-        </SearchSelect>
-        <SearchSelect>
-          <select
-            name="city"
-            id="city"
-            onChange={handleSelectCity}
-            value={selectedCity}
-          >
-            <option value="0">Selecione uma cidade</option>
-            {cities.map((city) => (
-              <option key={city} value={city}>
-                {city}
-              </option>
-            ))}
-          </select>
-          <IoIosArrowDown />
-        </SearchSelect>
-      </SearchContainer>
-      <Feed>
-        {complaints?.map((complaint) => (
-          <Card key={complaint.id} complaint={complaint} />
-        ))}
-      </Feed>
+          </Feed>
+        </>
+      )}
     </Container>
   );
 };
