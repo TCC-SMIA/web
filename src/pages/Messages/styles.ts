@@ -2,34 +2,30 @@ import { lighten } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: 300px auto;
-  grid-template-rows: 1fr;
-  grid-template-areas: 'CHAT' 'MESSAGES';
-  min-height: 100%;
-  min-width: 90%;
-  background: #fff;
-  border-radius: 10px;
+  display: flex;
+  background: var(--color-white);
+  border-radius: 5px;
+  min-width: 80%;
+  height: 88vh;
 `;
 
 export const ChatsContainer = styled.div`
-  grid-area: 'CHAT';
-  padding: 10px;
+  width: 30%;
 `;
 
 export const ChatList = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-row-gap: 5px;
+  height: 100%;
+  overflow-y: scroll;
 `;
 
 export const ChatItem = styled.div<{ selected: boolean }>`
+  margin: 6px;
+  border-radius: 10px;
   display: flex;
+  align-items: center;
+  padding: 12px;
   background: ${(props) =>
     props.selected ? lighten(0.2, '#426d49') : '#f5f5f5'};
-  padding: 10px;
-  border-radius: 15px;
   transition: 0.2s;
 
   :hover {
@@ -48,18 +44,20 @@ export const ChatItem = styled.div<{ selected: boolean }>`
 `;
 
 export const MessagesContainer = styled.div`
-  grid-area: 'MESSAGES';
-  border-radius: 10px;
-  padding: 20px;
-  background: var(--color-title-header);
   display: flex;
+  flex: 1;
   flex-direction: column;
-  justify-content: space-between;
+  height: 100%;
+  width: 70%;
 `;
 
 export const MessagesList = styled.div`
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  background-color: var(--color-textarea);
+  height: 95%;
+  padding: 12px;
 
   div + div {
     margin-top: 10px;
@@ -68,7 +66,6 @@ export const MessagesList = styled.div`
 `;
 
 export const OwnerMessage = styled.div`
-  position: relative;
   background: ${lighten(0.3, '#426d49')};
   padding: 10px;
   border-radius: 10px 10px 0px 10px;
@@ -87,6 +84,7 @@ export const AnswerMessage = styled.div`
 
 export const MessagesBox = styled.div`
   height: 62px;
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 15px;
@@ -113,7 +111,7 @@ export const MessagesBox = styled.div`
 export const ButtonSend = styled.button`
   width: 40px;
   height: 40px;
-  background: #426d49;
+  background: var(--color-smia);
   display: flex;
   justify-content: center;
   align-items: center;

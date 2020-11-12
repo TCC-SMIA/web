@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { WiMoonNew, WiMoonAltNew } from 'react-icons/wi';
 
 interface NotificationProps {
   isVisible: boolean;
