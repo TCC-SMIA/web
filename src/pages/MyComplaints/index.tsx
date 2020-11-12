@@ -9,7 +9,6 @@ import EmptyMyComplaintsSVG from '../../assets/empty-my-complaints.svg';
 
 import { Container, Feed, EmptyContainer } from './styles';
 import Loader from '../../components/Loader';
-import Button from '../../components/Button';
 
 const MyComplaints: React.FC = () => {
   const [complaints, setComplaints] = useState([] as IComplaint[]);
