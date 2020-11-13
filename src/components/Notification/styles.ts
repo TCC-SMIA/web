@@ -6,12 +6,13 @@ interface NotificationProps {
 
 export const Container = styled.div<NotificationProps>`
   position: absolute;
+  overflow-y: scroll;
   width: 300px;
-  height: 300px;
-  top: calc(80px + 0px);
+  height: 360px;
+  top: calc(100px + 0px);
   background: var(--color-white);
   border-radius: 0px 0px 8px 8px;
-  border: 1px solid var(--color-smia);
+  border: 2px solid var(--color-smia);
   opacity: 0;
   visibility: hidden;
   z-index: 10;
@@ -27,7 +28,7 @@ export const Container = styled.div<NotificationProps>`
     `}
 
   > div {
-    padding: 12px 0 0 6px;
+    padding: 12px 0;
   }
   h1 {
     font-size: 1.5rem;
@@ -39,8 +40,8 @@ export const NotificationItem = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  height: 36px;
   border-bottom: 1px solid var(--color-icons);
+  padding: 6px 12px;
 
   p {
     color: var(--color-notification);

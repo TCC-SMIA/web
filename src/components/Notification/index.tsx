@@ -35,9 +35,6 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
 
   return (
     <Container isVisible={visible}>
-      <div>
-        <h1>Notificações</h1>
-      </div>
       {notifications &&
         notifications.map((notification: INotification) => (
           <NotificationItem
@@ -45,9 +42,12 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
             onClick={() => handleReadNotification(notification)}
           >
             <p>{notification.content}</p>
-
             <ReadButton>
-              {notification.read ? <WiMoonNew /> : <WiMoonAltNew />}
+              {notification.read ? (
+                <WiMoonNew color="#426d49" />
+              ) : (
+                <WiMoonAltNew color="#426d49" />
+              )}
             </ReadButton>
           </NotificationItem>
         ))}

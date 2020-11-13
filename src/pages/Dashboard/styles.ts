@@ -50,3 +50,27 @@ export const SearchSelect = styled.div`
     right: 16px;
   }
 `;
+
+export const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 20px;
+
+  h2 {
+    color: var(--color-smia);
+    margin: 8px;
+  }
+
+  img {
+    width: 100%;
+  }
+`;
