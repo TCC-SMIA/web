@@ -1,8 +1,6 @@
 import io from 'socket.io-client';
 
-const socket = io(process.env.WEBSOCKET_API_URL as string, {
-  autoConnect: false,
-});
+const socket = io('wss://smia-api.herokuapp.com/', { autoConnect: false });
 
 const connect = (user_id: string): void => {
   socket.io.opts.query = {
