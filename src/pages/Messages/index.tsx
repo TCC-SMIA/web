@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiSend } from 'react-icons/fi';
-import Loader from '../../components/Loader';
 
+import Loader from '../../components/Loader';
 import IChat from '../../entities/Chat';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';

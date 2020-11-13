@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { WiMoonNew, WiMoonAltNew } from 'react-icons/wi';
 
 import api from '../../services/api';
+import * as socket from '../../services/socket';
 import INotification from '../../entities/Notification';
 import { Container, NotificationItem, ReadButton } from './styles';
+import { useAuth } from '../../hooks/useAuth';
 
 interface NotificationProps {
   visible: boolean;
@@ -11,6 +13,15 @@ interface NotificationProps {
 
 const Notification: React.FC<NotificationProps> = ({ visible }) => {
   const [notifications, setNotifications] = useState([] as INotification[]);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    socket.connect(user.id);
+
+    socket.subscribeToNewNotifications((data: INotification[]) => {
+      setNotifications(data);
+    });
+  }, [user.id]);
 
   useEffect(() => {
     api.get('/notifications').then((response) => {
