@@ -20,6 +20,7 @@
         "react-scripts": "3.4.1",
         "react-switch": "^5.0.1",
         "react-toastify": "^6.0.8",
+        "socket.io-client": "^2.3.0",
         "styled-components": "^5.1.1",
         "typescript": "~3.7.2",
         "yup": "^0.29.3"
@@ -56,6 +57,7 @@
         "@types/react-dom": "^16.9.0",
         "@types/react-leaflet": "^2.5.2",
         "@types/react-router-dom": "^5.1.5",
+        "@types/socket.io-client": "^1.4.34",
         "@types/styled-components": "^5.1.2",
         "@types/yup": "^0.29.6",
         "@typescript-eslint/eslint-plugin": "^3.8.0",
