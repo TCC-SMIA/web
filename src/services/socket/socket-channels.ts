@@ -1,5 +1,5 @@
 enum SocketChannels {
-  NotificationsChannel = 'new-notification',
+  NotificationsChannel = 'new_notification',
   ComplaintsFeedChannel = 'complaints_feed',
 }
 
