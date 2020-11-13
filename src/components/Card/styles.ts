@@ -27,8 +27,8 @@ export const Header = styled.div`
 
   svg {
     color: var(--color-smia);
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
   }
 `;
 
@@ -40,6 +40,7 @@ export const AvatarContainer = styled.div`
     height: 60px;
     width: 60px;
     border-radius: 50%;
+    border: 2px solid var(--color-smia);
   }
 
   p {
