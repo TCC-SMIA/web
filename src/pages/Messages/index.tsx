@@ -120,66 +120,6 @@ const Messages: React.FC = () => {
                     </ChatItem>
                   );
                 })}
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
-
-              <ChatItem key="id-test" onClick={() => alert('click')} selected>
-                <img src={RANDOM_AVATAR} alt="avatar" />
-                <p>Antonio Testador</p>
-              </ChatItem>
             </ChatList>
           </ChatsContainer>
           <MessagesContainer>
