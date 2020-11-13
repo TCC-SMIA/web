@@ -1,6 +1,8 @@
 import io from 'socket.io-client';
 
-const socket = io('ws://localhost:3333' as string, { autoConnect: false });
+const socket = io(process.env.WEBSOCKET_API_URL as string, {
+  autoConnect: false,
+});
 
 const connect = (user_id: string): void => {
   socket.io.opts.query = {
