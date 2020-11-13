@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiSend } from 'react-icons/fi';
-import Loader from '../../components/Loader';
 
+import Loader from '../../components/Loader';
 import IChat from '../../entities/Chat';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
@@ -128,7 +128,7 @@ const Messages: React.FC = () => {
                 selected.messages.map((message) => {
                   if (message.user_id === user.id) {
                     return (
-                      <OwnerMessage key={message.id}>
+                      <OwnerMessage loading={loading} key={message.id}>
                         {message.content}
                       </OwnerMessage>
                     );
@@ -140,7 +140,7 @@ const Messages: React.FC = () => {
                   );
                 })}
               {loading && (
-                <OwnerMessage key="message-loading">
+                <OwnerMessage loading={loading} key="message-loading">
                   <Loader />
                 </OwnerMessage>
               )}

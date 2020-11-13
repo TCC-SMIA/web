@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import Dropzone from '../../components/Dropzone';
 import { Container, Header, Option, OptionMap } from './styles';
 import api from '../../services/api';
+import Button from '../../components/Button';
 
 const Report: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -25,6 +26,8 @@ const Report: React.FC = () => {
     0,
   ]);
 
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,9 +43,9 @@ const Report: React.FC = () => {
   }, []);
 
   async function handleSubmit(event: FormEvent): Promise<void> {
+    event.preventDefault();
     try {
-      event.preventDefault();
-
+      setLoading(true);
       const [latitude, longitude] = selectedPosition;
 
       const data = new FormData();
@@ -62,8 +65,11 @@ const Report: React.FC = () => {
 
       toast.success('Relato criado com sucesso');
 
+      setLoading(false);
+      toast.success('Relato criado com sucesso.');
       navigate('/dashboard');
     } catch (err) {
+      setLoading(false);
       toast.error('Houve um erro ao tentar criar este relato.');
     }
   }
@@ -134,9 +140,9 @@ const Report: React.FC = () => {
 
         <hr color="#d3d3d3" />
         <footer>
-          <button type="submit" onClick={handleSubmit}>
+          <Button loading={loading} type="submit" onClick={handleSubmit}>
             Publicar
-          </button>
+          </Button>
         </footer>
       </form>
     </Container>

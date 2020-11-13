@@ -37,21 +37,6 @@ export const Container = styled.div`
   footer {
     justify-content: center;
     display: flex;
-    button {
-      margin-top: 20px;
-      width: 250px;
-      height: 45px;
-      border-radius: 8px;
-      border: none;
-      background: var(--color-smia);
-      font-weight: bold;
-      color: var(--color-white);
-      transition: background 0.2s;
-
-      &:hover {
-        background: var(--color-smia-hover);
-      }
-    }
   }
 `;
 
