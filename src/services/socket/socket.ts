@@ -30,9 +30,16 @@ const subscribeToComplaintsFeed = (
   socket.on(SocketChannels.ComplaintsFeedChannel, subscribeFunction);
 };
 
-export {
+const subscribeToChatsChannel = (
+  subscribeFunction: SubscribeFunction,
+): void => {
+  socket.on(SocketChannels.ChatChannel, subscribeFunction);
+};
+
+export default {
   connect,
   disconnect,
   subscribeToNewNotifications,
   subscribeToComplaintsFeed,
+  subscribeToChatsChannel,
 };

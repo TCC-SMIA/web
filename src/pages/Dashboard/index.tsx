@@ -3,7 +3,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 
 import api from '../../services/api';
 import Card from '../../components/Card';
-import * as socket from '../../services/socket/socket';
+import socket from '../../services/socket/socket';
 import IComplaint from '../../entities/Complaint';
 
 import EmptyDashboardSVG from '../../assets/empty-dashboard.svg';
