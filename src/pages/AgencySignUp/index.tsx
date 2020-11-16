@@ -183,6 +183,8 @@ const AgencySignUp: React.FC = () => {
           <Input
             placeholder="CNPJ: "
             name="cnpj"
+            type="number"
+            pattern="[0-9]"
             onChange={(event) => handleChangeCnpjInput(event)}
           />
           <Input
