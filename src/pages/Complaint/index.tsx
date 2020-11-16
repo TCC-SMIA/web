@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { useParams } from 'react-router';
 
@@ -18,6 +17,7 @@ import {
   Description,
   Title,
   CommentsContainer,
+  CommentItem,
 } from './styles';
 import { RANDOM_AVATAR } from '../../utils/constants';
 
@@ -45,6 +45,8 @@ const Complaint: React.FC = () => {
 
       setInitialPosition([latitude, longitude]);
     });
+
+    console.log(complaint);
   }, [complaint]);
 
   return (
@@ -101,7 +103,10 @@ const Complaint: React.FC = () => {
               <h1>Comentários</h1>
               {complaint.comments &&
                 complaint.comments.map((comment) => (
-                  <p key={comment.id}>{comment.content}</p>
+                  <CommentItem key={comment.id}>
+                    <img src={RANDOM_AVATAR} alt="default" />
+                    <p>{comment.content}</p>
+                  </CommentItem>
                 ))}
             </CommentsContainer>
           </ComplaintContainer>

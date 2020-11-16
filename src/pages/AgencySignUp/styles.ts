@@ -68,29 +68,6 @@ export const FormContainer = styled.div`
   }
 `;
 
-export const MapButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 1rem;
-  text-decoration: none;
-  border: none;
-  color: var(--color-bg-button);
-  transition: color linear 0.2s;
-  margin-top: 6px;
-
-  background: transparent;
-
-  :hover {
-    color: var(--color-bg-button-hover);
-  }
-
-  svg {
-    margin-right: 6px;
-  }
-`;
-
 export const BottomButtonsContainer = styled.div`
   margin: 8px 0;
   padding: 8px;
