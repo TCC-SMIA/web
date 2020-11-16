@@ -96,6 +96,7 @@ export const OwnerMessage = styled.div<{ loading: boolean }>`
   border-radius: 10px 10px 0px 10px;
   width: 50%;
   align-self: flex-end;
+  word-wrap: break-word;
 
   @media (max-width: 700px) {
     width: 80%;
@@ -108,6 +109,7 @@ export const AnswerMessage = styled.div`
   border-radius: 0px 10px 10px 10px;
   width: 50%;
   align-self: flex-start;
+  word-wrap: break-word;
 
   @media (max-width: 700px) {
     width: 80%;
