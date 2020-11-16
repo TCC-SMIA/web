@@ -175,3 +175,19 @@ export const EmptyContainer = styled.div`
     width: 100%;
   }
 `;
+
+export const EmptyChat = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  h3 {
+    color: var(--color-smia);
+  }
+
+  img {
+    width: 80%;
+  }
+`;
