@@ -3,6 +3,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 
 import api from '../../services/api';
 import Card from '../../components/Card';
+import socket from '../../services/socket/socket';
 import IComplaint from '../../entities/Complaint';
 
 import EmptyDashboardSVG from '../../assets/empty-dashboard.svg';
@@ -15,6 +16,7 @@ import {
   EmptyContainer,
 } from './styles';
 import Loader from '../../components/Loader';
+import { useAuth } from '../../hooks/useAuth';
 
 interface IBGECityResponse {
   nome: string;
@@ -31,6 +33,16 @@ const Dashboard: React.FC = () => {
   const [selectedUf, setSelectedUf] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    socket.disconnect();
+    socket.connect(user.id);
+
+    socket.subscribeToComplaintsFeed((data: IComplaint[]) => {
+      setComplaints(data);
+    });
+  }, [user.id]);
 
   useEffect(() => {
     api.get('/complaints', { params: { take: 15 } }).then((response) => {

@@ -21,6 +21,8 @@ import {
   ButtonSend,
   EmptyContainer,
 } from './styles';
+import socket from '../../services/socket/socket';
+import IMessage from '../../entities/Message';
 
 interface ICreateMessageRequestParams {
   chat_id: string;
@@ -29,6 +31,7 @@ interface ICreateMessageRequestParams {
 
 const Messages: React.FC = () => {
   const [chats, setChats] = useState([] as IChat[]);
+  const [messages, setMessages] = useState([] as IMessage[]);
   const [selected, setSelected] = useState({} as IChat);
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -41,6 +44,28 @@ const Messages: React.FC = () => {
       setSelected(response?.data[0]);
     });
   }, []);
+
+  useEffect(() => {
+    socket.disconnect();
+    socket.connect(user.id);
+
+    socket.subscribeToChatsChannel((data: IMessage[]) => {
+      console.log(`${selected.id} === ${data[0].chat_id}`);
+      console.log(data[0]);
+
+      selected.id && selected.id === data[0].chat_id && setMessages(data);
+    });
+  }, [user.id, selected.id]);
+
+  useEffect(() => {
+    if (selected.id)
+      api
+        .get(`/messages`, { params: { chat_id: selected.id } })
+        .then((response) => {
+          console.log('mensagens veio');
+          setMessages(response.data);
+        });
+  }, [selected]);
 
   const handleSelect = useCallback((chat: IChat) => {
     setSelected(chat);
@@ -62,20 +87,16 @@ const Messages: React.FC = () => {
           content: inputMessage,
         } as ICreateMessageRequestParams)
         .then((response) => {
-          const newChats = chats;
+          const newMessages = messages;
 
-          const chatIndex = chats.findIndex((chat) => {
-            return chat.id === response.data.chat.id;
-          });
+          newMessages.push(response.data);
 
-          newChats[chatIndex].messages.push(response.data);
-
-          setChats(newChats);
+          setMessages(newMessages);
           setInputMessage('');
           setLoading(false);
         });
     },
-    [selected, inputMessage, chats],
+    [selected, inputMessage, messages],
   );
 
   return (
@@ -124,8 +145,8 @@ const Messages: React.FC = () => {
           </ChatsContainer>
           <MessagesContainer>
             <MessagesList>
-              {selected?.messages &&
-                selected.messages.map((message) => {
+              {messages &&
+                messages.map((message) => {
                   if (message.user_id === user.id) {
                     return (
                       <OwnerMessage loading={loading} key={message.id}>
