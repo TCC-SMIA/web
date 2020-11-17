@@ -36,9 +36,6 @@ const Dashboard: React.FC = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    socket.disconnect();
-    socket.connect(user.id);
-
     socket.subscribeToComplaintsFeed((data: IComplaint[]) => {
       setComplaints(data);
     });

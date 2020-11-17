@@ -46,23 +46,22 @@ const Messages: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    socket.disconnect();
-    socket.connect(user.id);
-
-    socket.subscribeToChatsChannel((data: IMessage[]) => {
-      console.log(`${selected.id} === ${data[0].chat_id}`);
-      console.log(data[0]);
-
-      selected.id && selected.id === data[0].chat_id && setMessages(data);
+    socket.subscribeToMessagesChannel((data: IMessage[]) => {
+      selected && selected.id === data[0].chat_id && setMessages(data);
     });
-  }, [user.id, selected.id]);
+  }, [user, selected]);
 
   useEffect(() => {
-    if (selected.id)
+    socket.subscribeToChatsChannel((data: IChat[]) => {
+      setChats(data);
+    });
+  }, [user, selected]);
+
+  useEffect(() => {
+    if (selected && selected.id)
       api
         .get(`/messages`, { params: { chat_id: selected.id } })
         .then((response) => {
-          console.log('mensagens veio');
           setMessages(response.data);
         });
   }, [selected]);
@@ -113,7 +112,7 @@ const Messages: React.FC = () => {
             <ChatList>
               {chats.length > 0 &&
                 chats.map((chat: IChat) => {
-                  return chat.user.id === user.id ? (
+                  return (chat?.user && chat.user.id) === user.id ? (
                     <ChatItem
                       key={chat.id}
                       onClick={() => handleSelect(chat)}
