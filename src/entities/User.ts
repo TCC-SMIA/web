@@ -1,3 +1,8 @@
+export enum UserTypes {
+  Reporter = 'Reporter',
+  EnvironmentalAgency = 'EnvironmentalAgency',
+}
+
 export default interface IUser {
   id: string;
   name: string;
@@ -5,5 +10,5 @@ export default interface IUser {
   email: string;
   avatar: string;
   avatar_url: string;
-  user_type: number;
+  user_type: UserTypes;
 }
