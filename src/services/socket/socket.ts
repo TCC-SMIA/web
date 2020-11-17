@@ -42,6 +42,12 @@ const subscribeToMessagesChannel = (
   socket.on(SocketChannels.MessagesChannel, subscribeFunction);
 };
 
+const subscribeToComplaintCommentsChannel = (
+  subscribeFunction: SubscribeFunction,
+): void => {
+  socket.on(SocketChannels.ComplaintCommentsChannel, subscribeFunction);
+};
+
 export default {
   connect,
   disconnect,
@@ -49,4 +55,5 @@ export default {
   subscribeToComplaintsFeed,
   subscribeToChatsChannel,
   subscribeToMessagesChannel,
+  subscribeToComplaintCommentsChannel,
 };

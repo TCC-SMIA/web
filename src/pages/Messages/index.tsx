@@ -55,10 +55,13 @@ const Messages: React.FC = () => {
   }, [user, selected]);
 
   useEffect(() => {
+    socket.disconnect();
+    socket.connect(user.id);
+
     socket.subscribeToChatsChannel((data: IChat[]) => {
       setChats(data);
     });
-  }, [user, selected]);
+  }, [user]);
 
   useEffect(() => {
     if (selected && selected.id)

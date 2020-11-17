@@ -16,10 +16,13 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
   const { user } = useAuth();
 
   useEffect(() => {
+    socket.disconnect();
+    socket.connect(user.id);
+
     socket.subscribeToNewNotifications((data: INotification[]) => {
       setNotifications(data);
     });
-  }, [user.id]);
+  }, [user]);
 
   useEffect(() => {
     api.get('/notifications').then((response) => {

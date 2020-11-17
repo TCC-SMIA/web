@@ -36,10 +36,13 @@ const Dashboard: React.FC = () => {
   const { user } = useAuth();
 
   useEffect(() => {
+    socket.disconnect();
+    socket.connect(user.id);
+
     socket.subscribeToComplaintsFeed((data: IComplaint[]) => {
       setComplaints(data);
     });
-  }, [user.id]);
+  }, [user]);
 
   useEffect(() => {
     api.get('/complaints', { params: { take: 15 } }).then((response) => {
