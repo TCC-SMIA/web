@@ -6,6 +6,8 @@ import IChat from '../../entities/Chat';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
 import EmptyMessageSVG from '../../assets/empty-list-messages.svg';
+import EmptyMessageChatSVG from '../../assets/empty-message-chat.svg';
+
 import { RANDOM_AVATAR } from '../../utils/constants';
 
 import {
@@ -20,6 +22,7 @@ import {
   MessagesBox,
   ButtonSend,
   EmptyContainer,
+  EmptyChat,
 } from './styles';
 import socket from '../../services/socket/socket';
 import IMessage from '../../entities/Message';
@@ -103,7 +106,7 @@ const Messages: React.FC = () => {
       {chats.length === 0 && (
         <EmptyContainer>
           <h2>Não encontramos chats criados.</h2>
-          <img src={EmptyMessageSVG} alt="Lista de mensagens vazia" />
+          <img src={EmptyMessageSVG} alt="Lista de chats vazio." />
         </EmptyContainer>
       )}
       {chats.length > 0 && (
@@ -144,7 +147,7 @@ const Messages: React.FC = () => {
           </ChatsContainer>
           <MessagesContainer>
             <MessagesList>
-              {messages &&
+              {!!messages &&
                 messages.map((message) => {
                   if (message.user_id === user.id) {
                     return (
@@ -159,6 +162,15 @@ const Messages: React.FC = () => {
                     </AnswerMessage>
                   );
                 })}
+              {messages.length === 0 && (
+                <EmptyChat>
+                  <h3>Nenhuma mensagem encontrada</h3>
+                  <img
+                    src={EmptyMessageChatSVG}
+                    alt="Lista de mensagens vazia."
+                  />
+                </EmptyChat>
+              )}
               {loading && (
                 <OwnerMessage loading={loading} key="message-loading">
                   <Loader />
