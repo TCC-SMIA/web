@@ -9,11 +9,16 @@ import Button from '../../components/Button';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
 
-import { Container, FormContent, AvatarContainer } from './styles';
+import {
+  Container,
+  FormContent,
+  AvatarContainer,
+  ButtonLogout,
+} from './styles';
 import { RANDOM_AVATAR } from '../../utils/constants';
 
 const Profile: React.FC = () => {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, signOut } = useAuth();
 
   const [nameInput, setNameInput] = useState(user.name || '');
   const [nicknameInput, setNicknameInput] = useState(user.nickname || '');
@@ -186,6 +191,10 @@ const Profile: React.FC = () => {
     setPasswordConfirmationInput(event.target.value);
   }, []);
 
+  const handleSignOut = useCallback(() => {
+    signOut();
+  }, [signOut]);
+
   return (
     <Container>
       <AvatarContainer>
@@ -242,6 +251,7 @@ const Profile: React.FC = () => {
           </Button>
         </form>
       </FormContent>
+      <ButtonLogout onClick={handleSignOut}>Logout</ButtonLogout>
     </Container>
   );
 };

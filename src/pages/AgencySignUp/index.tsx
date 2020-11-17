@@ -1,10 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { FiArrowLeft, FiUser, FiMapPin } from 'react-icons/fi';
+import React, { useState, useCallback } from 'react';
+import { FiArrowLeft, FiUser } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { LeafletMouseEvent } from 'leaflet';
 
 import api from '../../services/api';
 import imgLogo from '../../assets/logo.png';
@@ -16,10 +15,8 @@ import {
   FormContainer,
   LogoImage,
   BottomButtonsContainer,
-  MapButton,
 } from './styles';
 import Input from '../../components/Input';
-import ModalMap from '../../components/ModalMap';
 
 interface ISignUpAgencyRequest {
   name: string;
@@ -38,17 +35,6 @@ const AgencySignUp: React.FC = () => {
   const [cnpjInput, setCnpjInput] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const [modalMapToggle, setModalMapToggle] = useState(false);
-
-  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
-    0,
-    0,
-  ]);
-  const [initialPosition, setInitialPosition] = useState<[number, number]>([
-    0,
-    0,
-  ]);
-
   const navigate = useNavigate();
 
   const handleSignUp = useCallback(
@@ -56,8 +42,6 @@ const AgencySignUp: React.FC = () => {
       event.preventDefault();
       setLoading(true);
       try {
-        const [latitude, longitude] = selectedPosition;
-
         const userSchema = Yup.object().shape({
           name: Yup.string()
             .required('Nome é um campo obrigatório.')
@@ -98,8 +82,6 @@ const AgencySignUp: React.FC = () => {
           cnpj: cnpjInput,
           email: emailInput,
           password: passwordInput,
-          latitude,
-          longitude,
         } as ISignUpAgencyRequest);
 
         toast.success('Cadastro realizado com sucesso.');
@@ -123,7 +105,6 @@ const AgencySignUp: React.FC = () => {
       }
     },
     [
-      selectedPosition,
       nameInput,
       cnpjInput,
       emailInput,
@@ -132,18 +113,6 @@ const AgencySignUp: React.FC = () => {
       navigate,
     ],
   );
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-
-      setInitialPosition([latitude, longitude]);
-    });
-  }, []);
-
-  const handleMapClick = useCallback((event: LeafletMouseEvent): void => {
-    setSelectedPosition([event.latlng.lat, event.latlng.lng]);
-  }, []);
 
   const handleChangeEmailInput = useCallback((event) => {
     setEmailInput(event.target.value);
@@ -183,6 +152,8 @@ const AgencySignUp: React.FC = () => {
           <Input
             placeholder="CNPJ: "
             name="cnpj"
+            type="number"
+            pattern="[0-9]"
             onChange={(event) => handleChangeCnpjInput(event)}
           />
           <Input
@@ -201,10 +172,7 @@ const AgencySignUp: React.FC = () => {
             type="password"
             onChange={(event) => handleChangePasswordInput(event)}
           />
-          <MapButton type="button" onClick={() => setModalMapToggle(true)}>
-            <FiMapPin />
-            Marcar no mapa
-          </MapButton>
+
           <Button loading={loading} type="submit">
             Cadastrar
           </Button>
@@ -220,15 +188,6 @@ const AgencySignUp: React.FC = () => {
           </Link>
         </BottomButtonsContainer>
       </FormContainer>
-
-      {modalMapToggle && (
-        <ModalMap
-          initialPosition={initialPosition}
-          selectedPosition={selectedPosition}
-          handleMapClick={handleMapClick}
-          onClose={() => setModalMapToggle(false)}
-        />
-      )}
     </Container>
   );
 };

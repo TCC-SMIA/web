@@ -40,20 +40,23 @@ const Header: React.FC = () => {
           </Link>
         </Button>
 
-        <Button>
-          <Link to="/complaints">
-            <FiNavigation2 />
+        {user.user_type === 1 && (
+          <>
+            <Button>
+              <Link to="/complaints">
+                <FiNavigation2 />
+                <Title>Minhas Denúncias</Title>
+              </Link>
+            </Button>
 
-            <Title>Minhas Denúncias</Title>
-          </Link>
-        </Button>
-
-        <Button>
-          <Link to="/report">
-            <FiMap />
-            <Title>Relatar</Title>
-          </Link>
-        </Button>
+            <Button>
+              <Link to="/report">
+                <FiMap />
+                <Title>Relatar</Title>
+              </Link>
+            </Button>
+          </>
+        )}
 
         <Button>
           <Link to="/messages">

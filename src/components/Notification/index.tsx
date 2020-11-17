@@ -22,7 +22,7 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
     socket.subscribeToNewNotifications((data: INotification[]) => {
       setNotifications(data);
     });
-  }, [user.id]);
+  }, [user]);
 
   useEffect(() => {
     api.get('/notifications').then((response) => {

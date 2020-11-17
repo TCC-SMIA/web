@@ -1,3 +1,4 @@
+import { shade } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -65,5 +66,27 @@ export const AvatarContainer = styled.div`
     &:hover {
       background-color: var(--color-title-green);
     }
+  }
+`;
+
+export const ButtonLogout = styled.button`
+  position: relative;
+  width: 80%;
+  height: 46px;
+  border-radius: 10px;
+  border: none;
+  background: var(--color-input);
+  color: var(--color-white);
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: 0.2s;
+  letter-spacing: 0.1rem;
+
+  &:hover {
+    background: ${shade(0.2, `#0A2342`)};
+  }
+
+  @media (min-width: 768px) {
+    display: none;
   }
 `;

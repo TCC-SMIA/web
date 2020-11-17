@@ -96,6 +96,7 @@ export const OwnerMessage = styled.div<{ loading: boolean }>`
   border-radius: 10px 10px 0px 10px;
   width: 50%;
   align-self: flex-end;
+  word-wrap: break-word;
 
   @media (max-width: 700px) {
     width: 80%;
@@ -108,6 +109,7 @@ export const AnswerMessage = styled.div`
   border-radius: 0px 10px 10px 10px;
   width: 50%;
   align-self: flex-start;
+  word-wrap: break-word;
 
   @media (max-width: 700px) {
     width: 80%;
@@ -173,5 +175,21 @@ export const EmptyContainer = styled.div`
 
   img {
     width: 100%;
+  }
+`;
+
+export const EmptyChat = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  h3 {
+    color: var(--color-smia);
+  }
+
+  img {
+    width: 80%;
   }
 `;

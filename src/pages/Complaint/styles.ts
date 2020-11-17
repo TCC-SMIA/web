@@ -107,3 +107,5 @@ export const CommentsContainer = styled.div`
     font-weight: normal;
   }
 `;
+
+export const CommentItem = styled.div``;

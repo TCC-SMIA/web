@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
+import socket from '../services/socket/socket';
 
 import api from '../services/api';
 import IUser from '../entities/User';
@@ -52,6 +53,9 @@ const AuthProvider: React.FC = ({ children }) => {
     api.defaults.headers.authorization = `Bearer ${token}`;
 
     setData({ token, user });
+
+    socket.disconnect();
+    socket.connect(user.id);
   }, []);
 
   const signOut = useCallback(() => {
@@ -60,6 +64,7 @@ const AuthProvider: React.FC = ({ children }) => {
     localStorage.removeItem('@smia:user_type');
 
     setData({} as AuthState);
+    socket.disconnect();
   }, []);
 
   const updateUser = useCallback(

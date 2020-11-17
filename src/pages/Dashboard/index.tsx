@@ -42,7 +42,7 @@ const Dashboard: React.FC = () => {
     socket.subscribeToComplaintsFeed((data: IComplaint[]) => {
       setComplaints(data);
     });
-  }, [user.id]);
+  }, [user]);
 
   useEffect(() => {
     api.get('/complaints', { params: { take: 15 } }).then((response) => {
