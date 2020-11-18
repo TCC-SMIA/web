@@ -49,3 +49,35 @@ export const NotificationItem = styled.div`
 `;
 
 export const ReadButton = styled.div``;
+
+export const NotificationButton = styled.div<{ hasNotification: number }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    display: ${(props) => (props.hasNotification ? 'flex' : 'none')};
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    padding: 6px;
+    margin-top: -10px;
+
+    position: absolute;
+    margin-left: 12px;
+    width: 24px;
+    height: 24px;
+    background: #ff882e;
+    content: '';
+    border-radius: 50%;
+  }
+`;
+
+export const Title = styled.p`
+  color: var(--color-title-header);
+  font-size: 12px;
+
+  font-weight: bold;
+`;

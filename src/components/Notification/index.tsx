@@ -1,10 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { WiMoonNew, WiMoonAltNew } from 'react-icons/wi';
+import { IoMdNotificationsOutline } from 'react-icons/io';
 
 import api from '../../services/api';
 import socket from '../../services/socket/socket';
 import INotification from '../../entities/Notification';
-import { Container, NotificationItem, ReadButton } from './styles';
+import {
+  Container,
+  NotificationItem,
+  ReadButton,
+  NotificationButton,
+  Title,
+} from './styles';
 import { useAuth } from '../../hooks/useAuth';
 
 interface NotificationProps {
@@ -34,25 +41,36 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
     api.patch('/notifications/read', { notification_id: notification.id });
   }, []);
 
+  const hasNotification = useMemo((): number => {
+    return notifications.length;
+  }, [notifications]);
+
   return (
-    <Container isVisible={visible}>
-      {notifications &&
-        notifications.map((notification: INotification) => (
-          <NotificationItem
-            key={notification.id}
-            onClick={() => handleReadNotification(notification)}
-          >
-            <p>{notification.content}</p>
-            <ReadButton>
-              {notification.read ? (
-                <WiMoonNew color="#426d49" />
-              ) : (
-                <WiMoonAltNew color="#426d49" />
-              )}
-            </ReadButton>
-          </NotificationItem>
-        ))}
-    </Container>
+    <>
+      <NotificationButton hasNotification={hasNotification}>
+        <IoMdNotificationsOutline size={30} color="#fff" />
+        <Title>Notificaçes</Title>
+        <span>{hasNotification}</span>
+      </NotificationButton>
+      <Container isVisible={visible}>
+        {notifications &&
+          notifications.map((notification: INotification) => (
+            <NotificationItem
+              key={notification.id}
+              onClick={() => handleReadNotification(notification)}
+            >
+              <p>{notification.content}</p>
+              <ReadButton>
+                {notification.read ? (
+                  <WiMoonNew color="#426d49" />
+                ) : (
+                  <WiMoonAltNew color="#426d49" />
+                )}
+              </ReadButton>
+            </NotificationItem>
+          ))}
+      </Container>
+    </>
   );
 };
 
