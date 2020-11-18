@@ -46,6 +46,17 @@ const Report: React.FC = () => {
     event.preventDefault();
     try {
       setLoading(true);
+
+      if (title === '') {
+        setLoading(false);
+        throw new Error('Titulo não pode estar vazio.');
+      }
+
+      if (description === '') {
+        setLoading(false);
+        throw new Error('Descrição não pode estar vazia.');
+      }
+
       const [latitude, longitude] = selectedPosition;
 
       const data = new FormData();
@@ -70,6 +81,10 @@ const Report: React.FC = () => {
       navigate('/dashboard');
     } catch (err) {
       setLoading(false);
+      if (err.message) {
+        toast.error(err.message);
+        return;
+      }
       toast.error('Houve um erro ao tentar criar este relato.');
     }
   }
