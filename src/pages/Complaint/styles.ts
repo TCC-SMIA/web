@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   width: 100vw;
-
-  overflow: scroll;
+  height: 100vh;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -34,6 +33,8 @@ export const ComplaintContainer = styled.div`
   flex-direction: column;
   padding: 12px;
   width: 30%;
+
+  overflow-x: scroll;
 
   img {
     width: 90%;
