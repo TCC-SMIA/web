@@ -9,22 +9,30 @@ import {
 } from 'react-icons/fi';
 
 import { Container } from './styles';
+import { useAuth } from '../../hooks/useAuth';
+import { UserTypes } from '../../entities/User';
 
 const BottomNavigator: React.FC = () => {
+  const { user } = useAuth();
+
   return (
     <Container>
       <Link to="/dashboard">
         <FiHome />
         <p>Início</p>
       </Link>
-      <Link to="/complaints">
-        <FiNavigation2 />
-        <p>Denúncias</p>
-      </Link>
-      <Link to="/report">
-        <FiMap />
-        <p>Relatar</p>
-      </Link>
+      {user.user_type === UserTypes.Reporter && (
+        <>
+          <Link to="/complaints">
+            <FiNavigation2 />
+            <p>Denúncias</p>
+          </Link>
+          <Link to="/report">
+            <FiMap />
+            <p>Relatar</p>
+          </Link>
+        </>
+      )}
       <Link to="/messages">
         <FiMessageCircle />
         <p>Mensagens</p>

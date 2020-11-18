@@ -10,6 +10,7 @@ import Notification from '../Notification';
 import { Container, LogoImage, Botoes, Button, Title } from './styles';
 import { useAuth } from '../../hooks/useAuth';
 import { RANDOM_AVATAR } from '../../utils/constants';
+import { UserTypes } from '../../entities/User';
 
 const Header: React.FC = () => {
   const [visible, setVisible] = useState(false);
@@ -40,7 +41,7 @@ const Header: React.FC = () => {
           </Link>
         </Button>
 
-        {user.user_type === 1 && (
+        {user.user_type === UserTypes.Reporter && (
           <>
             <Button>
               <Link to="/complaints">

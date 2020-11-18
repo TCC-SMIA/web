@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { useParams } from 'react-router';
+import { format } from 'date-fns';
 
 import emptyListSvg from '../../assets/empty-list.svg';
 import emptyImageSvg from '../../assets/empty-image.svg';
@@ -36,13 +37,10 @@ const Complaint: React.FC = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const getComplaintData = async (): Promise<void> => {
-      await api.get<IComplaint>(`/complaints/${id}`).then((response) => {
-        setComplaint(response.data);
-        setComments(response.data.comments);
-      });
-    };
-    getComplaintData();
+    api.get<IComplaint>(`/complaints/${id}`).then((response) => {
+      setComplaint(response.data);
+      setComments(response.data.comments);
+    });
   }, [id]);
 
   useEffect(() => {
@@ -115,10 +113,19 @@ const Complaint: React.FC = () => {
             <CommentsContainer>
               <h1>Comentários</h1>
               {comments &&
-                comments.map((comment) => (
+                comments.map((comment: IComment) => (
                   <CommentItem key={comment.id}>
-                    <img src={RANDOM_AVATAR} alt="default" />
-                    <p>{comment.content}</p>
+                    <div>
+                      <img
+                        src={comment.user.avatar_url || RANDOM_AVATAR}
+                        alt="default"
+                      />
+                      <div>
+                        <h5>{comment.user.name}</h5>
+                        <p>{comment.content}</p>
+                      </div>
+                    </div>
+                    <span>{format(new Date(comment.date), 'dd/MM HH:mm')}</span>
                   </CommentItem>
                 ))}
             </CommentsContainer>
