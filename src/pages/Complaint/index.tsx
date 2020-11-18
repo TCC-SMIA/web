@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { useParams } from 'react-router';
-
 import { format } from 'date-fns';
+
 import emptyListSvg from '../../assets/empty-list.svg';
 import emptyImageSvg from '../../assets/empty-image.svg';
 import socket from '../../services/socket/socket';
@@ -42,10 +42,6 @@ const Complaint: React.FC = () => {
       setComments(response.data.comments);
     });
   }, [id]);
-
-  useEffect(() => {
-    console.log(comments);
-  }, [comments]);
 
   useEffect(() => {
     socket.disconnect();

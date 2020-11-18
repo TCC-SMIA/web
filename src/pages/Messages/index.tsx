@@ -35,7 +35,7 @@ interface ICreateMessageRequestParams {
 const Messages: React.FC = () => {
   const [chats, setChats] = useState([] as IChat[]);
   const [messages, setMessages] = useState([] as IMessage[]);
-  const [selected, setSelected] = useState({} as IChat);
+  const [selected, setSelected] = useState('');
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -44,15 +44,9 @@ const Messages: React.FC = () => {
   useEffect(() => {
     api.get('/chats').then((response) => {
       setChats(response.data);
-      setSelected(response?.data[0]);
+      setSelected(response.data[0].id);
     });
   }, []);
-
-  useEffect(() => {
-    socket.subscribeToMessagesChannel((data: IMessage[]) => {
-      selected && selected.id === data[0].chat_id && setMessages(data);
-    });
-  }, [user, selected]);
 
   useEffect(() => {
     socket.disconnect();
@@ -61,19 +55,26 @@ const Messages: React.FC = () => {
     socket.subscribeToChatsChannel((data: IChat[]) => {
       setChats(data);
     });
+
+    socket.subscribeToMessagesChannel((data: IMessage[]) => {
+      if (selected === data[0].chat_id) {
+        setMessages(data);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
-    if (selected && selected.id)
+    if (selected)
       api
-        .get(`/messages`, { params: { chat_id: selected.id } })
+        .get(`/messages`, { params: { chat_id: selected } })
         .then((response) => {
           setMessages(response.data);
         });
   }, [selected]);
 
-  const handleSelect = useCallback((chat: IChat) => {
-    setSelected(chat);
+  const handleSelect = useCallback((chat_id: string) => {
+    setSelected(chat_id);
   }, []);
 
   const handleCreateMessage = useCallback(
@@ -88,7 +89,7 @@ const Messages: React.FC = () => {
 
       api
         .post('/messages', {
-          chat_id: selected?.id,
+          chat_id: selected,
           content: inputMessage,
         } as ICreateMessageRequestParams)
         .then((response) => {
@@ -121,8 +122,8 @@ const Messages: React.FC = () => {
                   return (chat?.user && chat.user.id) === user.id ? (
                     <ChatItem
                       key={chat.id}
-                      onClick={() => handleSelect(chat)}
-                      selected={chat.id === selected.id}
+                      onClick={() => handleSelect(chat.id)}
+                      selected={chat.id === selected}
                     >
                       <img
                         src={chat?.destinatary?.avatar_url || RANDOM_AVATAR}
@@ -135,8 +136,8 @@ const Messages: React.FC = () => {
                   ) : (
                     <ChatItem
                       key={chat.id}
-                      onClick={() => handleSelect(chat)}
-                      selected={chat.id === selected.id}
+                      onClick={() => handleSelect(chat.id)}
+                      selected={chat.id === selected}
                     >
                       <img
                         src={chat?.user?.avatar_url || RANDOM_AVATAR}
@@ -181,7 +182,7 @@ const Messages: React.FC = () => {
               )}
             </MessagesList>
             <MessagesBox>
-              {selected.id && (
+              {selected && (
                 <form onSubmit={(event) => handleCreateMessage(event)}>
                   <input
                     type="text"
