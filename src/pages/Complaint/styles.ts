@@ -108,4 +108,45 @@ export const CommentsContainer = styled.div`
   }
 `;
 
-export const CommentItem = styled.div``;
+export const CommentItem = styled.div`
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 5px;
+  justify-content: space-between;
+
+  & + div {
+    margin-top: 10px;
+  }
+
+  span {
+    color: #777;
+    font-size: 10px;
+    align-self: flex-end;
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    > div {
+      h5 {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  img {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  p {
+    color: #555;
+    font-size: 14px;
+  }
+`;
