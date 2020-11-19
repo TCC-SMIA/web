@@ -6,6 +6,10 @@ export const Container = styled.div`
   flex-direction: column;
   padding: 20px;
   align-items: center;
+
+  @media (min-width: 768px) {
+    width: 80%;
+  }
 `;
 
 export const Feed = styled.div`
