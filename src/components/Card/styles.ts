@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.div`
   padding: 15px 30px;
@@ -20,15 +21,37 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const IconsContainer = styled.div`
+  button {
+    border: none;
+    background: none;
+
+    > svg {
+      color: red;
+      transition: 0.1s;
+
+      :hover {
+        color: ${shade(0.2, `red`)};
+      }
+    }
+  }
 
   a {
     text-decoration: none;
+    margin-left: 25px;
   }
 
   svg {
     color: var(--color-smia);
     width: 40px;
     height: 40px;
+    transition: 0.2s;
+
+    :hover {
+      color: var(--color-smia-hover);
+    }
   }
 `;
 

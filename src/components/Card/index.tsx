@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { IoMdPin } from 'react-icons/io';
-import { FiSend } from 'react-icons/fi';
+import { FiSend, FiTrash, FiEdit } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {
@@ -11,6 +11,7 @@ import {
   Description,
   Options,
   AddComentContainer,
+  IconsContainer,
 } from './styles';
 import IComplaint from '../../entities/Complaint';
 import { RANDOM_AVATAR } from '../../utils/constants';
@@ -86,13 +87,27 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
             </>
           )}
         </AvatarContainer>
-        <Link
-          to={{
-            pathname: `/complaint/${complaint.id}`,
-          }}
-        >
-          <IoMdPin />
-        </Link>
+        <IconsContainer>
+          {complaint.user.id === user.id && (
+            <>
+              <button type="button">
+                <FiTrash />
+              </button>
+
+              <Link to="/">
+                <FiEdit />
+              </Link>
+            </>
+          )}
+
+          <Link
+            to={{
+              pathname: `/complaint/${complaint.id}`,
+            }}
+          >
+            <IoMdPin />
+          </Link>
+        </IconsContainer>
       </Header>
       <Title>
         <h5>{complaint.title}</h5>
