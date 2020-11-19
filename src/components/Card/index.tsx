@@ -18,6 +18,7 @@ import { RANDOM_AVATAR } from '../../utils/constants';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
 import { ButtonSend } from '../../pages/Messages/styles';
+import Modal from './Modal';
 
 interface ICreateCommentRequestParams {
   complaint_id: string;
@@ -33,6 +34,7 @@ interface ICardProps {
 
 const Card: React.FC<ICardProps> = ({ complaint }) => {
   const [inputMessage, setInputMessage] = useState('');
+  const [complaintToBeDeleted, setComplaintToBeDeleted] = useState('');
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -67,8 +69,13 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
     [complaint.id, inputMessage],
   );
 
+  const handleDeleteComplaint = useCallback((complaint_id: string) => {
+    setComplaintToBeDeleted(complaint_id);
+  }, []);
+
   return (
     <Container>
+      <Modal show={complaintToBeDeleted} close={handleDeleteComplaint} />
       <Header>
         <AvatarContainer>
           {complaint.anonymous && (
@@ -90,7 +97,10 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
         <IconsContainer>
           {complaint.user.id === user.id && (
             <>
-              <button type="button">
+              <button
+                type="button"
+                onClick={() => handleDeleteComplaint(complaint.id)}
+              >
                 <FiTrash />
               </button>
 
@@ -122,7 +132,6 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
         }
         alt="default"
       />
-
       <Options>
         {complaint.user_id !== user.id && !complaint.anonymous && (
           <button
