@@ -53,6 +53,11 @@ export const IconsContainer = styled.div`
     height: 40px;
     transition: 0.2s;
 
+    @media (max-width: 768px) {
+      width: 28px;
+      height: 28px;
+    }
+
     :hover {
       color: var(--color-smia-hover);
     }
@@ -82,6 +87,8 @@ export const AvatarContainer = styled.div`
     font-weight: 500;
     font-size: 1.2rem;
     margin-left: 10px;
+    text-decoration: none;
+    color: #111;
   }
 
   a {

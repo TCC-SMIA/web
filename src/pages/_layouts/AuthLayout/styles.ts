@@ -4,10 +4,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: var(--header-height);
-  min-height: 100vh;
-  height: 100%;
   background: var(--color-background);
-  margin-top: 105px;
 
   @media (max-width: 768px) {
     margin-top: 0;

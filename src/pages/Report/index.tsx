@@ -150,7 +150,7 @@ const Report: React.FC = () => {
                 onChange={handleSelectType}
                 value={selectedType}
               >
-                <option value="0">Selecione uma UF</option>
+                <option value="0">Selecione um tipo</option>
                 {complaintTypes.map((type) => (
                   <option key={type} value={type}>
                     {type}
