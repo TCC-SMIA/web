@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import { IoMdNotificationsOutline } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { FiHome, FiMap, FiMessageCircle, FiNavigation2 } from 'react-icons/fi';
 
@@ -67,10 +66,6 @@ const Header: React.FC = () => {
         </Button>
 
         <Button onClick={handleNoticationVisible}>
-          <div>
-            <IoMdNotificationsOutline size={30} color="#fff" />
-            <Title>Notificaçes</Title>
-          </div>
           <Notification visible={notificationsVisible} />
         </Button>
 

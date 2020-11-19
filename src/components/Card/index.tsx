@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { IoMdPin } from 'react-icons/io';
-import { FiSend } from 'react-icons/fi';
+import { FiSend, FiTrash, FiEdit } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {
@@ -11,12 +11,14 @@ import {
   Description,
   Options,
   AddComentContainer,
+  IconsContainer,
 } from './styles';
 import IComplaint from '../../entities/Complaint';
-import { RANDOM_AVATAR } from '../../utils/constants';
+import { RANDOM_AVATAR, RANDOM_COMPLAINT_IMAGE } from '../../utils/constants';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
 import { ButtonSend } from '../../pages/Messages/styles';
+import Modal from './Modal';
 
 interface ICreateCommentRequestParams {
   complaint_id: string;
@@ -32,6 +34,7 @@ interface ICardProps {
 
 const Card: React.FC<ICardProps> = ({ complaint }) => {
   const [inputMessage, setInputMessage] = useState('');
+  const [complaintToBeDeleted, setComplaintToBeDeleted] = useState('');
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -66,33 +69,55 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
     [complaint.id, inputMessage],
   );
 
+  const handleDeleteComplaint = useCallback((complaint_id: string) => {
+    setComplaintToBeDeleted(complaint_id);
+  }, []);
+
   return (
     <Container>
+      <Modal show={complaintToBeDeleted} close={handleDeleteComplaint} />
       <Header>
         <AvatarContainer>
           {complaint.anonymous && (
-            <>
+            <Link to={`/profile/${complaint.user.id}`}>
               <img src={RANDOM_AVATAR} alt="avatar" />
               <p>Anônimo</p>
-            </>
+            </Link>
           )}
           {!complaint.anonymous && (
-            <>
+            <Link to={`/profile/${complaint.user.id}`}>
               <img
                 src={complaint.user.avatar_url || RANDOM_AVATAR}
                 alt="avatar"
               />
               <p>{complaint.user.name}</p>
-            </>
+            </Link>
           )}
         </AvatarContainer>
-        <Link
-          to={{
-            pathname: `/complaint/${complaint.id}`,
-          }}
-        >
-          <IoMdPin />
-        </Link>
+        <IconsContainer>
+          {complaint.user.id === user.id && (
+            <>
+              <button
+                type="button"
+                onClick={() => handleDeleteComplaint(complaint.id)}
+              >
+                <FiTrash />
+              </button>
+
+              <Link to="/">
+                <FiEdit />
+              </Link>
+            </>
+          )}
+
+          <Link
+            to={{
+              pathname: `/complaint/${complaint.id}`,
+            }}
+          >
+            <IoMdPin />
+          </Link>
+        </IconsContainer>
       </Header>
       <Title>
         <h5>{complaint.title}</h5>
@@ -100,14 +125,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Description>
         <p>{complaint.description}</p>
       </Description>
-      <img
-        src={
-          complaint.image_url ||
-          'https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'
-        }
-        alt="default"
-      />
-
+      <img src={complaint.image_url || RANDOM_COMPLAINT_IMAGE} alt="default" />
       <Options>
         {complaint.user_id !== user.id && !complaint.anonymous && (
           <button
