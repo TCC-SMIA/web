@@ -14,7 +14,7 @@ import {
   IconsContainer,
 } from './styles';
 import IComplaint from '../../entities/Complaint';
-import { RANDOM_AVATAR } from '../../utils/constants';
+import { RANDOM_AVATAR, RANDOM_COMPLAINT_IMAGE } from '../../utils/constants';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
 import { ButtonSend } from '../../pages/Messages/styles';
@@ -79,19 +79,19 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Header>
         <AvatarContainer>
           {complaint.anonymous && (
-            <>
+            <Link to={`/profile/${complaint.user.id}`}>
               <img src={RANDOM_AVATAR} alt="avatar" />
               <p>Anônimo</p>
-            </>
+            </Link>
           )}
           {!complaint.anonymous && (
-            <>
+            <Link to={`/profile/${complaint.user.id}`}>
               <img
                 src={complaint.user.avatar_url || RANDOM_AVATAR}
                 alt="avatar"
               />
               <p>{complaint.user.name}</p>
-            </>
+            </Link>
           )}
         </AvatarContainer>
         <IconsContainer>
@@ -125,13 +125,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Description>
         <p>{complaint.description}</p>
       </Description>
-      <img
-        src={
-          complaint.image_url ||
-          'https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'
-        }
-        alt="default"
-      />
+      <img src={complaint.image_url || RANDOM_COMPLAINT_IMAGE} alt="default" />
       <Options>
         {complaint.user_id !== user.id && !complaint.anonymous && (
           <button
