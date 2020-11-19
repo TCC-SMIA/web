@@ -38,14 +38,23 @@ const Messages: React.FC = () => {
   const [selected, setSelected] = useState('');
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(false);
+  const [loadingMessage, setloadingMessage] = useState(false);
 
   const { user } = useAuth();
 
   useEffect(() => {
-    api.get('/chats').then((response) => {
-      setChats(response.data);
-      setSelected(response.data[0].id);
-    });
+    setLoadingPage(true);
+    api
+      .get('/chats')
+      .then((response) => {
+        setChats(response.data);
+        setSelected(response.data[0].id);
+        setLoadingPage(false);
+      })
+      .catch(() => {
+        setLoadingPage(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -65,11 +74,16 @@ const Messages: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
+    setloadingMessage(true);
     if (selected)
       api
         .get(`/messages`, { params: { chat_id: selected } })
         .then((response) => {
           setMessages(response.data);
+          setloadingMessage(false);
+        })
+        .catch(() => {
+          setloadingMessage(false);
         });
   }, [selected]);
 
@@ -107,7 +121,8 @@ const Messages: React.FC = () => {
 
   return (
     <Container>
-      {chats.length === 0 && (
+      {loadingPage && <Loader />}
+      {chats.length === 0 && !loadingPage && (
         <EmptyContainer>
           <h2>Não encontramos chats criados.</h2>
           <img src={EmptyMessageSVG} alt="Lista de chats vazio." />
@@ -166,7 +181,8 @@ const Messages: React.FC = () => {
                     </AnswerMessage>
                   );
                 })}
-              {messages.length === 0 && (
+              {loadingMessage && <Loader />}
+              {messages.length === 0 && !loadingMessage && (
                 <EmptyChat>
                   <h3>Nenhuma mensagem encontrada</h3>
                   <img
