@@ -108,9 +108,6 @@ const Complaint: React.FC = () => {
                 )}
               </AvatarContainer>
               <StatusContainer>
-                <span>
-                  Resolvido <FiCheck />
-                </span>
                 {complaint.resolved && (
                   <span>
                     Resolvido <FiCheck />
