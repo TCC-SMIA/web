@@ -95,9 +95,6 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           )}
         </AvatarContainer>
         <IconsContainer>
-          <span>
-            Resolvido <FiCheck />
-          </span>
           {complaint.resolved && (
             <span>
               Resolvido <FiCheck />

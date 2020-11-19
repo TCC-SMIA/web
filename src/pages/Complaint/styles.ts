@@ -151,3 +151,17 @@ export const CommentItem = styled.div`
     font-size: 14px;
   }
 `;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StatusContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  span {
+    color: var(--color-smia);
+  }
+`;
