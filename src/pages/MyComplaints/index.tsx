@@ -9,10 +9,23 @@ import EmptyMyComplaintsSVG from '../../assets/empty-my-complaints.svg';
 
 import { Container, Feed, EmptyContainer } from './styles';
 import Loader from '../../components/Loader';
+import Resume from '../../components/Resume';
+import { useAuth } from '../../hooks/useAuth';
+import IResume from '../../entities/Resume';
 
 const MyComplaints: React.FC = () => {
   const [complaints, setComplaints] = useState([] as IComplaint[]);
+  const [resume, setResume] = useState({} as IResume);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    api
+      .get('/users/profile/resume', { params: { user_id: user.id } })
+      .then((response) => {
+        setResume(response.data);
+      });
+  }, [user]);
 
   useEffect(() => {
     api.get(`/complaints/mycomplaints`).then((response) => {
@@ -24,6 +37,11 @@ const MyComplaints: React.FC = () => {
   return (
     <Container>
       {loading && <Loader />}
+      <Resume
+        all={resume.complaints_reported}
+        inProgress={resume.complaints_in_progress}
+        resolved={resume.complaints_resolved}
+      />
       {complaints.length === 0 && !loading && (
         <EmptyContainer>
           <h2>Você ainda não criou relatos.</h2>

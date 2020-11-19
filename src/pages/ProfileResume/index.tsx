@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Resume from '../../components/Resume';
+import IResume from '../../entities/Resume';
 
-import IUser from '../../entities/User';
 import api from '../../services/api';
 import { RANDOM_AVATAR } from '../../utils/constants';
 import RecentAcitivities from './RecentAcitivities';
 
 import { Container, AvatarContainer } from './styles';
-
-interface IResume {
-  user: IUser;
-  complaints_reported: number;
-  complaints_in_progress: number;
-  complaints_resolved: number;
-}
 
 const ProfileResume: React.FC = () => {
   const [resume, setResume] = useState({} as IResume);
