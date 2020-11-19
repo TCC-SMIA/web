@@ -125,9 +125,8 @@ export const SearchSelect = styled.div`
     background: var(--color-white);
     border-radius: 8px;
     border: 0;
-    padding: 16px 24px;
+    padding: 16px 0 16px 42px;
     font-size: 1rem;
-    margin: 4px 8px;
   }
 
   option {
@@ -136,6 +135,10 @@ export const SearchSelect = styled.div`
 
   svg {
     position: absolute;
-    right: 16px;
+    right: 8px;
+  }
+
+  @media (max-width: 450px) {
+    width: 95%;
   }
 `;
