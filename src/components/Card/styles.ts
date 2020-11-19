@@ -24,6 +24,10 @@ export const Header = styled.div`
 `;
 
 export const IconsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
   button {
     border: none;
     background: none;
@@ -53,10 +57,18 @@ export const IconsContainer = styled.div`
       color: var(--color-smia-hover);
     }
   }
+
+  span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--color-smia-hover);
+  }
 `;
 
 export const AvatarContainer = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
 
   img {
@@ -70,6 +82,12 @@ export const AvatarContainer = styled.div`
     font-weight: 500;
     font-size: 1.2rem;
     margin-left: 10px;
+  }
+
+  a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 `;
 

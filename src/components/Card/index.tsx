@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { IoMdPin } from 'react-icons/io';
-import { FiSend, FiTrash, FiEdit } from 'react-icons/fi';
+import { FiSend, FiTrash, FiEdit, FiCheck } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {
@@ -95,6 +95,14 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           )}
         </AvatarContainer>
         <IconsContainer>
+          <span>
+            Resolvido <FiCheck />
+          </span>
+          {complaint.resolved && (
+            <span>
+              Resolvido <FiCheck />
+            </span>
+          )}
           {complaint.user.id === user.id && (
             <>
               <button
