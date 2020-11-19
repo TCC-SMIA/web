@@ -4,7 +4,12 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 75%;
+  padding: 20px;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    width: 80%;
+  }
 `;
 
 export const Feed = styled.div`

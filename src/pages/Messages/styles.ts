@@ -6,9 +6,11 @@ export const Container = styled.div`
   background: var(--color-white);
   border-radius: 5px;
   min-width: 80%;
-  height: 88vh;
+  height: 100vh;
 
   @media (max-width: 700px) {
+    height: 100vh;
+
     flex-direction: column;
   }
 `;
@@ -23,6 +25,7 @@ export const ChatsContainer = styled.div`
 
 export const ChatList = styled.div`
   height: 100%;
+
   overflow-y: scroll;
 
   @media (max-width: 700px) {
@@ -70,7 +73,7 @@ export const MessagesContainer = styled.div`
 
   @media (max-width: 700px) {
     width: 100%;
-    height: 95%;
+    height: 100%;
   }
 `;
 

@@ -16,6 +16,11 @@ export const ComplaintList = styled.div`
   grid-gap: 15px;
   grid-template-columns: repeat(auto-fit, minmax(600px, 600px));
   grid-template-rows: repeat(auto-fit, min(1fr, 1fr));
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+    grid-template-rows: repeat(auto-fit, min(1fr, 1fr));
+  }
 `;
 
 export const ComplaintItem = styled.div`
@@ -35,6 +40,10 @@ export const ComplaintItem = styled.div`
 
     p {
       font-size: 0.8rem;
+
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
 
     span {
