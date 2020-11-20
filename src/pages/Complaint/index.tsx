@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { useParams } from 'react-router';
 import { format } from 'date-fns';
+import { FiCheck } from 'react-icons/fi';
 
 import emptyListSvg from '../../assets/empty-list.svg';
 import emptyImageSvg from '../../assets/empty-image.svg';
@@ -20,6 +21,8 @@ import {
   Title,
   CommentsContainer,
   CommentItem,
+  Header,
+  StatusContainer,
 } from './styles';
 import { RANDOM_AVATAR } from '../../utils/constants';
 import { IComment } from '../../entities/Comment';
@@ -86,23 +89,32 @@ const Complaint: React.FC = () => {
             </Map>
           </MapContainer>
           <ComplaintContainer>
-            <AvatarContainer>
-              {complaint.anonymous && (
-                <>
-                  <img src={RANDOM_AVATAR} alt="avatar" />
-                  <p>Anônimo</p>
-                </>
-              )}
-              {!complaint.anonymous && (
-                <>
-                  <img
-                    src={complaint?.user?.avatar_url || RANDOM_AVATAR}
-                    alt="avatar"
-                  />
-                  <p>{complaint?.user?.name}</p>
-                </>
-              )}
-            </AvatarContainer>
+            <Header>
+              <AvatarContainer>
+                {complaint.anonymous && (
+                  <>
+                    <img src={RANDOM_AVATAR} alt="avatar" />
+                    <p>Anônimo</p>
+                  </>
+                )}
+                {!complaint.anonymous && (
+                  <>
+                    <img
+                      src={complaint?.user?.avatar_url || RANDOM_AVATAR}
+                      alt="avatar"
+                    />
+                    <p>{complaint?.user?.name}</p>
+                  </>
+                )}
+              </AvatarContainer>
+              <StatusContainer>
+                {complaint.resolved && (
+                  <span>
+                    Resolvido <FiCheck />
+                  </span>
+                )}
+              </StatusContainer>
+            </Header>
             <Title>
               <p>{complaint.title}</p>
             </Title>

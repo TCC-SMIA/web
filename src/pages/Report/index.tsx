@@ -1,13 +1,20 @@
-import React, { useState, useCallback, useEffect, FormEvent } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  FormEvent,
+  ChangeEvent,
+} from 'react';
 
 import Switch from 'react-switch';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { useNavigate } from 'react-router';
+import { IoIosArrowDown } from 'react-icons/io';
 
 import { toast } from 'react-toastify';
 import Dropzone from '../../components/Dropzone';
-import { Container, Header, Option, OptionMap } from './styles';
+import { Container, Header, Option, OptionMap, SearchSelect } from './styles';
 import api from '../../services/api';
 import Button from '../../components/Button';
 
@@ -16,6 +23,8 @@ const Report: React.FC = () => {
   const [description, setDescription] = useState('');
   const [anonymous, setAnonymous] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File>();
+  const [complaintTypes, setComplaintTypes] = useState<string[]>();
+  const [selectedType, setselectedType] = useState('');
 
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
     0,
@@ -29,6 +38,12 @@ const Report: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    api.get('/complaints/types').then((response) => {
+      setComplaintTypes(response.data.complaint_types);
+    });
+  }, []);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -67,6 +82,7 @@ const Report: React.FC = () => {
       data.append('latitude', String(latitude));
       data.append('longitude', String(longitude));
       data.append('anonymous', anonymous ? '1' : '0');
+      data.append('type', selectedType);
 
       if (selectedFile) {
         data.append('image', selectedFile);
@@ -101,6 +117,13 @@ const Report: React.FC = () => {
     setAnonymous(!anonymous);
   }, [anonymous]);
 
+  const handleSelectType = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>): void => {
+      setselectedType(event.target.value);
+    },
+    [],
+  );
+
   return (
     <Container>
       <Header>
@@ -116,6 +139,28 @@ const Report: React.FC = () => {
             name="titulo do relato"
           />
         </Option>
+
+        {!!complaintTypes && (
+          <Option>
+            <p>Tipo do relato</p>
+            <SearchSelect>
+              <select
+                name="uf"
+                id="uf"
+                onChange={handleSelectType}
+                value={selectedType}
+              >
+                <option value="0">Selecione um tipo</option>
+                {complaintTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+              <IoIosArrowDown />
+            </SearchSelect>
+          </Option>
+        )}
 
         <Dropzone onFileUploaded={setSelectedFile} />
 
