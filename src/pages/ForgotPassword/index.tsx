@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import imgLogo from '../../assets/logo.png';
 import api from '../../services/api';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
 
 import {
   Container,
@@ -83,13 +84,12 @@ const ForgotPassword: React.FC = () => {
         </div>
 
         <form onSubmit={(event) => handleForgotPassword(event)}>
-          <div>
-            <input
-              placeholder="Email: "
-              name="email"
-              onChange={(event) => handleChangeEmailInput(event)}
-            />
-          </div>
+          <Input
+            placeholder="Email: "
+            name="email"
+            onChange={(event) => handleChangeEmailInput(event)}
+          />
+
           <Button loading={loading} type="submit">
             Enviar
           </Button>
