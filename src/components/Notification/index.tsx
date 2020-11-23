@@ -49,7 +49,7 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
     <>
       <NotificationButton hasNotification={hasNotification}>
         <IoMdNotificationsOutline size={30} color="#fff" />
-        <Title>Notificaçes</Title>
+        <Title>Notificações</Title>
         <span>{hasNotification}</span>
       </NotificationButton>
       <Container isVisible={visible}>
