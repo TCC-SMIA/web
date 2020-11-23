@@ -13,15 +13,15 @@ const Resume: React.FC<IResumeQuantity> = ({ all, inProgress, resolved }) => {
     <ResumeContainer>
       <ResumeItem>
         <span>{all}</span>
-        <h2>Denûncias reportadas</h2>
+        <h2>Denúncias reportadas</h2>
       </ResumeItem>
       <ResumeItem>
         <span>{inProgress}</span>
-        <h2>Denûncias sendo resolvidas</h2>
+        <h2>Denúncias sendo resolvidas</h2>
       </ResumeItem>
       <ResumeItem>
         <span>{resolved}</span>
-        <h2>Denûncias resolvidas</h2>
+        <h2>Denúncias resolvidas</h2>
       </ResumeItem>
     </ResumeContainer>
   );
