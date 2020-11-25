@@ -1,15 +1,26 @@
 import React, { useCallback } from 'react';
+import { toast } from 'react-toastify';
 import api from '../../../services/api';
+import Loader from '../../Loader';
 
 import { Container } from './styles';
 
 const Modal: React.FC<{ show: string; close: any }> = ({ show, close }) => {
+  const [loading, setLoading] = React.useState(false);
+
   const handleDeleteComplaint = useCallback(() => {
-    api
-      .delete('/complaints/delete', { params: { complaint_id: show } })
-      .then(() => {
-        close('');
-      });
+    try {
+      setLoading(true);
+      api
+        .delete('/complaints/delete', { params: { complaint_id: show } })
+        .then(() => {
+          close('');
+          setLoading(false);
+        });
+    } catch (error) {
+      setLoading(false);
+      toast.error('Não foi possível apagar a denúncia.');
+    }
   }, [show, close]);
 
   return (
@@ -20,7 +31,8 @@ const Modal: React.FC<{ show: string; close: any }> = ({ show, close }) => {
             <h1>Você tem certeza que deseja apagar a denuncia?</h1>
             <div>
               <button type="submit" onClick={handleDeleteComplaint}>
-                Sim
+                {loading && <Loader />}
+                {!loading && 'Sim'}
               </button>
               <button type="submit" onClick={() => close('')}>
                 Não
