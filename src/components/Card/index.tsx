@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 import React, { useCallback, useState } from 'react';
 import { IoMdPin } from 'react-icons/io';
-import { FiSend, FiTrash, FiEdit, FiCheck } from 'react-icons/fi';
+import { FiSend, FiTrash, FiEdit } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {
@@ -24,7 +25,6 @@ interface ICreateCommentRequestParams {
   complaint_id: string;
   content: string;
 }
-
 interface ICreateChatRequestParams {
   contact_id: string;
 }
@@ -37,6 +37,19 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const [complaintToBeDeleted, setComplaintToBeDeleted] = useState('');
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const getStatusComplaint = (status: string): React.ReactNode => {
+    switch (status) {
+      case (status = 'New'):
+        return <>Nova denúncia</>;
+      case (status = 'InProgress'):
+        return <>Em progresso</>;
+      case (status = 'Resolved'):
+        return <>Resolvido</>;
+      default:
+        return <>Nova denúncia</>;
+    }
+  };
 
   const handleCreateChatWithReporter = useCallback(
     (user_id) => {
@@ -95,11 +108,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           )}
         </AvatarContainer>
         <IconsContainer>
-          {complaint.resolved && (
-            <span>
-              Resolvido <FiCheck />
-            </span>
-          )}
+          <span>{getStatusComplaint(complaint.status)}</span>
           {complaint.user.id === user.id && (
             <>
               <button

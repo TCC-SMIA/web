@@ -37,11 +37,13 @@ const MyComplaints: React.FC = () => {
   return (
     <Container>
       {loading && <Loader />}
-      <Resume
-        all={resume.complaints_reported}
-        inProgress={resume.complaints_in_progress}
-        resolved={resume.complaints_resolved}
-      />
+      {!!resume && !loading && (
+        <Resume
+          all={resume.complaints_reported}
+          inProgress={resume.complaints_in_progress}
+          resolved={resume.complaints_resolved}
+        />
+      )}
       {complaints.length === 0 && !loading && (
         <EmptyContainer>
           <h2>Você ainda não criou relatos.</h2>

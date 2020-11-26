@@ -67,7 +67,9 @@ export const IconsContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    text-align: center;
     color: var(--color-smia-hover);
+    margin-right: 12px;
   }
 `;
 

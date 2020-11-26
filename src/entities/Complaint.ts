@@ -13,6 +13,8 @@ export default interface IComplaint {
   anonymous: boolean;
   city: string;
   state: string;
+  status: string;
+  type: string;
   user: IUser;
   user_id?: string;
   comments: IComment[];

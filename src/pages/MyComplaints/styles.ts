@@ -26,12 +26,7 @@ export const EmptyContainer = styled.div`
   justify-content: center;
   text-align: center;
 
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  padding: 20px;
+  padding: 20px 180px;
 
   h2 {
     color: var(--color-smia);
@@ -53,5 +48,9 @@ export const EmptyContainer = styled.div`
     &:hover {
       color: ${shade(0.2, `#f2f2f2`)};
     }
+  }
+
+  @media (max-width: 760px) {
+    padding: 20px;
   }
 `;

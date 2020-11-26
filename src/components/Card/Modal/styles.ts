@@ -37,11 +37,12 @@ export const Container = styled.div`
       justify-content: center;
 
       button {
+        position: relative;
         height: 80px;
         width: 240px;
         border-radius: 20px;
         font-size: 1.8rem;
-        background: red;
+        background: var(--color-bg-button);
         color: #fff;
         border: none;
         font-weight: bold;

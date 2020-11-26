@@ -8,6 +8,7 @@ export const ResumeItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   padding: 10px;
 
   span {

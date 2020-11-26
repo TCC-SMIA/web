@@ -17,9 +17,13 @@ export const Container = styled.div`
 
 export const ChatsContainer = styled.div`
   width: 30%;
+  background: var(--color-white);
+  z-index: 9999;
 
   @media (max-width: 700px) {
     width: 100%;
+    position: fixed;
+    top: 0;
   }
 `;
 
@@ -73,7 +77,7 @@ export const MessagesContainer = styled.div`
 
   @media (max-width: 700px) {
     width: 100%;
-    height: 100%;
+    height: 80%;
   }
 `;
 
@@ -142,6 +146,10 @@ export const MessagesBox = styled.div`
     font-size: 15px;
     color: #4a4a4a;
     padding-left: 15px;
+  }
+  @media (max-width: 700px) {
+    position: fixed;
+    bottom: 45px;
   }
 `;
 
