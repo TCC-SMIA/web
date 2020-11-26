@@ -1,13 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useCallback, useState } from 'react';
 import { IoMdPin } from 'react-icons/io';
-import {
-  FiSend,
-  FiTrash,
-  FiEdit,
-  FiCheckCircle,
-  FiBriefcase,
-} from 'react-icons/fi';
+import { FiSend, FiTrash, FiEdit } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {
