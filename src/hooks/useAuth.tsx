@@ -42,7 +42,6 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = useCallback(async ({ login, password }: SignInCredentias) => {
     const response = await api.post('sessions', { login, password });
 
-    console.log('entrou aqui');
     const { token, user, user_type } = response.data;
 
     user.user_type = user_type;

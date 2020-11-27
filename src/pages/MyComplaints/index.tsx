@@ -30,7 +30,6 @@ const MyComplaints: React.FC = () => {
   useEffect(() => {
     api.get(`/complaints/mycomplaints`).then((response) => {
       setComplaints(response.data);
-      console.log(response.data);
       setLoading(false);
     });
   }, []);
