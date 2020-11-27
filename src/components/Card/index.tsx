@@ -92,7 +92,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Header>
         <AvatarContainer>
           {complaint.anonymous && (
-            <Link to={`/profile/${complaint.user.id}`}>
+            <Link to="/">
               <img src={RANDOM_AVATAR} alt="avatar" />
               <p>Anônimo</p>
             </Link>
@@ -109,7 +109,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
         </AvatarContainer>
         <IconsContainer>
           <span>{getStatusComplaint(complaint.status)}</span>
-          {complaint.user.id === user.id && (
+          {!complaint.anonymous && complaint.user.id === user.id && (
             <>
               <button
                 type="button"
@@ -118,7 +118,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
                 <FiTrash />
               </button>
 
-              <Link to="/">
+              <Link to={`/edit-report/${complaint.id}`}>
                 <FiEdit />
               </Link>
             </>
