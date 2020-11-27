@@ -109,7 +109,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
         </AvatarContainer>
         <IconsContainer>
           <span>{getStatusComplaint(complaint.status)}</span>
-          {!complaint.anonymous && complaint.user.id === user.id && (
+          {!!complaint.user && complaint.user.id === user.id && (
             <>
               <button
                 type="button"
@@ -123,7 +123,6 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
               </Link>
             </>
           )}
-
           <Link
             to={{
               pathname: `/complaint/${complaint.id}`,
