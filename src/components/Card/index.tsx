@@ -98,7 +98,11 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Header>
         <AvatarContainer>
           {complaint.anonymous && (
-            <Link to="/">
+            <Link
+              to="/"
+              style={{ cursor: 'default' }}
+              onClick={(e) => e.preventDefault()}
+            >
               <img src={RANDOM_AVATAR} alt="avatar" />
               <p>Anônimo</p>
             </Link>
