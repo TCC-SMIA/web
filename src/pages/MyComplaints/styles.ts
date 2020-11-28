@@ -7,8 +7,8 @@ export const Container = styled.div`
   padding: 20px;
   align-items: center;
 
-  @media (min-width: 768px) {
-    width: 80%;
+  @media (max-width: 768px) {
+    width: 95%;
   }
 `;
 
@@ -17,6 +17,10 @@ export const Feed = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `;
 
 export const EmptyContainer = styled.div`
