@@ -70,6 +70,10 @@ export const IconsContainer = styled.div`
     text-align: center;
     color: var(--color-smia-hover);
     margin-right: 12px;
+
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
   }
 `;
 
@@ -91,6 +95,12 @@ export const AvatarContainer = styled.div`
     margin-left: 10px;
     text-decoration: none;
     color: #111;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   a {
@@ -98,10 +108,26 @@ export const AvatarContainer = styled.div`
     flex-direction: row;
     align-items: center;
   }
+
+  @media (max-width: 768px) {
+    img {
+      height: 40px;
+      width: 40px;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const Description = styled.div`
   margin-top: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 
   p {
     font-weight: 300;

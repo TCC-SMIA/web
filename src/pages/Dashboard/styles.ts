@@ -25,6 +25,7 @@ export const FilterContainer = styled.div`
 
   button {
     align-items: center;
+
     svg {
       margin: auto 8px;
     }
@@ -32,6 +33,10 @@ export const FilterContainer = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
+
+    button {
+      font-size: 1rem;
+    }
   }
 `;
 

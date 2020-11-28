@@ -8,6 +8,10 @@ export const Title = styled.h1`
   text-align: center;
   border-bottom: 1px solid var(--color-smia);
   font-weight: 500;
+
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+  }
 `;
 
 export const ComplaintList = styled.div`

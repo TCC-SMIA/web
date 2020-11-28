@@ -8,7 +8,7 @@ export const Container = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-    width: 95%;
+    width: 100%;
   }
 `;
 
@@ -19,7 +19,7 @@ export const Feed = styled.div`
   flex-direction: column;
 
   @media (max-width: 768px) {
-    width: 95%;
+    width: 100%;
   }
 `;
 
