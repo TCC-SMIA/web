@@ -47,9 +47,6 @@ const Complaint: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-    socket.disconnect();
-    socket.connect(user.id);
-
     socket.subscribeToComplaintCommentsChannel((data: IComment[]) => {
       setComments(data);
     });

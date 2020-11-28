@@ -59,24 +59,18 @@ const Messages: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(messages);
-  }, [messages]);
-
-  useEffect(() => {
-    socket.disconnect();
-    socket.connect(user.id);
-
-    socket.subscribeToChatsChannel((data: IChat[]) => {
-      setChats(data);
-    });
-
     socket.subscribeToMessagesChannel((data: IMessage[]) => {
       if (selected === data[0].chat_id) {
         setMessages(data);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [selected]);
+
+  useEffect(() => {
+    socket.subscribeToChatsChannel((data: IChat[]) => {
+      setChats(data);
+    });
+  }, []);
 
   useEffect(() => {
     setloadingMessage(true);
