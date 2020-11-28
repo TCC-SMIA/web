@@ -21,6 +21,10 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const IconsContainer = styled.div`
@@ -187,4 +191,17 @@ export const AddComentContainer = styled.div`
 
 export const Title = styled.div`
   margin-top: 0.8rem;
+`;
+
+export const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  img {
+    max-width: 840px;
+    max-height: 560px;
+  }
 `;

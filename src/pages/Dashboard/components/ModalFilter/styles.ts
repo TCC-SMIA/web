@@ -24,3 +24,19 @@ export const Container = styled.div`
     width: 90vw;
   }
 `;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+
+  svg {
+    color: var(--color-smia);
+    height: 24px;
+    width: 24px;
+  }
+`;

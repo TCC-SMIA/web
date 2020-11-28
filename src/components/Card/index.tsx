@@ -13,7 +13,9 @@ import {
   Options,
   AddComentContainer,
   IconsContainer,
+  ImageContainer,
 } from './styles';
+
 import IComplaint from '../../entities/Complaint';
 import { RANDOM_AVATAR, RANDOM_COMPLAINT_IMAGE } from '../../utils/constants';
 import api from '../../services/api';
@@ -40,19 +42,6 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const getStatusComplaint = (status: string): React.ReactNode => {
-    switch (status) {
-      case (status = 'New'):
-        return <>Nova denúncia</>;
-      case (status = 'InProgress'):
-        return <>Em progresso</>;
-      case (status = 'Resolved'):
-        return <>Resolvido</>;
-      default:
-        return <>Nova denúncia</>;
-    }
-  };
-
   const handleCreateChatWithReporter = useCallback(
     (user_id) => {
       api
@@ -71,7 +60,10 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       event.preventDefault();
       setLoading(true);
 
-      if (!inputMessage) return;
+      if (!inputMessage) {
+        setLoading(false);
+        return;
+      }
 
       api
         .post('/comments', {
@@ -107,12 +99,12 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
                 src={complaint.user.avatar_url || RANDOM_AVATAR}
                 alt="avatar"
               />
-              <p>{complaint.user.name}</p>
+              <p>{complaint.user.nickname}</p>
             </Link>
           )}
         </AvatarContainer>
         <IconsContainer>
-          <span>{getStatusComplaint(complaint.status)}</span>
+          <span>{complaint.status}</span>
           {!!complaint.user && complaint.user.id === user.id && (
             <>
               <button
@@ -142,7 +134,14 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Description>
         <p>{complaint.description}</p>
       </Description>
-      <img src={complaint.image_url || RANDOM_COMPLAINT_IMAGE} alt="default" />
+
+      <ImageContainer>
+        <img
+          src={complaint.image_url || RANDOM_COMPLAINT_IMAGE}
+          alt="default"
+        />
+      </ImageContainer>
+
       <Options>
         {complaint.user_id !== user.id && !complaint.anonymous && (
           <button

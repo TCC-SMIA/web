@@ -48,6 +48,21 @@ export const NotificationItem = styled.div`
   }
 `;
 
+export const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  h2 {
+    color: var(--color-smia);
+  }
+
+  img {
+    margin-top: 8px;
+    max-height: 180px;
+  }
+`;
+
 export const ReadButton = styled.div``;
 
 export const NotificationButton = styled.div<{ hasNotification: number }>`
