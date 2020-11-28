@@ -134,6 +134,7 @@ export const Options = styled.div`
 `;
 
 export const AddComentContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
 
