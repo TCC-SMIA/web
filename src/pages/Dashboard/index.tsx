@@ -158,11 +158,11 @@ const Dashboard: React.FC = () => {
   );
 
   const complaintsInProgress = useMemo(() => {
-    const quantityInProfress = complaints.filter(
+    const quantityInProgress = complaints.filter(
       (complaint) => complaint.status === ComplaintStatusEnum.InProgress,
     ).length;
 
-    return quantityInProfress;
+    return quantityInProgress;
   }, [complaints]);
 
   const complaintsResolved = useMemo(() => {
@@ -175,7 +175,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      {complaints.length !== 0 && !loading && (
+      {!loading && (
         <>
           <Resume
             all={complaints.length}
@@ -198,6 +198,7 @@ const Dashboard: React.FC = () => {
           <img src={EmptyDashboardSVG} alt="Lista de mensagens vazia" />
         </EmptyContainer>
       )}
+
       {complaints.length > 0 && !loading && (
         <>
           <Feed>
@@ -208,7 +209,11 @@ const Dashboard: React.FC = () => {
         </>
       )}
       {modalFilterVisible && (
-        <ModalFilter>
+        <ModalFilter
+          onClose={() => {
+            setModalFilterVisible(!modalFilterVisible);
+          }}
+        >
           <SearchSelect>
             <select
               name="uf"
