@@ -108,18 +108,36 @@ export const OwnerMessage = styled.div<{ loading: boolean }>`
   @media (max-width: 700px) {
     width: 80%;
   }
+
+  span {
+    color: #333;
+    font-size: 12px;
+    align-self: flex-end;
+  }
 `;
 
 export const AnswerMessage = styled.div`
+  display: flex;
+  flex-direction: column;
   background: #d5d5d5;
   padding: 12px;
   border-radius: 0px 10px 10px 10px;
   width: 50%;
-  align-self: flex-start;
   word-wrap: break-word;
+  align-self: flex-start;
+
+  p {
+    align-self: flex-start;
+  }
 
   @media (max-width: 700px) {
     width: 80%;
+  }
+
+  span {
+    color: #333;
+    font-size: 12px;
+    align-self: flex-end;
   }
 `;
 

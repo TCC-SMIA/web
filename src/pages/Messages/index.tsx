@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 
+import { format } from 'date-fns';
 import Loader from '../../components/Loader';
 import IChat from '../../entities/Chat';
 import { useAuth } from '../../hooks/useAuth';
@@ -56,6 +57,10 @@ const Messages: React.FC = () => {
         setLoadingPage(false);
       });
   }, []);
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   useEffect(() => {
     socket.disconnect();
@@ -171,13 +176,21 @@ const Messages: React.FC = () => {
                   if (message.user_id === user.id) {
                     return (
                       <OwnerMessage loading={loading} key={message.id}>
-                        {message.content}
+                        <p>{message.content}</p>
+
+                        <span>
+                          {format(new Date(message.created_at), 'dd/MM HH:mm')}
+                        </span>
                       </OwnerMessage>
                     );
                   }
                   return (
                     <AnswerMessage key={message.id}>
-                      {message.content}
+                      <p>{message.content}</p>
+
+                      <span>
+                        {format(new Date(message.created_at), 'dd/MM HH:mm')}
+                      </span>
                     </AnswerMessage>
                   );
                 })}
