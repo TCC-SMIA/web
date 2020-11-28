@@ -6,6 +6,7 @@ export const Container = styled.div`
   align-self: center;
   background: var(--color-background);
   margin-top: 0;
+  min-height: 100vh;
 
   @media (max-width: 768px) {
     margin-top: 0;
