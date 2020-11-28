@@ -3,8 +3,10 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: var(--header-height);
+  align-self: center;
   background: var(--color-background);
+  margin-top: 0;
+  min-height: 100vh;
 
   @media (max-width: 768px) {
     margin-top: 0;

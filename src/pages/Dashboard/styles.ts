@@ -83,6 +83,7 @@ export const EmptyContainer = styled.div`
   transform: translate(-50%, -50%);
 
   padding: 20px;
+  height: 100%;
 
   h2 {
     color: var(--color-smia);
