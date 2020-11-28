@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
+import { FiFilter } from 'react-icons/fi';
 
 import api from '../../services/api';
 import Card from '../../components/Card';
@@ -7,16 +8,19 @@ import socket from '../../services/socket/socket';
 import IComplaint from '../../entities/Complaint';
 
 import EmptyDashboardSVG from '../../assets/empty-dashboard.svg';
+import Loader from '../../components/Loader';
+import ModalFilter from './components/ModalFilter';
+import Button from '../../components/Button';
+import { useAuth } from '../../hooks/useAuth';
 
 import {
   Container,
   Feed,
   SearchSelect,
-  SearchContainer,
+  FilterContainer,
   EmptyContainer,
 } from './styles';
-import Loader from '../../components/Loader';
-import { useAuth } from '../../hooks/useAuth';
+import { COMPLAINT_STATUS } from '../../utils/constants';
 
 interface IBGECityResponse {
   nome: string;
@@ -30,9 +34,13 @@ const Dashboard: React.FC = () => {
   const [complaints, setComplaints] = useState([] as IComplaint[]);
   const [ufs, setUfs] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
+  const [complaintTypes, setComplaintTypes] = useState<string[]>([]);
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedUf, setSelectedUf] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [loading, setLoading] = useState(true);
+  const [modalFilterVisible, setModalFilterVisible] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -77,22 +85,31 @@ const Dashboard: React.FC = () => {
       });
   }, [selectedUf]);
 
-  const filterComplaints = useCallback((state?: string, city?: string) => {
-    if (state && city) {
-      api
-        .get('/complaints', { params: { city, state, skip: 0, take: 15 } })
-        .then((response) => {
-          setComplaints(response.data);
-        });
-    }
-    if (state) {
-      api
-        .get('/complaints', { params: { state, skip: 0, take: 15 } })
-        .then((response) => {
-          setComplaints(response.data);
-        });
-    }
+  useEffect(() => {
+    api.get('/complaints/types').then((response) => {
+      setComplaintTypes(response.data.complaint_types);
+    });
   }, []);
+
+  const filterComplaints = useCallback(
+    (state?: string, city?: string, type?: string, status?: string) => {
+      api
+        .get('/complaints', {
+          params: {
+            city,
+            state,
+            type,
+            status,
+            skip: 0,
+            take: 15,
+          },
+        })
+        .then((response) => {
+          setComplaints(response.data);
+        });
+    },
+    [],
+  );
 
   const handleSelectUf = useCallback(
     (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -110,8 +127,42 @@ const Dashboard: React.FC = () => {
     [filterComplaints, selectedUf],
   );
 
+  const handleSelectType = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>): void => {
+      setSelectedType(event.target.value);
+      filterComplaints(
+        selectedUf,
+        selectedCity,
+        event.target.value,
+        selectedStatus,
+      );
+    },
+    [filterComplaints, selectedCity, selectedUf, selectedStatus],
+  );
+
+  const handleSelectStatus = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>): void => {
+      setSelectedStatus(event.target.value);
+      filterComplaints(
+        selectedUf,
+        selectedCity,
+        selectedType,
+        event.target.value,
+      );
+    },
+    [filterComplaints, selectedCity, selectedUf, selectedType],
+  );
+
   return (
     <Container>
+      {!loading && (
+        <FilterContainer>
+          <Button onClick={() => setModalFilterVisible(!modalFilterVisible)}>
+            <FiFilter />
+            Filtrar denúncias
+          </Button>
+        </FilterContainer>
+      )}
       {loading && <Loader />}
       {complaints.length === 0 && !loading && (
         <EmptyContainer>
@@ -121,46 +172,83 @@ const Dashboard: React.FC = () => {
       )}
       {complaints.length > 0 && !loading && (
         <>
-          <SearchContainer>
-            <SearchSelect>
-              <select
-                name="uf"
-                id="uf"
-                onChange={handleSelectUf}
-                value={selectedUf}
-              >
-                <option value="0">Selecione uma UF</option>
-                {ufs.map((uf) => (
-                  <option key={uf} value={uf}>
-                    {uf}
-                  </option>
-                ))}
-              </select>
-              <IoIosArrowDown />
-            </SearchSelect>
-            <SearchSelect>
-              <select
-                name="city"
-                id="city"
-                onChange={handleSelectCity}
-                value={selectedCity}
-              >
-                <option value="0">Selecione uma cidade</option>
-                {cities.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
-              <IoIosArrowDown />
-            </SearchSelect>
-          </SearchContainer>
           <Feed>
             {complaints?.map((complaint) => (
               <Card key={complaint.id} complaint={complaint} />
             ))}
           </Feed>
         </>
+      )}
+      {modalFilterVisible && (
+        <ModalFilter>
+          <SearchSelect>
+            <select
+              name="uf"
+              id="uf"
+              onChange={handleSelectUf}
+              value={selectedUf}
+            >
+              <option value="0">Selecione uma UF</option>
+              {ufs.map((uf) => (
+                <option key={uf} value={uf}>
+                  {uf}
+                </option>
+              ))}
+            </select>
+            <IoIosArrowDown />
+          </SearchSelect>
+          <SearchSelect>
+            <select
+              name="city"
+              id="city"
+              onChange={handleSelectCity}
+              value={selectedCity}
+            >
+              <option value="0">Selecione uma cidade</option>
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+            <IoIosArrowDown />
+          </SearchSelect>
+          <SearchSelect>
+            <select
+              name="type"
+              id="type"
+              onChange={handleSelectType}
+              value={selectedType}
+            >
+              <option value="0">Selecione um tipo</option>
+              {complaintTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+            <IoIosArrowDown />
+          </SearchSelect>
+          <SearchSelect>
+            <select
+              name="type"
+              id="type"
+              onChange={handleSelectStatus}
+              value={selectedStatus}
+            >
+              <option value="0">Selecione um status</option>
+              {COMPLAINT_STATUS.map((statusType) => (
+                <option key={statusType} value={statusType}>
+                  {statusType}
+                </option>
+              ))}
+            </select>
+            <IoIosArrowDown />
+          </SearchSelect>
+          <Button onClick={() => setModalFilterVisible(!modalFilterVisible)}>
+            Aplicar filtros
+          </Button>
+        </ModalFilter>
       )}
     </Container>
   );

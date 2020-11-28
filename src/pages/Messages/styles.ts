@@ -10,6 +10,7 @@ export const Container = styled.div`
 
   @media (max-width: 700px) {
     height: 100vh;
+    width: 100%;
 
     flex-direction: column;
   }
@@ -29,10 +30,10 @@ export const ChatsContainer = styled.div`
 
 export const ChatList = styled.div`
   height: 100%;
-
   overflow-y: scroll;
 
   @media (max-width: 700px) {
+    height: 100px;
     display: flex;
   }
 `;
@@ -62,6 +63,15 @@ export const ChatItem = styled.div<{ selected: boolean }>`
   }
 
   @media (max-width: 700px) {
+    p {
+      margin-left: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
     img {
       display: none;
     }
@@ -78,6 +88,7 @@ export const MessagesContainer = styled.div`
   @media (max-width: 700px) {
     width: 100%;
     height: 80%;
+    margin-top: 100px;
   }
 `;
 
@@ -108,18 +119,36 @@ export const OwnerMessage = styled.div<{ loading: boolean }>`
   @media (max-width: 700px) {
     width: 80%;
   }
+
+  span {
+    color: #333;
+    font-size: 12px;
+    align-self: flex-end;
+  }
 `;
 
 export const AnswerMessage = styled.div`
+  display: flex;
+  flex-direction: column;
   background: #d5d5d5;
   padding: 12px;
   border-radius: 0px 10px 10px 10px;
   width: 50%;
-  align-self: flex-start;
   word-wrap: break-word;
+  align-self: flex-start;
+
+  p {
+    align-self: flex-start;
+  }
 
   @media (max-width: 700px) {
     width: 80%;
+  }
+
+  span {
+    color: #333;
+    font-size: 12px;
+    align-self: flex-end;
   }
 `;
 

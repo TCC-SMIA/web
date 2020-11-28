@@ -1,8 +1,8 @@
 import io from 'socket.io-client';
 import SocketChannels from './socket-channels';
 
-// const socket = io('ws://localhost:3333', { autoConnect: false });
-const socket = io('wss://smia-api.herokuapp.com/', { autoConnect: false });
+const socket = io('ws://localhost:3333', { autoConnect: false });
+// const socket = io('wss://smia-api.herokuapp.com/', { autoConnect: false });
 
 type SubscribeFunction = (data: any) => any;
 

@@ -15,6 +15,7 @@ const Profile = lazy(() => import('../pages/Profile'));
 const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('../pages/ResetPassword'));
 const Report = lazy(() => import('../pages/Report'));
+const EditReport = lazy(() => import('../pages/EditReport'));
 const Messages = lazy(() => import('../pages/Messages'));
 const Complaint = lazy(() => import('../pages/Complaint'));
 const MyComplaints = lazy(() => import('../pages/MyComplaints'));
@@ -36,6 +37,7 @@ const MainRoutes: React.FC = () => {
         <Route path="/dashboard" element={Dashboard} />
         <Route path="/profile" element={Profile} />
         <Route path="/report" element={Report} />
+        <Route path="/edit-report/:id" element={EditReport} />
         <Route path="/messages" element={Messages} />
         <Route path="/complaint/:id" element={Complaint} />
         <Route path="/complaints" element={MyComplaints} />

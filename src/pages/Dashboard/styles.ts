@@ -4,9 +4,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  width: 100vw;
 
   @media (min-width: 768px) {
-    width: 80%;
+    width: 70vw;
   }
 `;
 
@@ -17,12 +18,25 @@ export const Feed = styled.div`
   flex-direction: column;
 `;
 
-export const SearchContainer = styled.div`
+export const FilterContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    align-items: center;
+
+    svg {
+      margin: auto 8px;
+    }
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
+
+    button {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -30,7 +44,7 @@ export const SearchSelect = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  flex: 1;
+  width: 100%;
 
   select {
     -webkit-appearance: none;
@@ -39,10 +53,11 @@ export const SearchSelect = styled.div`
     flex: 1;
     background: var(--color-white);
     border-radius: 8px;
-    border: 0;
+    border: 1px solid var(--color-smia);
     padding: 16px 24px;
     font-size: 1rem;
     margin: 4px 8px;
+    width: 100%;
   }
 
   option {

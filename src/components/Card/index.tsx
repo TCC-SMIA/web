@@ -20,6 +20,7 @@ import api from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
 import { ButtonSend } from '../../pages/Messages/styles';
 import Modal from './Modal';
+import Loader from '../Loader';
 
 interface ICreateCommentRequestParams {
   complaint_id: string;
@@ -35,6 +36,7 @@ interface ICardProps {
 const Card: React.FC<ICardProps> = ({ complaint }) => {
   const [inputMessage, setInputMessage] = useState('');
   const [complaintToBeDeleted, setComplaintToBeDeleted] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -67,6 +69,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const handleCreateComment = useCallback(
     (event) => {
       event.preventDefault();
+      setLoading(true);
 
       if (!inputMessage) return;
 
@@ -76,6 +79,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           content: inputMessage,
         } as ICreateCommentRequestParams)
         .then(() => {
+          setLoading(false);
           setInputMessage('');
         });
     },
@@ -92,7 +96,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Header>
         <AvatarContainer>
           {complaint.anonymous && (
-            <Link to={`/profile/${complaint.user.id}`}>
+            <Link to="/">
               <img src={RANDOM_AVATAR} alt="avatar" />
               <p>Anônimo</p>
             </Link>
@@ -109,7 +113,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
         </AvatarContainer>
         <IconsContainer>
           <span>{getStatusComplaint(complaint.status)}</span>
-          {complaint.user.id === user.id && (
+          {!!complaint.user && complaint.user.id === user.id && (
             <>
               <button
                 type="button"
@@ -118,12 +122,11 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
                 <FiTrash />
               </button>
 
-              <Link to="/">
+              <Link to={`/edit-report/${complaint.id}`}>
                 <FiEdit />
               </Link>
             </>
           )}
-
           <Link
             to={{
               pathname: `/complaint/${complaint.id}`,
@@ -158,6 +161,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
         </button>
       </Options>
       <AddComentContainer>
+        {loading && <Loader />}
         <AvatarContainer>
           <img src={user.avatar_url || RANDOM_AVATAR} alt="avatar" />
         </AvatarContainer>
