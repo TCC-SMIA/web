@@ -5,14 +5,13 @@ import React, {
   FormEvent,
   ChangeEvent,
 } from 'react';
-
 import Switch from 'react-switch';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { useNavigate, useParams } from 'react-router';
 import { IoIosArrowDown, IoIosCamera } from 'react-icons/io';
-
 import { toast } from 'react-toastify';
+
 import {
   Container,
   Header,
@@ -24,7 +23,10 @@ import {
 import api from '../../services/api';
 import Button from '../../components/Button';
 import IComplaint from '../../entities/Complaint';
-import { RANDOM_COMPLAINT_IMAGE } from '../../utils/constants';
+import {
+  COMPLAINT_STATUS,
+  RANDOM_COMPLAINT_IMAGE,
+} from '../../utils/constants';
 import Loader from '../../components/Loader';
 
 const Report: React.FC = () => {
@@ -36,7 +38,8 @@ const Report: React.FC = () => {
   const [complaintDate, setComplaintDate] = useState<Date>();
   const [complaintImage, setComplaintImage] = useState<string>();
   const [complaintTypes, setComplaintTypes] = useState<string[]>();
-  const [selectedType, setselectedType] = useState('');
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
 
   const [loadingPage, setLoadingPage] = useState(false);
   const [loadingImage, setLoadingImage] = useState(false);
@@ -55,9 +58,10 @@ const Report: React.FC = () => {
         setComplaintDate(response.data.date);
         setDescription(response.data.description);
         setAnonymous(response.data.anonymous);
-        setselectedType(response.data.type);
+        setSelectedType(response.data.type);
         setSelectedPosition([response.data.latitude, response.data.longitude]);
         setComplaintImage(response.data.image_url);
+        setSelectedStatus(response.data.status);
         setLoadingPage(false);
       });
     } catch (error) {
@@ -77,48 +81,71 @@ const Report: React.FC = () => {
     setSelectedPosition([event.latlng.lat, event.latlng.lng]);
   }, []);
 
-  async function handleSubmit(event: FormEvent): Promise<void> {
-    event.preventDefault();
-    try {
-      setLoading(true);
+  const handleSubmit = useCallback(
+    async (event: FormEvent): Promise<void> => {
+      event.preventDefault();
+      try {
+        setLoading(true);
 
-      if (title === '') {
+        if (title === '') {
+          setLoading(false);
+          throw new Error('Titulo não pode estar vazio.');
+        }
+
+        if (description === '') {
+          setLoading(false);
+          throw new Error('Descrição não pode estar vazia.');
+        }
+
+        if (selectedType === '' || selectedType === '0') {
+          setLoading(false);
+          throw new Error('Por favor selecione o tipo da denuncia.');
+        }
+
+        if (selectedStatus === '' || selectedStatus === '0') {
+          setLoading(false);
+          throw new Error('Por favor selecione o status da denuncia.');
+        }
+
+        const [latitude, longitude] = selectedPosition;
+
+        await api.put('/complaints/update', {
+          complaint_id: id,
+          title,
+          description,
+          latitude,
+          longitude,
+          anonymous,
+          complaintDate,
+          type: selectedType,
+          status: selectedStatus,
+        });
+
+        toast.success('Relato editado com sucesso');
+
         setLoading(false);
-        throw new Error('Titulo não pode estar vazio.');
-      }
-
-      if (description === '') {
+        navigate('/dashboard');
+      } catch (err) {
         setLoading(false);
-        throw new Error('Descrição não pode estar vazia.');
+        if (err.message) {
+          toast.error(err.message);
+          return;
+        }
+        toast.error('Houve um erro ao tentar criar este relato.');
       }
-
-      const [latitude, longitude] = selectedPosition;
-
-      // TODO : Inserir tipo de denúncia na edição
-
-      await api.put('/complaints/update', {
-        complaint_id: id,
-        title,
-        description,
-        latitude,
-        longitude,
-        anonymous,
-        complaintDate,
-      });
-
-      toast.success('Relato editado com sucesso');
-
-      setLoading(false);
-      navigate('/dashboard');
-    } catch (err) {
-      setLoading(false);
-      if (err.message) {
-        toast.error(err.message);
-        return;
-      }
-      toast.error('Houve um erro ao tentar criar este relato.');
-    }
-  }
+    },
+    [
+      anonymous,
+      complaintDate,
+      description,
+      id,
+      navigate,
+      selectedPosition,
+      selectedStatus,
+      selectedType,
+      title,
+    ],
+  );
 
   const handleImageChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -158,7 +185,14 @@ const Report: React.FC = () => {
 
   const handleSelectType = useCallback(
     (event: ChangeEvent<HTMLSelectElement>): void => {
-      setselectedType(event.target.value);
+      setSelectedType(event.target.value);
+    },
+    [],
+  );
+
+  const handleSelectStatus = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>): void => {
+      setSelectedStatus(event.target.value);
     },
     [],
   );
@@ -206,6 +240,28 @@ const Report: React.FC = () => {
                 </Option>
               )}
 
+              {!!COMPLAINT_STATUS && (
+                <Option>
+                  <p>Status da denúncia</p>
+                  <SearchSelect>
+                    <select
+                      name="status"
+                      id="status"
+                      onChange={handleSelectStatus}
+                      value={selectedStatus}
+                    >
+                      <option value="0">Selecione o status</option>
+                      {COMPLAINT_STATUS.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                    <IoIosArrowDown />
+                  </SearchSelect>
+                </Option>
+              )}
+
               <ImageContainer>
                 <img
                   src={complaintImage || RANDOM_COMPLAINT_IMAGE}
@@ -225,7 +281,7 @@ const Report: React.FC = () => {
               </ImageContainer>
 
               <Option>
-                <p>Deseja publicar como anônimo</p>
+                <p>Deseja alterar o seu relato para anônimo?</p>
                 <Switch
                   onChange={() => handleAnonymousSwitch()}
                   onColor="#426d49"

@@ -5,7 +5,7 @@ import { FiFilter } from 'react-icons/fi';
 import api from '../../services/api';
 import Card from '../../components/Card';
 import socket from '../../services/socket/socket';
-import IComplaint, { ComplaintStatusEnum } from '../../entities/Complaint';
+import IComplaint from '../../entities/Complaint';
 
 import EmptyDashboardSVG from '../../assets/empty-dashboard.svg';
 import Loader from '../../components/Loader';
@@ -20,6 +20,7 @@ import {
   FilterContainer,
   EmptyContainer,
 } from './styles';
+import { COMPLAINT_STATUS } from '../../utils/constants';
 
 interface IBGECityResponse {
   nome: string;
@@ -28,12 +29,6 @@ interface IBGECityResponse {
 interface IBGEUFResponse {
   sigla: string;
 }
-
-const COMPLAINT_STATUS = [
-  ComplaintStatusEnum.New,
-  ComplaintStatusEnum.InProgress,
-  ComplaintStatusEnum.Resolved,
-];
 
 const Dashboard: React.FC = () => {
   const [complaints, setComplaints] = useState([] as IComplaint[]);
@@ -98,8 +93,6 @@ const Dashboard: React.FC = () => {
 
   const filterComplaints = useCallback(
     (state?: string, city?: string, type?: string, status?: string) => {
-      console.log({ city, state, type, status });
-
       api
         .get('/complaints', {
           params: {
