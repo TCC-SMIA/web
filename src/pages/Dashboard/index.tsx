@@ -175,7 +175,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      {complaints.length !== 0 && !loading && (
+      {!loading && (
         <>
           <Resume
             all={complaints.length}
