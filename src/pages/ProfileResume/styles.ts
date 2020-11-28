@@ -10,7 +10,6 @@ export const AvatarContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
-  margin-right: 30px;
 
   h1 {
     text-align: center;
