@@ -69,21 +69,23 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const handleCreateComment = useCallback(
     (event) => {
       event.preventDefault();
-      setLoading(true);
+      if (!loading) {
+        setLoading(true);
 
-      if (!inputMessage) return;
+        if (!inputMessage) return;
 
-      api
-        .post('/comments', {
-          complaint_id: complaint.id,
-          content: inputMessage,
-        } as ICreateCommentRequestParams)
-        .then(() => {
-          setLoading(false);
-          setInputMessage('');
-        });
+        api
+          .post('/comments', {
+            complaint_id: complaint.id,
+            content: inputMessage,
+          } as ICreateCommentRequestParams)
+          .then(() => {
+            setLoading(false);
+            setInputMessage('');
+          });
+      }
     },
-    [complaint.id, inputMessage],
+    [complaint.id, inputMessage, loading],
   );
 
   const handleDeleteComplaint = useCallback((complaint_id: string) => {
