@@ -1,11 +1,17 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  ChangeEvent,
+  useMemo,
+} from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FiFilter } from 'react-icons/fi';
 
 import api from '../../services/api';
 import Card from '../../components/Card';
 import socket from '../../services/socket/socket';
-import IComplaint from '../../entities/Complaint';
+import IComplaint, { ComplaintStatusEnum } from '../../entities/Complaint';
 
 import EmptyDashboardSVG from '../../assets/empty-dashboard.svg';
 import Loader from '../../components/Loader';
@@ -21,6 +27,7 @@ import {
   EmptyContainer,
 } from './styles';
 import { COMPLAINT_STATUS } from '../../utils/constants';
+import Resume from '../../components/Resume';
 
 interface IBGECityResponse {
   nome: string;
@@ -44,9 +51,6 @@ const Dashboard: React.FC = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    socket.disconnect();
-    socket.connect(user.id);
-
     socket.subscribeToComplaintsFeed((data: IComplaint[]) => {
       setComplaints(data);
     });
@@ -153,17 +157,41 @@ const Dashboard: React.FC = () => {
     [filterComplaints, selectedCity, selectedUf, selectedType],
   );
 
+  const complaintsInProgress = useMemo(() => {
+    const quantityInProfress = complaints.filter(
+      (complaint) => complaint.status === ComplaintStatusEnum.InProgress,
+    ).length;
+
+    return quantityInProfress;
+  }, [complaints]);
+
+  const complaintsResolved = useMemo(() => {
+    const quantityResolved = complaints.filter(
+      (complaint) => complaint.status === ComplaintStatusEnum.Resolved,
+    ).length;
+
+    return quantityResolved;
+  }, [complaints]);
+
   return (
     <Container>
       {!loading && (
-        <FilterContainer>
-          <Button onClick={() => setModalFilterVisible(!modalFilterVisible)}>
-            <FiFilter />
-            Filtrar denúncias
-          </Button>
-        </FilterContainer>
+        <>
+          <Resume
+            all={complaints.length}
+            inProgress={complaintsInProgress}
+            resolved={complaintsResolved}
+          />
+          <FilterContainer>
+            <Button onClick={() => setModalFilterVisible(!modalFilterVisible)}>
+              <FiFilter />
+              Filtrar denúncias
+            </Button>
+          </FilterContainer>
+        </>
       )}
       {loading && <Loader />}
+
       {complaints.length === 0 && !loading && (
         <EmptyContainer>
           <h2>Não encontramos relatos criados.</h2>

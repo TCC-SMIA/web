@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ResumeContainer = styled.div`
   display: flex;
+  align-self: center;
 `;
 
 export const ResumeItem = styled.div`

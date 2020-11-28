@@ -23,9 +23,6 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    socket.disconnect();
-    socket.connect(user.id);
-
     socket.subscribeToNewNotifications((data: INotification[]) => {
       setNotifications(data);
     });
