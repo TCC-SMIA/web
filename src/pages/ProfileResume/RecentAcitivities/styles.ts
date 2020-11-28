@@ -32,6 +32,7 @@ export const ComplaintItem = styled.div`
   padding: 5px;
   border-radius: 20px;
   background: #f9f9f9;
+  cursor: pointer;
 
   > div {
     display: flex;
