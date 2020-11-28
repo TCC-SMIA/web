@@ -191,6 +191,10 @@ export const AddComentContainer = styled.div`
 
 export const Title = styled.div`
   margin-top: 0.8rem;
+
+  h6 {
+    font-weight: normal;
+  }
 `;
 
 export const ImageContainer = styled.div`

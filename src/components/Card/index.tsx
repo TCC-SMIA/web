@@ -1,8 +1,19 @@
+/* eslint-disable import/no-duplicates */
 /* eslint-disable no-param-reassign */
 import React, { useCallback, useState } from 'react';
 import { IoMdPin } from 'react-icons/io';
 import { FiSend, FiTrash, FiEdit } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import IComplaint from '../../entities/Complaint';
+import { RANDOM_AVATAR, RANDOM_COMPLAINT_IMAGE } from '../../utils/constants';
+import api from '../../services/api';
+import { useAuth } from '../../hooks/useAuth';
+import { ButtonSend } from '../../pages/Messages/styles';
+import Modal from './Modal';
+import Loader from '../Loader';
 
 import {
   Container,
@@ -15,14 +26,6 @@ import {
   IconsContainer,
   ImageContainer,
 } from './styles';
-
-import IComplaint from '../../entities/Complaint';
-import { RANDOM_AVATAR, RANDOM_COMPLAINT_IMAGE } from '../../utils/constants';
-import api from '../../services/api';
-import { useAuth } from '../../hooks/useAuth';
-import { ButtonSend } from '../../pages/Messages/styles';
-import Modal from './Modal';
-import Loader from '../Loader';
 
 interface ICreateCommentRequestParams {
   complaint_id: string;
@@ -136,6 +139,11 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       </Header>
       <Title>
         <h5>{complaint.title}</h5>
+        <h6>
+          {format(new Date(complaint.date), "'Dia' dd 'de' MMMM 'às' HH:mm", {
+            locale: ptBR,
+          })}
+        </h6>
       </Title>
       <Description>
         <p>{complaint.description}</p>
