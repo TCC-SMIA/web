@@ -7,6 +7,12 @@ export const Container = styled.div`
   display: flex;
   padding: 0 30px;
 
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+
   @media (max-width: 768px) {
     display: none;
   }
