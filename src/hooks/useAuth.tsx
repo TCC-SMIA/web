@@ -2,10 +2,9 @@ import React, { createContext, useCallback, useState, useContext } from 'react';
 
 import api from '../services/api';
 import IUser from '../entities/User';
-import IAgency from '../entities/Agency';
 
 interface AuthState {
-  user: IUser | IAgency;
+  user: IUser;
   token: string;
 }
 
@@ -15,10 +14,10 @@ interface SignInCredentias {
 }
 
 interface AuthContextData {
-  user: IUser | IAgency;
+  user: IUser;
   signIn(credentials: SignInCredentias): Promise<void>;
   signOut(): void;
-  updateUser(user: IUser | IAgency): void;
+  updateUser(user: IUser): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -63,7 +62,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const updateUser = useCallback(
-    (user: IUser | IAgency) => {
+    (user: IUser) => {
       setData({
         token: data.token,
         user: Object.assign(data.user, user),

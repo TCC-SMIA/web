@@ -1,12 +1,10 @@
 import IUser from './User';
-import IAgency from './Agency';
 
 export interface IComment {
   id: string;
   user_id: string;
   user: IUser;
-  agency_id: string;
-  agency: IAgency;
+  complaint_id: string;
   content: string;
   date: Date;
 }

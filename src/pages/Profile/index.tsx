@@ -16,6 +16,7 @@ import {
   ButtonLogout,
 } from './styles';
 import { RANDOM_AVATAR } from '../../utils/constants';
+import { UserTypes } from '../../entities/User';
 
 const Profile: React.FC = () => {
   const { user, updateUser, signOut } = useAuth();
@@ -43,7 +44,7 @@ const Profile: React.FC = () => {
               'Insira um nome válido e sem caracteres especiais.',
             ),
           nickname:
-            user.user_type === 1
+            user.user_type === UserTypes.Reporter
               ? Yup.string().matches(
                   /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/,
                   'Insira um apelido válido e sem caracteres especiais.',
@@ -216,7 +217,7 @@ const Profile: React.FC = () => {
             name="name"
             onChange={(event) => handleChangeNameInput(event)}
           />
-          {user.user_type === 1 && (
+          {user.user_type === UserTypes.Reporter && (
             <Input
               placeholder={user.nickname}
               name="nickname"

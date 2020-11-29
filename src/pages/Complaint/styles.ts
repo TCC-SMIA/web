@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -109,7 +109,7 @@ export const CommentsContainer = styled.div`
   }
 `;
 
-export const CommentItem = styled.div`
+export const CommentItem = styled.div<{ numberOfVisibleLines?: number }>`
   display: flex;
   flex-direction: column;
   background: #f9f9f9;
@@ -131,6 +131,18 @@ export const CommentItem = styled.div`
     p {
       color: #555;
       font-size: 14px;
+
+      ${(props) =>
+        props.numberOfVisibleLines &&
+        css`
+          font-size: 0.8rem;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        `}
     }
   }
 `;

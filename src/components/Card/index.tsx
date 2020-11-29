@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 /* eslint-disable no-param-reassign */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { IoMdPin } from 'react-icons/io';
 import { FiSend, FiTrash, FiEdit } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
@@ -26,6 +26,12 @@ import {
   IconsContainer,
   ImageContainer,
 } from './styles';
+import {
+  CommentItem,
+  CommentAvatarContainer,
+} from '../../pages/Complaint/styles';
+import { IComment } from '../../entities/Comment';
+import socket from '../../services/socket/socket';
 
 interface ICreateCommentRequestParams {
   complaint_id: string;
@@ -42,8 +48,27 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const [inputMessage, setInputMessage] = useState('');
   const [complaintToBeDeleted, setComplaintToBeDeleted] = useState('');
   const [loading, setLoading] = useState(false);
+  const [comments, setComments] = useState<IComment[]>([]);
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (complaint.id)
+      api
+        .get<IComment[]>(`/comments`, {
+          params: { complaint_id: complaint.id },
+        })
+        .then((response) => {
+          const threeComments = response.data.slice(0, 3);
+          setComments(threeComments);
+        });
+  }, [complaint]);
+
+  useEffect(() => {
+    socket.subscribeToComplaintCommentsChannel((data: IComment[]) => {
+      if (complaint.id === data[0].complaint_id) setComments(data);
+    });
+  }, [complaint]);
 
   const handleCreateChatWithReporter = useCallback(
     (user_id) => {
@@ -170,9 +195,30 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           type="button"
           onClick={() => navigate(`/complaint/${complaint.id}`)}
         >
-          Comentários
+          Ver mais
         </button>
       </Options>
+      {comments &&
+        comments.length > 0 &&
+        comments.map((comment: IComment) => (
+          <CommentItem
+            key={comment.id}
+            onClick={() => navigate(`/profile/${comment.user_id}`)}
+            numberOfVisibleLines={2}
+          >
+            <CommentAvatarContainer>
+              <img
+                src={comment.user.avatar_url || RANDOM_AVATAR}
+                alt="default"
+              />
+              <h5>{comment.user.name}</h5>
+            </CommentAvatarContainer>
+            <div>
+              <p>{comment.content}</p>
+            </div>
+            <span>{format(new Date(comment.date), 'dd/MM HH:mm')}</span>
+          </CommentItem>
+        ))}
       <AddComentContainer>
         {loading && <Loader />}
         <AvatarContainer>
