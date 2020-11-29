@@ -5,11 +5,14 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import api from '../../services/api';
 import socket from '../../services/socket/socket';
 import INotification from '../../entities/Notification';
+import EmptyNotificationsSVG from '../../assets/empty-notifications.svg';
+
 import {
   Container,
   NotificationItem,
   ReadButton,
   NotificationButton,
+  EmptyContainer,
   Title,
 } from './styles';
 import { useAuth } from '../../hooks/useAuth';
@@ -50,7 +53,13 @@ const Notification: React.FC<NotificationProps> = ({ visible }) => {
         <span>{hasNotification}</span>
       </NotificationButton>
       <Container isVisible={visible}>
-        {notifications &&
+        {notifications.length === 0 && (
+          <EmptyContainer>
+            <h2>Não há notificações.</h2>
+            <img src={EmptyNotificationsSVG} alt="Não há notificações." />
+          </EmptyContainer>
+        )}
+        {notifications.length > 0 &&
           notifications.map((notification: INotification) => (
             <NotificationItem
               key={notification.id}

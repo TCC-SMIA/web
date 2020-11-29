@@ -148,7 +148,7 @@ const Report: React.FC = () => {
   );
 
   const handleImageChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+    async (event: ChangeEvent<HTMLInputElement>) => {
       try {
         setLoadingImage(true);
         if (event.target.files) {
@@ -157,15 +157,15 @@ const Report: React.FC = () => {
           data.append('complaint_id', id);
           data.append('image', event.target.files[0]);
 
-          api.patch('/complaints/image', data).then((response) => {
+          await api.patch('/complaints/image', data).then((response) => {
             setComplaintImage(response.data.image_url);
             setLoadingImage(false);
             toast.success('Imagem atualizada com sucesso.');
           });
         }
       } catch (error) {
-        toast.error('Não foi possível atualizar a imagem.');
         setLoadingImage(false);
+        toast.error('Não foi possível atualizar a imagem.');
       }
     },
     [id],

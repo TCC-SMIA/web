@@ -37,7 +37,7 @@ const ProfileResume: React.FC = () => {
             inProgress={resume.complaints_in_progress}
             resolved={resume.complaints_resolved}
           />
-          <RecentAcitivities user_id={id} />
+          <RecentAcitivities />
         </>
       )}
     </Container>

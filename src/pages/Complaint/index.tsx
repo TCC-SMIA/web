@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { format } from 'date-fns';
 import { FiCheck } from 'react-icons/fi';
 
@@ -38,6 +38,7 @@ const Complaint: React.FC = () => {
   const [complaint, setComplaint] = useState<IComplaint>({} as IComplaint);
   const [comments, setComments] = useState<IComment[]>([]);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get<IComplaint>(`/complaints/${id}`).then((response) => {
@@ -123,7 +124,10 @@ const Complaint: React.FC = () => {
               <h1>Comentários</h1>
               {comments &&
                 comments.map((comment: IComment) => (
-                  <CommentItem key={comment.id}>
+                  <CommentItem
+                    key={comment.id}
+                    onClick={() => navigate(`/profile/${comment.user_id}`)}
+                  >
                     <div>
                       <img
                         src={comment.user.avatar_url || RANDOM_AVATAR}

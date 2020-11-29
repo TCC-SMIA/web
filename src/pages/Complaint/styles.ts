@@ -116,6 +116,7 @@ export const CommentItem = styled.div`
   border-radius: 10px;
   padding: 5px;
   justify-content: space-between;
+  cursor: pointer;
 
   & + div {
     margin-top: 10px;

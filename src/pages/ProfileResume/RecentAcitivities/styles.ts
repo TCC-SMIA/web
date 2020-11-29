@@ -32,6 +32,8 @@ export const ComplaintItem = styled.div`
   padding: 5px;
   border-radius: 20px;
   background: #f9f9f9;
+  align-items: center;
+  cursor: pointer;
 
   > div {
     display: flex;
@@ -44,6 +46,12 @@ export const ComplaintItem = styled.div`
 
     p {
       font-size: 0.8rem;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
 
       @media (max-width: 768px) {
         display: none;

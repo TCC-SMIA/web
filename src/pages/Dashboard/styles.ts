@@ -78,11 +78,12 @@ export const EmptyContainer = styled.div`
   text-align: center;
 
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
 
   padding: 20px;
+  height: 100%;
 
   h2 {
     color: var(--color-smia);
@@ -91,5 +92,9 @@ export const EmptyContainer = styled.div`
 
   img {
     width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    top: 78%;
   }
 `;

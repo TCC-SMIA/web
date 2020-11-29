@@ -1,8 +1,19 @@
+/* eslint-disable import/no-duplicates */
 /* eslint-disable no-param-reassign */
 import React, { useCallback, useState } from 'react';
 import { IoMdPin } from 'react-icons/io';
 import { FiSend, FiTrash, FiEdit } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import IComplaint from '../../entities/Complaint';
+import { RANDOM_AVATAR, RANDOM_COMPLAINT_IMAGE } from '../../utils/constants';
+import api from '../../services/api';
+import { useAuth } from '../../hooks/useAuth';
+import { ButtonSend } from '../../pages/Messages/styles';
+import Modal from './Modal';
+import Loader from '../Loader';
 
 import {
   Container,
@@ -13,14 +24,8 @@ import {
   Options,
   AddComentContainer,
   IconsContainer,
+  ImageContainer,
 } from './styles';
-import IComplaint from '../../entities/Complaint';
-import { RANDOM_AVATAR, RANDOM_COMPLAINT_IMAGE } from '../../utils/constants';
-import api from '../../services/api';
-import { useAuth } from '../../hooks/useAuth';
-import { ButtonSend } from '../../pages/Messages/styles';
-import Modal from './Modal';
-import Loader from '../Loader';
 
 interface ICreateCommentRequestParams {
   complaint_id: string;
@@ -40,19 +45,6 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const getStatusComplaint = (status: string): React.ReactNode => {
-    switch (status) {
-      case (status = 'New'):
-        return <>Nova denúncia</>;
-      case (status = 'InProgress'):
-        return <>Em progresso</>;
-      case (status = 'Resolved'):
-        return <>Resolvido</>;
-      default:
-        return <>Nova denúncia</>;
-    }
-  };
-
   const handleCreateChatWithReporter = useCallback(
     (user_id) => {
       api
@@ -69,21 +61,26 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const handleCreateComment = useCallback(
     (event) => {
       event.preventDefault();
-      setLoading(true);
+      if (!loading) {
+        setLoading(true);
 
-      if (!inputMessage) return;
-
-      api
-        .post('/comments', {
-          complaint_id: complaint.id,
-          content: inputMessage,
-        } as ICreateCommentRequestParams)
-        .then(() => {
+        if (!inputMessage) {
           setLoading(false);
-          setInputMessage('');
-        });
+          return;
+        }
+
+        api
+          .post('/comments', {
+            complaint_id: complaint.id,
+            content: inputMessage,
+          } as ICreateCommentRequestParams)
+          .then(() => {
+            setLoading(false);
+            setInputMessage('');
+          });
+      }
     },
-    [complaint.id, inputMessage],
+    [complaint.id, inputMessage, loading],
   );
 
   const handleDeleteComplaint = useCallback((complaint_id: string) => {
@@ -96,7 +93,11 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       <Header>
         <AvatarContainer>
           {complaint.anonymous && (
-            <Link to="/">
+            <Link
+              to="/"
+              style={{ cursor: 'default' }}
+              onClick={(e) => e.preventDefault()}
+            >
               <img src={RANDOM_AVATAR} alt="avatar" />
               <p>Anônimo</p>
             </Link>
@@ -107,12 +108,12 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
                 src={complaint.user.avatar_url || RANDOM_AVATAR}
                 alt="avatar"
               />
-              <p>{complaint.user.name}</p>
+              <p>{complaint.user.nickname}</p>
             </Link>
           )}
         </AvatarContainer>
         <IconsContainer>
-          <span>{getStatusComplaint(complaint.status)}</span>
+          <span>{complaint.status}</span>
           {!!complaint.user && complaint.user.id === user.id && (
             <>
               <button
@@ -138,11 +139,23 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
       </Header>
       <Title>
         <h5>{complaint.title}</h5>
+        <h6>
+          {format(new Date(complaint.date), "'Dia' dd 'de' MMMM 'às' HH:mm", {
+            locale: ptBR,
+          })}
+        </h6>
       </Title>
       <Description>
         <p>{complaint.description}</p>
       </Description>
-      <img src={complaint.image_url || RANDOM_COMPLAINT_IMAGE} alt="default" />
+
+      <ImageContainer>
+        <img
+          src={complaint.image_url || RANDOM_COMPLAINT_IMAGE}
+          alt="default"
+        />
+      </ImageContainer>
+
       <Options>
         {complaint.user_id !== user.id && !complaint.anonymous && (
           <button
