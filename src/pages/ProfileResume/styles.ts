@@ -36,3 +36,8 @@ export const AvatarContainer = styled.div`
     }
   }
 `;
+
+export const ChatButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;

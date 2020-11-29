@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import Button from '../../components/Button';
 import Resume from '../../components/Resume';
 import IResume from '../../entities/Resume';
+import { useAuth } from '../../hooks/useAuth';
 
 import api from '../../services/api';
 import { RANDOM_AVATAR } from '../../utils/constants';
 import RecentAcitivities from './RecentAcitivities';
 
-import { Container, AvatarContainer } from './styles';
+import { Container, AvatarContainer, ChatButtonContainer } from './styles';
+
+interface ICreateChatRequestParams {
+  contact_id: string;
+}
 
 const ProfileResume: React.FC = () => {
   const [resume, setResume] = useState({} as IResume);
   const { id } = useParams();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     api
@@ -20,6 +28,19 @@ const ProfileResume: React.FC = () => {
         setResume(response.data);
       });
   }, [id]);
+
+  const handleCreateChatWithReporter = useCallback(
+    (user_id) => {
+      api
+        .post('/chats', {
+          contact_id: user_id,
+        } as ICreateChatRequestParams)
+        .then(() => {
+          navigate('/messages');
+        });
+    },
+    [navigate],
+  );
 
   return (
     <Container>
@@ -37,6 +58,16 @@ const ProfileResume: React.FC = () => {
             inProgress={resume.complaints_in_progress}
             resolved={resume.complaints_resolved}
           />
+          {user.id !== resume.user.id && (
+            <ChatButtonContainer>
+              <Button
+                onClick={() => handleCreateChatWithReporter(resume.user.id)}
+              >
+                Entrar em contato
+              </Button>
+            </ChatButtonContainer>
+          )}
+
           <RecentAcitivities />
         </>
       )}

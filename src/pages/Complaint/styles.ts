@@ -109,6 +109,11 @@ export const CommentsContainer = styled.div`
   }
 `;
 
+export const LoadingItem = styled.div`
+  position: relative;
+  min-height: 50px;
+`;
+
 export const CommentItem = styled.div<{ numberOfVisibleLines?: number }>`
   display: flex;
   flex-direction: column;
@@ -175,5 +180,37 @@ export const StatusContainer = styled.div`
 
   span {
     color: var(--color-smia);
+  }
+`;
+
+export const ButtonSend = styled.button`
+  width: 40px;
+  height: 40px;
+  background: var(--color-smia);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 0px 15px 15px 0px;
+  border: none;
+`;
+
+export const CreateComment = styled.div`
+  position: relative;
+  display: flex;
+  margin: 8px 0;
+
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    input {
+      height: 100%;
+      border-radius: 5px;
+      border: none;
+      padding: 2px;
+    }
   }
 `;
