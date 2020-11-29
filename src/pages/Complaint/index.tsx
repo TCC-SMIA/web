@@ -23,6 +23,7 @@ import {
   CommentItem,
   Header,
   StatusContainer,
+  CommentAvatarContainer,
 } from './styles';
 import { RANDOM_AVATAR } from '../../utils/constants';
 import { IComment } from '../../entities/Comment';
@@ -43,9 +44,19 @@ const Complaint: React.FC = () => {
   useEffect(() => {
     api.get<IComplaint>(`/complaints/${id}`).then((response) => {
       setComplaint(response.data);
-      setComments(response.data.comments);
     });
   }, [id]);
+
+  useEffect(() => {
+    if (complaint.id)
+      api
+        .get<IComment[]>(`/comments`, {
+          params: { complaint_id: complaint.id },
+        })
+        .then((response) => {
+          setComments(response.data);
+        });
+  }, [complaint]);
 
   useEffect(() => {
     socket.subscribeToComplaintCommentsChannel((data: IComment[]) => {
@@ -123,20 +134,21 @@ const Complaint: React.FC = () => {
             <CommentsContainer>
               <h1>Comentários</h1>
               {comments &&
+                comments.length > 0 &&
                 comments.map((comment: IComment) => (
                   <CommentItem
                     key={comment.id}
                     onClick={() => navigate(`/profile/${comment.user_id}`)}
                   >
-                    <div>
+                    <CommentAvatarContainer>
                       <img
                         src={comment.user.avatar_url || RANDOM_AVATAR}
                         alt="default"
                       />
-                      <div>
-                        <h5>{comment.user.name}</h5>
-                        <p>{comment.content}</p>
-                      </div>
+                      <h5>{comment.user.name}</h5>
+                    </CommentAvatarContainer>
+                    <div>
+                      <p>{comment.content}</p>
                     </div>
                     <span>{format(new Date(comment.date), 'dd/MM HH:mm')}</span>
                   </CommentItem>

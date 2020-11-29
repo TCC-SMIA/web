@@ -111,11 +111,10 @@ export const CommentsContainer = styled.div`
 
 export const CommentItem = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   background: #f9f9f9;
   border-radius: 10px;
-  padding: 5px;
-  justify-content: space-between;
+  padding: 8px;
   cursor: pointer;
 
   & + div {
@@ -128,16 +127,21 @@ export const CommentItem = styled.div`
     align-self: flex-end;
   }
 
-  > div {
-    display: flex;
-    align-items: center;
-
-    > div {
-      h5 {
-        font-size: 14px;
-        font-weight: 500;
-      }
+  div {
+    p {
+      color: #555;
+      font-size: 14px;
     }
+  }
+`;
+
+export const CommentAvatarContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  h5 {
+    font-size: 14px;
+    font-weight: 500;
   }
 
   img {
@@ -145,11 +149,6 @@ export const CommentItem = styled.div`
     width: 36px;
     border-radius: 50%;
     margin-right: 5px;
-  }
-
-  p {
-    color: #555;
-    font-size: 14px;
   }
 `;
 
