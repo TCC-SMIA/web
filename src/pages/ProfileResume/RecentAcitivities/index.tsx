@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import { useParams, useNavigate } from 'react-router';
 
@@ -15,18 +15,24 @@ const RecentAcitivities: React.FC = () => {
 
   useEffect(() => {
     api
-      .get('/complaints/activities/resume', { params: { user_id: id } })
+      .get<IComplaint[]>('/complaints/activities/resume', {
+        params: { user_id: id },
+      })
       .then((response) => {
         setComplaints(response.data);
       });
   }, [id]);
 
+  const publicComplaints = useMemo(() => {
+    return complaints.filter((complaint) => complaint.anonymous !== true);
+  }, [complaints]);
+
   return (
     <Container>
       <Title>Atividades Recentes</Title>
       <ComplaintList>
-        {complaints.length > 0 &&
-          complaints.map((complaint) => (
+        {publicComplaints.length > 0 &&
+          publicComplaints.map((complaint) => (
             <ComplaintItem
               key={complaint.id}
               onClick={() => navigate(`/complaint/${complaint.id}`)}

@@ -5,10 +5,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  align-items: center;
+  width: 100vw;
 
-  @media (max-width: 768px) {
-    width: 100%;
+  @media (min-width: 768px) {
+    width: 70vw;
   }
 `;
 
@@ -17,10 +17,6 @@ export const Feed = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
 `;
 
 export const EmptyContainer = styled.div`

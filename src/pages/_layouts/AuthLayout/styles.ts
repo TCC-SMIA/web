@@ -5,7 +5,7 @@ export const Container = styled.div`
   justify-content: center;
   align-self: center;
   background: var(--color-background);
-  margin-top: 0;
+  margin-top: var(--header-height);
   min-height: 100vh;
 
   @media (max-width: 768px) {
