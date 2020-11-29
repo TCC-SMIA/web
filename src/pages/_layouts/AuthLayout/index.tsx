@@ -13,6 +13,8 @@ const AuthLayout: React.FC = () => {
   useEffect(() => {
     socket.disconnect();
     socket.connect(user.id);
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [user]);
 
   return (

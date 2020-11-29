@@ -34,7 +34,12 @@ const Header: React.FC = () => {
 
       <Botoes>
         <Button>
-          <Link to="/dashboard">
+          <Link
+            to="/dashboard"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
             <FiHome />
             <Title>Início</Title>
           </Link>
@@ -43,7 +48,12 @@ const Header: React.FC = () => {
         {user.user_type === UserTypes.Reporter && (
           <>
             <Button>
-              <Link to="/complaints">
+              <Link
+                to="/complaints"
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              >
                 <FiNavigation2 />
                 <Title>Minhas Denúncias</Title>
               </Link>
