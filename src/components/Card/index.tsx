@@ -53,18 +53,6 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (complaint.id)
-      api
-        .get<IComment[]>(`/comments`, {
-          params: { complaint_id: complaint.id },
-        })
-        .then((response) => {
-          const threeComments = response.data.slice(0, 3);
-          setComments(threeComments);
-        });
-  }, [complaint]);
-
-  useEffect(() => {
     socket.subscribeToComplaintCommentsChannel((data: IComment[]) => {
       if (complaint.id === data[0].complaint_id) setComments(data);
     });
@@ -111,6 +99,20 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const handleDeleteComplaint = useCallback((complaint_id: string) => {
     setComplaintToBeDeleted(complaint_id);
   }, []);
+
+  const handleFetchComments = useCallback(() => {
+    if (comments.length > 0) setComments([]);
+
+    if (complaint && complaint.id && comments.length === 0)
+      api
+        .get<IComment[]>(`/comments`, {
+          params: { complaint_id: complaint.id },
+        })
+        .then((response) => {
+          const threeComments = response.data.slice(0, 3);
+          setComments(threeComments);
+        });
+  }, [complaint, comments]);
 
   return (
     <Container>
@@ -190,7 +192,9 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
             Chamar relator
           </button>
         )}
-
+        <button type="button" onClick={handleFetchComments}>
+          Comentários
+        </button>
         <button
           type="button"
           onClick={() => navigate(`/complaint/${complaint.id}`)}
