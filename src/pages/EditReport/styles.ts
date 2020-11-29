@@ -80,6 +80,21 @@ export const Option = styled.div`
       background: var(--color-smia-hover);
     }
   }
+  @media (max-width: 450px) {
+    margin: 20px 6px;
+    p {
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      height: 35px;
+      border-radius: 8px;
+      border: 1px solid var(--color-separator-border);
+      background: var(--color-textarea);
+      padding: 10px;
+      font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
+    }
+  }
 `;
 
 export const OptionMap = styled.div`
@@ -139,7 +154,29 @@ export const SearchSelect = styled.div`
   }
 
   @media (max-width: 450px) {
-    width: 95%;
+    width: 70%;
+
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: var(--color-white);
+      border-radius: 8px;
+      border: 0;
+      padding: 12px 2px;
+      font-size: 1rem;
+      max-width: 100%;
+      min-width: 180px;
+    }
+
+    option {
+      font-size: 0.8rem;
+    }
+
+    svg {
+      position: absolute;
+      right: 6px;
+    }
   }
 `;
 
