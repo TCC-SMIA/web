@@ -95,7 +95,7 @@ const Profile: React.FC = () => {
           updateUser(newUser);
 
           toast.success('Perfil atualizado.');
-
+          setLoading(false);
           return;
         }
 
