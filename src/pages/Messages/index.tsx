@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import Loader from '../../components/Loader';
 import IChat from '../../entities/Chat';
 import { useAuth } from '../../hooks/useAuth';
+import { useChatContext } from '../../hooks/useChat';
 import api from '../../services/api';
 import EmptyMessageSVG from '../../assets/empty-list-messages.svg';
 import EmptyMessageChatSVG from '../../assets/empty-message-chat.svg';
@@ -34,6 +35,9 @@ interface ICreateMessageRequestParams {
 }
 
 const Messages: React.FC = () => {
+  const { user } = useAuth();
+  const { chatId, saveChatId } = useChatContext();
+
   const [chats, setChats] = useState([] as IChat[]);
   const [messages, setMessages] = useState([] as IMessage[]);
   const [selected, setSelected] = useState('');
@@ -42,21 +46,19 @@ const Messages: React.FC = () => {
   const [loadingPage, setLoadingPage] = useState(false);
   const [loadingMessage, setloadingMessage] = useState(false);
 
-  const { user } = useAuth();
-
   useEffect(() => {
     setLoadingPage(true);
     api
       .get('/chats')
       .then((response) => {
         setChats(response.data);
-        setSelected(response.data[0].id);
+        setSelected(chatId || response.data[0].id);
         setLoadingPage(false);
       })
       .catch(() => {
         setLoadingPage(false);
       });
-  }, []);
+  }, [chatId]);
 
   useEffect(() => {
     socket.subscribeToMessagesChannel((data: IMessage[]) => {
@@ -86,9 +88,13 @@ const Messages: React.FC = () => {
         });
   }, [selected]);
 
-  const handleSelect = useCallback((chat_id: string) => {
-    setSelected(chat_id);
-  }, []);
+  const handleSelect = useCallback(
+    (chat_id: string) => {
+      saveChatId(chat_id);
+      setSelected(chat_id);
+    },
+    [saveChatId],
+  );
 
   const handleCreateMessage = useCallback(
     (event) => {
