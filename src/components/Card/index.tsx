@@ -54,7 +54,8 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
 
   useEffect(() => {
     socket.subscribeToComplaintCommentsChannel((data: IComment[]) => {
-      if (complaint.id === data[0].complaint_id) setComments(data);
+      if (complaint.id === data[0].complaint_id)
+        setComments(data.slice(data.length - 3, data.length));
     });
   }, [complaint]);
 
@@ -109,7 +110,10 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           params: { complaint_id: complaint.id },
         })
         .then((response) => {
-          const threeComments = response.data.slice(0, 3);
+          const threeComments = response.data.slice(
+            response.data.length - 3,
+            response.data.length,
+          );
           setComments(threeComments);
         });
   }, [complaint, comments]);
@@ -189,7 +193,7 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
             type="button"
             onClick={() => handleCreateChatWithReporter(complaint.user_id)}
           >
-            Chamar relator
+            Entrar em contato
           </button>
         )}
         <button type="button" onClick={handleFetchComments}>

@@ -161,6 +161,12 @@ export const Options = styled.div`
       background-color: var(--color-background);
     }
   }
+
+  @media (max-width: 768px) {
+    button {
+      font-size: 0.8rem;
+    }
+  }
 `;
 
 export const AddComentContainer = styled.div`
@@ -185,6 +191,16 @@ export const AddComentContainer = styled.div`
       color: #4a4a4a;
       padding-left: 15px;
       border: 1px solid #e3e3e3;
+    }
+  }
+
+  @media (max-width: 768px) {
+    form {
+      input {
+        ::placeholder {
+          font-size: 0.8rem;
+        }
+      }
     }
   }
 `;
