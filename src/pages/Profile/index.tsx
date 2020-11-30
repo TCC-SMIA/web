@@ -156,6 +156,7 @@ const Profile: React.FC = () => {
         api.patch('/users/avatar', data).then((response) => {
           const newUser = {
             ...response.data.user,
+            user_type: response.data.user_type,
           };
 
           updateUser(newUser);
