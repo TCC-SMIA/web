@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { shade } from 'polished';
+import { ComplaintStatusEnum } from '../../entities/Complaint';
 
 export const Container = styled.div`
   padding: 15px 30px;
@@ -66,18 +67,48 @@ export const IconsContainer = styled.div`
       color: var(--color-smia-hover);
     }
   }
+`;
 
-  span {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-    color: var(--color-smia-hover);
-    margin-right: 12px;
+export const ComplaintStatus = styled.span<{ status: string }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  margin-right: 12px;
+  padding: 5px;
+  border-radius: 10px;
+  font-weight: 500;
 
-    @media (max-width: 768px) {
-      font-size: 0.8rem;
+  ${(props): any => {
+    switch (props.status) {
+      case ComplaintStatusEnum.New:
+        return css`
+          color: var(--color-smia-hover);
+          border: 2px solid var(--color-smia-hover);
+        `;
+
+      case ComplaintStatusEnum.InProgress:
+        return css`
+          color: #ff882e;
+          border: 2px solid #ff882e;
+        `;
+
+      case ComplaintStatusEnum.Resolved:
+        return css`
+          color: var(--color-bg-button);
+          border: 2px solid var(--color-bg-button);
+        `;
+
+      default:
+        return css`
+          color: var(--color-smia-hover);
+          border: 2px solid var(--color-smia-hover);
+        `;
     }
+  }}
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
   }
 `;
 
@@ -144,6 +175,7 @@ export const Options = styled.div`
   justify-content: space-evenly;
 
   button {
+    position: relative;
     height: 42px;
     background: transparent;
     padding: 0;
@@ -159,6 +191,12 @@ export const Options = styled.div`
 
     &:hover {
       background-color: var(--color-background);
+    }
+  }
+
+  @media (max-width: 768px) {
+    button {
+      font-size: 0.8rem;
     }
   }
 `;
@@ -185,6 +223,16 @@ export const AddComentContainer = styled.div`
       color: #4a4a4a;
       padding-left: 15px;
       border: 1px solid #e3e3e3;
+    }
+  }
+
+  @media (max-width: 768px) {
+    form {
+      input {
+        ::placeholder {
+          font-size: 0.8rem;
+        }
+      }
     }
   }
 `;

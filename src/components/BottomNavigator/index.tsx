@@ -21,7 +21,7 @@ const BottomNavigator: React.FC = () => {
         <FiHome />
         <p>Início</p>
       </Link>
-      {user.user_type === UserTypes.Reporter && (
+      {user.type === UserTypes.Reporter && (
         <>
           <Link to="/complaints">
             <FiNavigation2 />
