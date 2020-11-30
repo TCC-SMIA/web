@@ -45,7 +45,7 @@ const Header: React.FC = () => {
           </Link>
         </Button>
 
-        {user.user_type === UserTypes.Reporter && (
+        {user.type === UserTypes.Reporter && (
           <>
             <Button>
               <Link

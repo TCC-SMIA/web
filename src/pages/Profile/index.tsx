@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
               'Insira um nome válido e sem caracteres especiais.',
             ),
           nickname:
-            user.user_type === UserTypes.Reporter
+            user.type === UserTypes.Reporter
               ? Yup.string().matches(
                   /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/,
                   'Insira um apelido válido e sem caracteres especiais.',
@@ -88,8 +88,7 @@ const Profile: React.FC = () => {
           });
 
           const newUser = {
-            ...response.data.user,
-            user_type: response.data.user_type,
+            ...response.data,
           };
 
           updateUser(newUser);
@@ -110,7 +109,6 @@ const Profile: React.FC = () => {
 
         const newUser = {
           ...response.data.user,
-          user_type: response.data.user_type,
         };
 
         updateUser(newUser);
@@ -142,7 +140,7 @@ const Profile: React.FC = () => {
       oldPasswordInput,
       passwordConfirmationInput,
       updateUser,
-      user.user_type,
+      user,
     ],
   );
 
@@ -155,8 +153,7 @@ const Profile: React.FC = () => {
 
         api.patch('/users/avatar', data).then((response) => {
           const newUser = {
-            ...response.data.user,
-            user_type: response.data.user_type,
+            ...response.data,
           };
 
           updateUser(newUser);
@@ -217,7 +214,7 @@ const Profile: React.FC = () => {
             name="name"
             onChange={(event) => handleChangeNameInput(event)}
           />
-          {user.user_type === UserTypes.Reporter && (
+          {user.type === UserTypes.Reporter && (
             <Input
               placeholder={user.nickname}
               name="nickname"

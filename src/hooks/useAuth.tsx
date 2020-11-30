@@ -41,9 +41,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = useCallback(async ({ login, password }: SignInCredentias) => {
     const response = await api.post('sessions', { login, password });
 
-    const { token, user, user_type } = response.data;
-
-    user.user_type = user_type;
+    const { token, user } = response.data;
 
     localStorage.setItem('@smia:token', token);
     localStorage.setItem('@smia:user', JSON.stringify(user));
@@ -57,7 +55,6 @@ const AuthProvider: React.FC = ({ children }) => {
     localStorage.removeItem('@smia:token');
     localStorage.removeItem('@smia:user');
     localStorage.removeItem('@smia:chatId');
-    localStorage.removeItem('@smia:user_type');
 
     setData({} as AuthState);
   }, []);
