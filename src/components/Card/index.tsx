@@ -25,6 +25,7 @@ import {
   AddComentContainer,
   IconsContainer,
   ImageContainer,
+  ComplaintStatus,
 } from './styles';
 import {
   CommentItem,
@@ -144,7 +145,9 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
           )}
         </AvatarContainer>
         <IconsContainer>
-          <span>{complaint.status}</span>
+          <ComplaintStatus status={complaint.status}>
+            {complaint.status}
+          </ComplaintStatus>
           {!!complaint.user && complaint.user.id === user.id && (
             <>
               <button
