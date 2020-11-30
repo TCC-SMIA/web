@@ -281,6 +281,14 @@ const Dashboard: React.FC = () => {
           <Button onClick={() => setModalFilterVisible(!modalFilterVisible)}>
             Aplicar filtros
           </Button>
+          <Button
+            onClick={() => {
+              filterComplaints('', '', '', '');
+              setModalFilterVisible(!modalFilterVisible);
+            }}
+          >
+            Limpar filtros
+          </Button>
         </ModalFilter>
       )}
     </Container>
