@@ -175,6 +175,7 @@ export const Options = styled.div`
   justify-content: space-evenly;
 
   button {
+    position: relative;
     height: 42px;
     background: transparent;
     padding: 0;

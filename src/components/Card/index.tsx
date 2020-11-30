@@ -27,10 +27,12 @@ import {
   ImageContainer,
   ComplaintStatus,
 } from './styles';
+
 import {
   CommentItem,
   CommentAvatarContainer,
 } from '../../pages/Complaint/styles';
+
 import { IComment } from '../../entities/Comment';
 import socket from '../../services/socket/socket';
 
@@ -49,6 +51,8 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
   const [inputMessage, setInputMessage] = useState('');
   const [complaintToBeDeleted, setComplaintToBeDeleted] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingCreateChat, setLoadingCreateChat] = useState(false);
+  const [loadingFetchComments, setLoadingFetchComments] = useState(false);
   const [comments, setComments] = useState<IComment[]>([]);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -62,15 +66,23 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
 
   const handleCreateChatWithReporter = useCallback(
     (user_id) => {
-      api
-        .post('/chats', {
-          contact_id: user_id,
-        } as ICreateChatRequestParams)
-        .then(() => {
-          navigate('/messages');
-        });
+      try {
+        if (!loadingCreateChat) {
+          setLoadingCreateChat(true);
+          api
+            .post('/chats', {
+              contact_id: user_id,
+            } as ICreateChatRequestParams)
+            .then(() => {
+              navigate('/messages');
+              setLoadingCreateChat(false);
+            });
+        }
+      } catch (error) {
+        setLoadingCreateChat(false);
+      }
     },
-    [navigate],
+    [loadingCreateChat, navigate],
   );
 
   const handleCreateComment = useCallback(
@@ -102,21 +114,27 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
     setComplaintToBeDeleted(complaint_id);
   }, []);
 
-  const handleFetchComments = useCallback(() => {
-    if (comments.length > 0) setComments([]);
+  const handleFetchComments = useCallback(async () => {
+    try {
+      setLoadingFetchComments(true);
+      if (comments.length > 0) setComments([]);
 
-    if (complaint && complaint.id && comments.length === 0)
-      api
-        .get<IComment[]>(`/comments`, {
-          params: { complaint_id: complaint.id },
-        })
-        .then((response) => {
-          const threeComments = response.data.slice(
-            response.data.length - 3,
-            response.data.length,
-          );
-          setComments(threeComments);
-        });
+      if (complaint && complaint.id && comments.length === 0)
+        await api
+          .get<IComment[]>(`/comments`, {
+            params: { complaint_id: complaint.id },
+          })
+          .then((response) => {
+            const threeComments = response.data.slice(
+              response.data.length - 3,
+              response.data.length,
+            );
+            setComments(threeComments);
+            setLoadingFetchComments(false);
+          });
+    } catch (error) {
+      setLoadingFetchComments(false);
+    }
   }, [complaint, comments]);
 
   return (
@@ -196,11 +214,13 @@ const Card: React.FC<ICardProps> = ({ complaint }) => {
             type="button"
             onClick={() => handleCreateChatWithReporter(complaint.user_id)}
           >
-            Entrar em contato
+            {!loadingCreateChat && 'Entrar em contato'}
+            {loadingCreateChat && <Loader />}
           </button>
         )}
         <button type="button" onClick={handleFetchComments}>
-          Comentários
+          {!loadingFetchComments && 'Comentários'}
+          {loadingFetchComments && <Loader />}
         </button>
         <button
           type="button"
